@@ -1,0 +1,375 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+:root {
+  --body-font: "Inter", sans-serif;
+  --theme-bg: #fff;
+  --body-color: #808191;
+  --body-bg: #17161f;
+  --font-color: #020748;
+  --bg-primary: rgb(3, 111, 253);
+  --bg-secondary: rgb(20, 9, 173);
+  --bg-approved: rgb(5, 128, 32);
+  --bg-pending: rgb(232, 186, 59);
+  --bg-danger: red;
+  --button-bg: #353340;
+  --button-color: #353340;
+  --border-color: rgba(7, 11, 250, 0.936);
+  --delay: 0s;
+ }
+
+ .btn-info{
+  background-color: #86e5f8 !important;
+ }
+
+ .btn-warning{
+  background-color: #ffe035 !important;
+ }
+
+ .btn-danger{
+  background-color: #e25764 !important;
+ }
+
+body {
+  /* background-color: var(--body-bg) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; */
+}
+
+.main-container{
+  border: 1px solid var(--border-color);
+}
+
+.content {
+  font-family: "Inter", sans-serif !important;
+  background-color: var(--theme-bg);
+  /* max-width: 1240px;
+  max-height: 900px; */
+  /* height: 95vh; */
+  display: flex;
+
+  overflow: hidden;
+  /* border-radius: 20px; */
+  font-size: 15px;
+  font-weight: 500;
+  /* box-shadow: 0 20px 50px rgba(250, 239, 239, 0.3); */
+  /* position: relative; */
+  /* border: 1px solid var(--border-color); */
+}
+
+.sidebar .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.header img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.sidebar {
+
+  color: var(--bg-primary) !important;
+  width: 220px;
+  height: 100vh;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition-duration: 0.2s;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* border: 1px solid blue; */
+
+}
+
+.header .admin-title {
+  width: 150px;
+}
+
+.header span {
+  color: var(--font-color);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+
+.side-wrapper {
+    padding: 13px 0;
+    border-bottom: none;
+  }
+
+.side-menu {
+  display: flex;
+  flex-direction: column;
+  padding-left: 15px;
+}
+
+.side-menu li {
+  width: 150px;
+  height: 40px;
+  padding-left: 10px;
+  border-radius: 15px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--font-color);
+  margin-top: 20px;
+  /* border: 1px solid var(--border-color); */
+
+}
+
+.side-menu li:hover{
+  background-color: var(--bg-primary);
+    border-color: #080843 !important;
+    color: white !important;
+}
+
+.side-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  color: #b3b4bb;
+}
+
+.logoutButtonWrapper{
+  padding-left: 45px;
+}
+
+#logoutButton{
+  margin: 15px auto !important;
+}
+
+
+.hiddenRow {
+  padding: 0 !important;
+}
+
+.tab-content{
+  padding-top: 10px;
+
+}
+
+.tfoot input {
+  width: 100%;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+.form-wrapper{
+  margin-left: auto;
+}
+
+#filterReservations,
+#filterRooms,
+#filterCustomers,
+#filterUsers{
+  margin-left: auto !important;
+}
+
+.table-info tr{
+  border: 2px solid black !important;
+}
+
+.information{
+  display: flex;
+  /* background-color: #ede7e3; */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+
+}
+
+.customerInfo-left{
+    flex: 1;
+    /* background-color: #d8d0ef; */
+    padding-left: 0;
+    padding: 5px;
+
+}
+
+.customerInfo-right{
+  flex: 1;
+  padding: 5px;
+  /* background-color: #d6e3c4; */
+  border-left: 1px solid black;
+
+}
+
+.information p{
+  display: inline;
+  width: 100%;
+  /* background-color: aliceblue; */
+  padding: 3px 6px;
+}
+
+.customerInfo-left div{
+  margin: 10px 0px;
+  padding: 5px;
+
+}
+
+.customerInfo-left div span{
+  margin-right: auto;
+}
+
+.customerInfo-right div{
+  margin: 10px 0px;
+  padding: 5px;
+
+}
+
+.customerInfo-left p:nth-child(2), .customerInfo-right p:nth-child(2) {
+  margin-left: 10px;
+  background: #ade8f4;
+  border-radius: 3px;
+}
+
+.customerInfo-right button{
+ float: right;
+ margin: 0 !important;
+/* background-color: #17161f !important; */
+}
+
+
+.bookingDates,.checkin-Date, .checkout-Date{
+  width: 60px;
+  display: inline;
+  /* background-color: aliceblue; */
+  border-radius: 6px;
+}
+
+.bookingDates:first-child{
+  margin-right: 2px;
+}
+
+td, th{
+  vertical-align: middle !important;
+}
+
+#reservationDeleteModal .modal-header{
+  color: #fff;
+}
+
+.modal-body{
+/* width: auto; */
+}
+
+.reservationFormContent{
+  display: flex;
+
+}
+
+.customerRoomForm{
+  margin-right: 10px;
+}
+
+.customerRoomForm,.customerInfoForm{
+flex: 1;
+}
+.customerInfoForm{
+  margin-left: 10px;
+}
+
+.customerForm{
+  display: flex !important;
+  flex-direction: column;
+}
+
+#roomsTable{
+  /* max-width: 95vw !important; */
+  font-size: small !important;
+}
+
+.saperatorLine{
+  display: inline;
+  border: 1px solid black;
+  background: black;
+  content: "";
+}
+
+.form-check-input:active{
+  background-color: aquamarine;
+
+}
+.form-check-input{
+  margin-left: 2px;
+  color: aquamarine !important;
+}
+
+.actions-btn{
+  float: right;
+}
+
+.btn-warning, .btn-danger{
+  width: 100px !important;
+}
+
+table thead tr{
+  background-color: black !important;
+  color: white !important;
+  }
+
+  .dataTables_length{
+    margin: 10px !important;
+  }
+
+  .dataTables_length label{
+    margin: 3px;
+    padding: 3px;
+  }
+
+  div.dataTables_wrapper div.dataTables_length select{
+    width: 50px !important;
+    margin: 0 3px !important;
+    padding: 5 5px !important;
+  }
+
+  #reservationsTable_wrapper .top,
+  #customersTable_wrapper .top,
+  #roomsTable_wrapper .top,
+  #usersTable_wrapper .top{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .pagination {
+    --bs-pagination-padding-x: 0.4rem !important;
+    --bs-pagination-padding-y: 0.2rem !important;
+
+  }
+
+  .paid, .yes{
+    background: rgb(173, 255, 185);
+    border-radius: 10px;
+    padding: 4px 8px;
+  }
+
+  .unPaid, .no{
+    background: rgb(245, 116, 116);
+    border-radius: 10px;
+    padding: 4px 8px;
+  }
+
+
+
+
+
+
+

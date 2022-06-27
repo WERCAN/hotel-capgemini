@@ -1,0 +1,941 @@
+var RESERVATION_API = "http://localhost:9090/api/reservations" ;
+var CUSTOMERS_API="http://localhost:9090/api/customer";
+// var HOME_ROUTE = "http://localhost:9090/home" ;
+var ROOMS_API = "http://localhost:9090/api/rooms";
+var USERS_API="http://localhost:9090/api/users";
+
+var jsonData={"data":{"First":[{"Id":1,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":2,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":3,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":4,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":5,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":6,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":7,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":8,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":240},{"Id":9,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":240},{"Id":10,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Disabled room","Prijzen ":380},{"Id":11,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":12,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed","Comments":"Non Smoking","Prijzen ":380},{"Id":13,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Non Smoking","Prijzen ":220},{"Id":14,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Non Smoking","Prijzen ":220},{"Id":15,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":16,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":17,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":18,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":19,"Room":"2 x Double","Adults":4,"Childeren/baby":2,"Bed":"2xD 1XS 1XBaby beds","Comments":"Non Smoking","Prijzen ":550}],"Second floor":[{"Id":1,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":2,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":3,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":4,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":5,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":6,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":7,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":8,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":240},{"Id":9,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":240},{"Id":10,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Disabled room","Prijzen ":380},{"Id":11,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":12,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed","Comments":"Non Smoking","Prijzen ":380},{"Id":13,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Non Smoking","Prijzen ":220},{"Id":14,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Non Smoking","Prijzen ":220},{"Id":15,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":16,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":17,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":18,"Room":"Double","Adults":4,"Childeren/baby":2,"Bed":"2xD 1xS 1xBaby beds","Comments":"Non Smoking","Prijzen ":550},{"Id":19,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed","Comments":"Non Smoking","Prijzen ":380}],"Third floor":[{"Id":1,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":2,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":3,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":4,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":5,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":6,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":7,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":8,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":0},{"Id":9,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":0},{"Id":10,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Disabled room","Prijzen ":0},{"Id":11,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":0},{"Id":12,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed","Comments":"Non Smoking","Prijzen ":0},{"Id":13,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Non Smoking","Prijzen ":0},{"Id":14,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Non Smoking","Prijzen ":0},{"Id":15,"Room":"2x Double","Adults":4,"Childeren/baby":2,"Bed":"2x D 1xS 1xBaby beds","Comments":"Non Smoking","Prijzen ":0},{"Id":16,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":0},{"Id":17,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":0},{"Id":18,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":0},{"Id":19,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed","Comments":"Non Smoking","Prijzen ":0}],"Fourth floor":[{"Id":41,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Smoking","Prijzen ":0},{"Id":42,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Smoking","Prijzen ":0},{"Id":43,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Smoking","Prijzen ":0},{"Id":44,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Smoking","Prijzen ":220},{"Id":45,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Smoking","Prijzen ":220},{"Id":46,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Smoking","Prijzen ":0},{"Id":47,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Smoking","Prijzen ":0},{"Id":48,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":0},{"Id":49,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":0},{"Id":410,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Disabled room","Prijzen ":0},{"Id":411,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Smoking","Prijzen ":0},{"Id":412,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed","Comments":"Smoking","Prijzen ":0},{"Id":413,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Smoking","Prijzen ":0},{"Id":414,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Smoking","Prijzen ":0},{"Id":415,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Smoking","Prijzen ":0},{"Id":416,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Smoking","Prijzen ":0},{"Id":417,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed ","Comments":"Smoking","Prijzen ":0},{"Id":418,"Room":"Penthouse","Adults":8,"Childeren/baby":2,"Bed":"2xD 4XS 2XBaby beds","Comments":"Smoking","Prijzen ":800},{"Id":419,"Room":"Penthouse","Adults":8,"Childeren/baby":2,"Bed":"2xD 4XS 2XBaby beds","Comments":"Smoking","Prijzen ":800}]}};
+var reservationTable;
+var roomsTable;
+var customerInfo=[];
+
+// INIT
+function init() {
+  //console.log("inside init");
+
+   initReservationTable();
+   // Get reservations from backend and update DOM
+   getReservationData();
+
+   initCustomersTable();
+   getCustomersData();
+
+   initRoomsTable();
+   getRoomsData();
+
+   initUsersTable();
+   getUsersData();
+
+  // Add event listener for opening and closing details
+  $("#reservationsTable tbody").on("click", "#information", function () {
+    var tr = $(this).closest("tr");
+    var row = reservationTable.row(tr);
+
+    if (row.child.isShown()) {
+      // This row is already open - close it
+      row.child.hide();
+      tr.removeClass("shown");
+    } else {
+      // Open this row (the format() function would return the data to be shown)
+      row.child(format(row.data())).show();
+      tr.addClass("shown");
+    }
+  });
+
+  $("#reservationsTable tbody, #customersTable tbody, #roomsTable tbody, #usersTable tbody").on("click", "tr", function () {
+    console.log("Clicking on row");
+    if ($(this).hasClass("selected")) {
+      $(this).removeClass("selected");
+      // emptyRoomModals();
+    } else {
+      reservationTable.$("tr.selected").removeClass("selected");
+      customersTable.$("tr.selected").removeClass("selected");
+      roomsTable.$("tr.selected").removeClass("selected");
+      usersTable.$("tr.selected").removeClass("selected");
+
+      // emptyRoomModals();
+      $(this).addClass("selected");
+    }
+  });
+
+   //******* Edit Reservation ********
+  $("#editReservationButton").click( function () {
+    console.log("Inside click of editReservationButton");
+    // Get the data from selected row and fill fields in modal
+    if (reservationTable.row($('.selected')).data() == undefined) {
+        alert("Select reservation first");
+    }else{
+        var reservationInfoEdit = reservationTable.row($('.selected')).data();
+        const startDate = new Date(reservationInfoEdit.startDate);
+        const endDate = new Date(reservationInfoEdit.endDate);
+
+         $("#editStartDate").val(startDate.toISOString().substring(0, 10));
+         $("#editEndDate").val(endDate.toISOString().substring(0, 10));
+         $("#editBabyBed").val(reservationInfoEdit.babyBed);
+         $("#editPrice").val(reservationInfoEdit.price);
+         $("#editServicePrice").val(reservationInfoEdit.roomServicePrice);
+         $("#editTotalPrice").val(reservationInfoEdit.totalPrice);
+
+         $('#editReservationModal').modal('show');
+    }
+    });
+
+  $('#editReservationModal').on('submit', function(e){
+    e.preventDefault();
+    console.log("Submitting Edit Customer Modal Form!");
+    createReservation();
+    $('#editCustomerModal').modal('hide');
+  });
+
+    //---Delete reservation
+    $("#deleteReservationButton").click(function () {
+      console.log("Inside click of deleteReservationButton");
+      if (reservationTable.row($('.selected')).data() == undefined) {
+        alert("Select customer first");
+    }else{
+        $('#reservationDeleteModal').modal('show');
+    }
+    });
+
+    // Delete Button in modal
+    $("#deleteReservationConfirmButton").click(function () {
+      console.log("Inside click of deleteCustomerButton");
+      deleteReservation();
+      $("#reservationDeleteModal").modal("hide");
+    });
+
+    // Datatable Search Filtering
+     $("#filterReservations").keyup(function () {
+        reservationTable.search(this.value).draw();
+      });
+      $("#filterRooms").keyup(function () {
+        roomsTable.search(this.value).draw();
+      });
+      $("#filterCustomers").keyup(function () {
+        customersTable.search(this.value).draw();
+      });
+
+   //******* Edit Customer ********
+  $("#editReCustomerButton").click( function () {
+    console.log("Inside click of editReservationButton");
+    // Get the data from selected row and fill fields in modal
+    if (reservationTable.row($('.selected')).data() == undefined) {
+        alert("Select customer first");
+    }else{
+        var customerInfoEdit = reservationTable.row($('.selected')).data();
+
+         $("#editName").val(customerInfoEdit.customers[0].firstName);
+         $("#editGuests").val(customerInfoEdit.customers.length);
+         $("#editEmail").val(customerInfoEdit.customers[0].email);
+         $("#editPhone").val(customerInfoEdit.customers[0].phone);
+         $("#editDocumentType").val(customerInfoEdit.customers[0].typeOfDocument);
+
+         $('#editReCustomerModal').modal('show');
+    }
+    });
+
+  $('#editReCustomerModal').on('submit', function(e){
+  e.preventDefault();
+    console.log("Submitting Edit Customer Modal Form!");
+    createCustomer();
+    $('#editReCustomerModal').modal('hide');
+  });
+
+
+  //******* Edit Room ********
+  $("#editRoomButton").click( function (e) {
+    e.preventDefault();
+    console.log("Inside click of editRoomButton");
+    // Get the data from selected row and fill fields in modal
+    if (roomsTable.row($('.selected')).data() == undefined) {
+        alert("Select room first!");
+    }else{
+        var roomInfoEdit = roomsTable.row($('.selected')).data();
+        var selectType=roomInfoEdit.roomType;
+        var indx;
+        switch (selectType) {
+          case "Single":
+            indx = 1;
+            break;
+          case "Double":
+            indx = 2;
+            break;
+          case "2x Double":
+            indx = 3;
+            break;
+          case "Penthouse":
+            indx = 4;
+            break;
+        }
+
+         $("#editRoomModal #editRoomNo").val(roomInfoEdit.roomNumber);
+         $("#editRoomModal #editRoomGuests").val(roomInfoEdit.sizePerson);
+         $("#editRoomModal #editBaby").val(roomInfoEdit.childrenPlace);
+         $("#editRoomModal #editRoomPrice").val(roomInfoEdit.price);
+         $("#editRoomModal #editSingleBed").val(roomInfoEdit.singleBedAmount);
+         $("#editRoomModal #editDoubleBed").val(roomInfoEdit.doubleBedAmount);
+         document.getElementById("selectRoom").selectedIndex=indx;
+
+         if(roomInfoEdit.cleanRoom == true){
+          $("#isCleanYes").prop("checked", true);
+         }else{
+          $("#isCleanNo").prop("checked", true);
+         }
+
+         if(roomInfoEdit.roomActive == true){
+          $("#isActiveYes").prop("checked", true);
+         }else{
+          $("#isActiveNo").prop("checked", true);
+         }
+
+         if(roomInfoEdit.disabled == true){
+          $("#isDisabledYes").prop("checked", true);
+         }else{
+          $("#isDisabledNo").prop("checked", true);
+         }
+
+         if(roomInfoEdit.smoke == true){
+          $("#isSmokingYes").prop("checked", true);
+         }else{
+          $("#isSmokingNo").prop("checked", true);
+         }
+
+         $('#editRoomModal').modal('show');
+    }
+    });
+
+  $('#editRoomModal').on('submit', function(e){
+    e.preventDefault();
+    console.log("Edit Room Modal Form submitted!");
+    createRoom();
+    $('#editCustomerModal').modal('hide');
+  });
+
+    // Add event listener for opening and closing details
+    $('#customersTable tbody').on('click', '#infoCustomer', function () {
+      var tr = $(this).closest('tr');
+      var row = customersTable.row(tr);
+
+      if (row.child.isShown()) {
+          // This row is already open - close it
+          row.child.hide();
+          tr.removeClass('shown');
+      } else {
+          // Open this row
+          row.child(formatCustomerPage(row.data())).show();
+          tr.addClass('shown');
+      }
+  });
+
+
+  $('#usersTable tbody').on('click', '#infoUser', function () {
+    var tr = $(this).closest('tr');
+    var row = usersTable.row(tr);
+
+    if (row.child.isShown()) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+    } else {
+        // Open this row
+        row.child(formatUserPage(row.data())).show();
+        tr.addClass('shown');
+    }
+});
+
+}
+
+//------- RESERVATIONS -------
+// INIT Reservations Table
+function initReservationTable() {
+    console.log('inside initReservationTable' );
+    // Create columns (with titles) for datatable: id, name, address, age
+    var checkedIn='<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">'
+    var checkedOut='<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">'
+    var infoBtn='<div><button type="button" class="btn btn-info p-1 m-0" id="information">Info</button></div>'
+    columns = [
+        { "title": "ID",
+            "data": "id" },
+        { "title":  "Room",
+            "data": "room.id" },
+        { "title":  "Date",
+            "data": "startDate",
+            render: function(data,type,row){
+            const date = new Date(data);
+            return (date.getMonth()+1)+'/' + date.getDate() + '/'+ date.getFullYear();
+            }
+        },
+        { "title":  "Checked -in",
+            "data": "startDate",
+          render: function(data, type,row){
+            return data + checkedIn;
+          } },
+        { "title":  "Checked-out",
+            "data": "endDate",
+            render: function(data, type,row){
+              return data + checkedIn;
+            } },
+        { "title": "Name",
+            "data": "customers.0.firstName"},
+        { "title": "Room Type",
+          "data": "room.roomType"},
+        { "title":  "Payment",
+             "data": "room.disabled",
+             render: function(data,type,row){
+                      if(data === true){
+                       return "<span class='paid'>Paid</span>";
+                       } else { return "<span class='unPaid'>unPaid</span>";}
+         }},
+        { "title": "Total Price",
+            "data": "totalPrice",
+            render: function ( data, type, row ) {
+              return '$'+ data;
+          }}
+    ];
+
+    // Define new table with above columns
+    reservationTable = $("#reservationsTable").DataTable( {
+        "order": [[ 0, "asc" ]],
+        "columns": columns,
+        columnDefs: [
+                    {
+                        targets: 2,
+                        render: DataTable.render.datetime('Do MMM YYYY'),
+                    },
+                    {
+                       targets: 9,
+                        render: function(){
+                        return infoBtn;
+                        },
+                 },
+                ],
+        pageLength: 7,
+        "lengthMenu": [ 5, 10, 15, 20 ],
+        dom: '<"top">ct<"top"lip><"clear">',
+    });
+
+    $("tr td:first-child").addClass("td-roomNum");
+}
+
+function getReservationData(){
+    console.log('inside getReservationsData' );
+    // http:/localhost:9090/api/reservation
+    // json list of reservation
+    $.ajax({
+        url: RESERVATION_API,
+        type: "get",
+        dataType: "json",
+        // success: function(reservations, textStatus, jqXHR){
+        success: function(reservations){
+            if (reservations) {
+                reservationTable.clear();
+                reservationTable.rows.add(reservations);
+                reservationTable.columns.adjust().draw();
+            }
+
+
+           reservations.forEach(item => {
+              //console.log(item);
+              const obj={
+                roomNo: null,
+                firstName: null,
+                lastName: null
+              };
+             obj.roomNo = item.room.roomNumber ;
+             obj.firstName = item.customers[0].firstName ;
+             obj.lastName =  item.customers[0].lastName ;
+
+             customerInfo.push(obj);
+            });
+            //console.log("CUSTOMER INFO:" + customerInfo[0].roomNo);
+        },
+        fail: function (error) {
+            console.log('Error: ' + error);
+        }
+    });
+}
+
+function createReservation(){
+  console.log('create Reservation FUNCTION!');
+
+  var reservationInfoEdit = reservationTable.row($('.selected')).data();
+
+  //Put reservation data from page in Javascript object
+    reservationInfoEdit.startDate = $("#editStartDate").val();
+    reservationInfoEdit.endDate   = $("#editEndDate").val();
+    reservationInfoEdit.babyBed = $("#editBabyBed").val();
+    reservationInfoEdit.price = $("#editPrice").val();
+    reservationInfoEdit.totalPrice = $("#editTotalPrice").val();
+    reservationInfoEdit.roomServicePrice = $("#editServicePrice").val();
+
+     var reservationJson = JSON.stringify(reservationInfoEdit);
+     console.log(reservationJson);
+    // var reservationJson1 = JSON.parse(reservationInfoEdit);
+    // console.log(reservationJson1);
+
+    $.ajax({
+      url: RESERVATION_API,
+      type: "post",
+      contentType:"application/json",
+      datatype: "json",
+      data: reservationJson,
+      // success: function(reservations, textStatus, jqXHR){
+      success: function(response){
+          if (response) {
+             console.log("Success!!!!!!");
+          }
+      },
+      fail: function (error) {
+          console.log('Error: ' + error);
+      }
+  });
+}
+
+// Format Customer Information Table that is inside Reservation Table
+function format(d) {
+  // `d` is the original data object for the row
+  var infoHtml = `<table class="table-info" cellpadding="5" cellspacing="0" style="padding-left: 50px">
+  <tr>
+    <div class="information disabled">
+      <div class="customerInfo-left">
+        <div class="name">
+          <span>Name: </span>
+          <p>${d.customers[0].firstName}</p>
+        </div>
+        <div class="email">
+          <span>Email: </span>
+          <p>${d.customers[0].email}</p>
+        </div>
+        <div class="phone">
+          <span>Phone: </span>
+          <p>${d.customers[0].phone}</p>
+        </div>
+        <div class="documentType">
+          <span>Document: </span>
+          <p>${d.customers[0].typeOfDocument}</p>
+        </div>
+      </div>
+      <div class="customerInfo-right">
+        <div class="guests">
+          <span> Guests: </span>
+          <p>${d.customers.length}</p>
+        </div>
+        <div class="babyBed">
+          <span>Baby Bed: </span>
+          <p>${d.babyBed}</p>
+        </div>
+        <div class="roomPrice">
+          <span>Room Price: $</span>
+          <p>${d.room.price}</p>
+        </div>
+        <div class="servicePrice">
+          <span>Service Price: $</span>
+          <p>${d.roomServicePrice}</p>
+        </div>
+        <div class="detail">
+
+        </div>
+      </div>
+    </div>
+  </tr>
+</table>`;
+
+  return infoHtml;
+}
+
+function deleteReservation(){
+    if (reservationTable.row($('.selected')).data() == undefined) {
+        alert("Select customer first");
+    }else{
+        var reservation = reservationTable.row($('.selected')).data();
+        // http:9090/api/reservations/2
+        console.log(RESERVATION_API + '/' + reservation.id);
+        console.log(reservation);
+
+            $.ajax({
+                url: RESERVATION_API + '/' + reservation.id,
+                contentType: "application/json",
+                type: 'DELETE',
+                dataType: "text",  // get back from frontend
+                // success: function(reservation, textStatus, jqXHR){
+                success: function(message){
+                  console.log(message);
+                  alert("Reservation deleted");
+                  // Refresh table data
+                  getReservationData();
+                },
+                fail: function (error) {
+                  console.log('Error: ' + error);
+                }
+            });
+
+    }
+
+}
+
+//------- CUSTOMERS -------
+// INIT CUSTOMERS Table
+function initCustomersTable() {
+  console.log('inside initCustomersTable' );
+  // Create columns (with titles) for datatable: id, name, address, age
+  var infoBtn='<div><button type="button" class="btn btn-info p-1 m-0" id="infoCustomer">Info</button></div>'
+  columns = [
+    { "title": "Room No",
+    "data": null ,
+    "width": "350px",
+    render: function(data,type,row){
+     // console.log(customerInfo);
+      customerInfo.forEach(item => {
+        if(item.firstName == row.firstName && item.lastName == row.lastName){
+               return " Yess";
+        }
+      });
+      return "255";
+    }
+    },
+      { "title": "ID",
+      "data": "id"
+      },
+      { "title":  "First Name",
+          "data": "firstName"
+      },
+      { "title":  "Last Name",
+          "data": "lastName"
+      },
+      { "title":  "Phone",
+          "data": "phone",
+          "width": "350px"
+      },
+      { "title":  "Email",
+          "data": "email"
+      },
+      { "title":  "Document",
+          "data": "typeOfDocument"
+      }
+  ];
+
+//   {
+//     "id": 1,
+//     "firstName": "Ansley",
+//     "lastName": "Hahn",
+//     "address": "Apt. 785 67609 Hudson Village, Katharinaport, UT 79687",
+//     "email": "providenci.kulas@yahoo.com",
+//     "phone": "525.840.7866",
+//     "typeOfDocument": "Passport"
+// }
+
+  // Define new table with above columns
+  customersTable = $("#customersTable").DataTable( {
+      "order": [[ 1, "asc" ]],
+      "columns": columns,
+      columnDefs: [
+        { targets: [ 4 ], width: '200px' },
+        { targets: '_all', className: 'dt-left' },
+        {
+          targets: 7,
+          render: function(){
+                 return infoBtn
+               },
+        },
+                  ],
+      pageLength: 6,
+      "lengthMenu": [ 5, 10, 15, 20 ],
+      dom: '<"top">ct<"top"lip><"clear">',
+  });
+}
+
+function getCustomersData(){
+  console.log('getCustomersData' );
+  // http:/localhost:9090/api/customers
+  // json list of customers
+  $.ajax({
+      url: CUSTOMERS_API,
+      type: "get",
+      dataType: "json",
+      // success: function(reservations, textStatus, jqXHR){
+      success: function(customers){
+          if (customers) {
+              customersTable.clear();
+              customersTable.rows.add(customers);
+              customersTable.columns.adjust().draw();
+          }
+      },
+      fail: function (error) {
+          console.log('Error: ' + error);
+      }
+  });
+}
+
+function createCustomer(){
+  console.log('create Reservation FUNCTION!');
+
+  var reservationInfoEdit = reservationTable.row($('.selected')).data();
+
+  //Put customer data from page in Javascript object
+
+    reservationInfoEdit.startDate = $("#editStartDate").val();
+    reservationInfoEdit.endDate   = $("#editEndDate").val();
+        //  name :$("#editName").val(),
+        //  guests :$("#editGuests").val(),
+        //  email :$("#editEmail").val(),
+        //  phone :$("#editPhone").val(),
+        //  typeOfDocument :$("#editDocumentType").val(),
+    reservationInfoEdit.babyBed = $("#editBabyBed").val();
+    reservationInfoEdit.price = $("#editPrice").val();
+    reservationInfoEdit.totalPrice = $("#editTotalPrice").val();
+    reservationInfoEdit.roomServicePrice = $("#editServicePrice").val();
+
+    console.log(reservationInfoEdit);
+    $.ajax({
+      url: RESERVATION_API,
+      type: "post",
+      contentType:"application/json",
+      datatype: "json",
+      data: reservationInfoEdit,
+      // success: function(reservations, textStatus, jqXHR){
+      success: function(response){
+          if (response) {
+             console.log("Success!!!!!!");
+          }else{
+            console.log("NOT Success!!!!!!");
+          }
+      },
+      fail: function (error) {
+          console.log('Error: ' + error);
+      }
+  });
+
+  //         {
+  //             "id": 1,
+  //             "firstName": "Ramon",
+  //             "lastName": "Berge",
+  //             "address": "12977 Matt Creek, East Erick, NV 29812-3934",
+  //             "email": "price.shields@gmail.com",
+  //             "phone": "214.181.8129",
+  //             "typeOfDocument": "Passport"
+  //         }
+}
+
+/* Formatting function for row details - modify as you need */
+function formatCustomerPage(d) {
+  // `d` is the original data object for the row
+  return (
+      '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+      '<tr>' +
+      '<td>Address:</td>' +
+      '<td>' +
+      d.address +
+      '</td>' +
+      '</tr>' +
+      '</table>'
+  );
+}
+
+//------- ROOMS -------
+//------- INIT Rooms Table -------
+function initRoomsTable() {
+    console.log('inside initRoomsTable' );
+    // Create columns (with titles) for datatable: id, name, address, age
+  //  var checkedInData1='<p class="checkin-Date">2011-04-25</p><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">'
+   // var checkedInData2='<p class="checkin-Date">2011-04-25</p><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">'
+   var infoBtn='<div><button type="button" class="btn btn-info p-1 m-0" id="infoRoom">Info</button></div>'
+    columns = [
+        { "title":  "ID",
+            "data": "id" },
+        { "title":  "Room No",
+            "data": "roomNumber" },
+        { "title":  "Room Type",
+            "data": "roomType" },
+        { "title":  "Adults",
+            "data": "sizePerson"},
+        { "title":  "Childs",
+            "data": "childrenPlace"},
+        { "title":  "Single Bed",
+            "data": "singleBedAmount"},
+        { "title":  "Double Bed",
+            "data": "doubleBedAmount"},
+        { "title":  "isClean",
+             "data": "cleanRoom",
+             render: function(data,type,row){
+                      if(data === true){
+                       return "<span class='yes'>YES</span>";
+                       } else { return "<span class='no'>NO</span>";}
+         }},
+        { "title":  "isActive",
+             "data": "roomActive",
+             render: function(data,type,row){
+                     if(data === true){
+                      return "<span class='yes'>YES</span>";
+                     } else {return "<span class='no'>NO</span>";}
+          }},
+        { "title":  "Prise",
+            "data": "price"},
+        { "title":  "Disabled",
+            "data": "disabled",
+             render: function(data,type,row){
+                     if(data === true){
+                      return "<span class='yes'>YES</span>";
+                     } else {return "<span class='no'>NO</span>"; }
+          }},
+        { "title": "Smoke",
+            "data": "smoke",
+            render: function(data,type,row){
+                    if(data === true){
+                     return "<span class='yes'>YES</span>";
+                    }else{return "<span class='no'>NO</span>"; }
+          }},
+    ];
+
+//            "roomType": "Double",
+//            "sizePerson": 4,
+//            "roomNumber": 2,
+//            "singleBedAmount": 2,
+//            "doubleBedAmount": 1,
+//            "cleanRoom": true,
+//            "roomActive": true,
+//            "price": 22.0,
+//            "childrenPlace": 2,
+//            "disabled": true,
+//            "smoke": true,
+//            "id": 215
+
+    // Define new table with above columns
+    roomsTable = $("#roomsTable").DataTable( {
+        "order": [[ 0, "asc" ]],
+        "columns": columns,
+        columnDefs: [
+          { targets: '_all', className: 'dt-left' },
+          {
+            targets: 12,
+            render: function(){
+                   return infoBtn
+                 },
+          },
+                    ],
+        pageLength: 7,
+        responsive: true,
+        "lengthMenu": [ 5, 10, 15, 20 ],
+        dom: '<"top">ct<"top"lip><"clear">',
+    });
+}
+
+function getRoomsData(){
+    console.log('inside getRoomsData' );
+    // http:/localhost:9090/api/rooms
+    // json list of rooms
+    $.ajax({
+        url: ROOMS_API,
+        type: "get",
+        dataType: "json",
+        // success: function(reservations, textStatus, jqXHR){
+        success: function(rooms){
+            console.log('Data: ' + rooms[0].id );
+            if (rooms) {
+                roomsTable.clear();
+                roomsTable.rows.add(rooms);
+                roomsTable.columns.adjust().draw();
+            }
+        },
+        fail: function (error) {
+            console.log('Error: ' + error);
+        }
+    });
+}
+
+function createRoom(){
+ // console.log('create Room FUNCTION!');
+
+  var roomInfoEdit = roomsTable.row($('.selected')).data();
+
+  //Put room data from page in Javascript object
+
+  roomInfoEdit.id=0;
+  roomInfoEdit.roomType = $("#selectRoom :selected").text();
+  roomInfoEdit.roomNumber = $("#editRoomNo").val();
+  roomInfoEdit.sizePerson = $("#editRoomGuests").val();
+  roomInfoEdit.childrenPlace = $("#editBaby").val();
+  roomInfoEdit.price = $("#editRoomPrice").val();
+  roomInfoEdit.singleBedAmount = $("#editSingleBed").val();
+  roomInfoEdit.doubleBedAmount = $("#editDoubleBed").val();
+
+  var isClean= $("#isClean  input[name='isCleanRadioName']:checked").val();
+  if(isClean == "yes"){
+    roomInfoEdit.cleanRoom = true;
+  }else{
+    roomInfoEdit.cleanRoom = false;
+  }
+
+  var isActive= $("#isActive  input[name='isActiveRadioName']:checked").val();
+  if(isActive == "yes"){
+    roomInfoEdit.roomActive = true;
+  }else{
+    roomInfoEdit.roomActive = false;
+  }
+
+  var isDisabled= $("#isDisabled  input[name='isDisabledRadioName']:checked").val();
+  if(isDisabled == "yes"){
+    roomInfoEdit.disabled = true;
+  }else{
+    roomInfoEdit.disabled = false;
+  }
+
+  var isSmoke= $("#isSmoke  input[name='isSmokingRadioName']:checked").val();
+  if(isSmoke == "yes"){
+    roomInfoEdit.smoke = true;
+  }else{
+    roomInfoEdit.smoke = false;
+  }
+
+  var roomJson=JSON.stringify(roomInfoEdit);
+    console.log(roomInfoEdit);
+    $.ajax({
+      url: ROOMS_API,
+      type: "post",
+      contentType:"application/json",
+      datatype: "json",
+      data: roomJson,
+      // success: function(reservations, textStatus, jqXHR){
+      success: function(response){
+          if (response) {
+             console.log("Success!!!!!!");
+          }else{
+            console.log("NOT Success!!!!!!");
+          }
+      },
+      fail: function (error) {
+          console.log('Error: ' + error);
+      }
+  });
+}
+
+function formatUserPage(d) {
+  // `d` is the original data object for the row
+  return (
+      '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+      '<tr>' +
+      '<td>Address:</td>' +
+      '<td>' +
+      d.address +
+      '</td>' +
+      '</tr>' +
+      '</table>'
+  );
+}
+
+//------- USERS -------
+//------- INIT Users Table -------
+function initUsersTable() {
+  console.log('inside initUsersTable' );
+
+  var infoBtn='<div><button type="button" class="btn btn-info p-1 m-0" id="infoUser">Info</button></div>'
+  columns = [
+      { "title": "ID",
+          "data": "id"
+      },
+      { "title":  "First Name",
+          "data": "firstName"
+      },
+      { "title":  "Last Name",
+           "data": "lastName"
+      },
+      { "title":  "Password",
+           "data": "password",
+      },
+      { "title":  "Email",
+           "data": "emailAddress"
+      },
+      { "title":  "UserName",
+           "data": "username"
+      },
+      { "title":  "BirthDate",
+           "data": "birthDate",
+           render: function ( data, type, row ) {
+            var dateSplit = data.split('-');
+            return (dateSplit[1] +'/'+ dateSplit[2] +'/'+ dateSplit[0]);
+        }
+      }
+  ];
+
+//   {
+//     "id": 21,
+//     "firstName": "Halid",
+//     "lastName": "Karabiyik",
+//     "emailAddress": "user@gmail.com",
+//     "password": "Konya42",
+//     "address": "hoptillepad",
+//     "birthDate": "20-08-1996",
+//     "username": "Adminuser",
+//     "role": "AD"
+// }
+
+  // Define new table with above columns
+  usersTable = $("#usersTable").DataTable( {
+      "order": [[ 0, "asc" ]],
+      "columns": columns,
+      columnDefs: [
+                  {
+                     targets: 7,
+                      render: function(){
+                      return infoBtn;
+                      },
+               },
+              ],
+      pageLength: 7,
+      "lengthMenu": [ 5, 10, 15, 20 ],
+      dom: '<"top">ct<"top"lip><"clear">',
+  });
+}
+
+function getUsersData(){
+  console.log('inside getUsersData' );
+  // http:/localhost:9090/api/users
+  // json list of users
+  $.ajax({
+      url: USERS_API,
+      type: "get",
+      dataType: "json",
+      success: function(users){
+          if (users) {
+              usersTable.clear();
+              usersTable.rows.add(users);
+              usersTable.columns.adjust().draw();
+          }
+      },
+      fail: function (error) {
+          console.log('Error: ' + error);
+      }
+  });
+}
+
+//------ Date  -----
+$( function() {
+  var dateFormat = "mm/dd/yy",
+    from = $( "#editStartDate" )
+      .datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 1
+      })
+      .on( "change", function() {
+        to.datepicker( "option", "minDate", getDate( this ) );
+      }),
+    to = $( "#editEndDate" ).datepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 1
+    })
+    .on( "change", function() {
+      from.datepicker( "option", "maxDate", getDate( this ) );
+    });
+
+  function getDate( element ) {
+    var date;
+    try {
+      date = $.datepicker.parseDate( dateFormat, element.value );
+    } catch( error ) {
+      date = null;
+    }
+
+    return date;
+  }
+} );
