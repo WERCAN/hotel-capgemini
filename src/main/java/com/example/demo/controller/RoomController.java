@@ -20,6 +20,7 @@ public class RoomController {
     public RoomController (RoomService roomService) {this.roomService=roomService;}
 
     // http://localhost:9090/api/rooms
+    @CrossOrigin
     @GetMapping(value = "/rooms", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<Room>> getAllRooms(){
 
@@ -31,6 +32,7 @@ public class RoomController {
     }
 
     // http://localhost:9090/api/rooms
+    @CrossOrigin
     @PostMapping(value = "/rooms", consumes= MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Room> createRoom( @RequestBody Room room){
 

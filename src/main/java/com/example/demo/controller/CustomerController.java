@@ -24,6 +24,7 @@ public class CustomerController {
     }
 
     // http://localhost:9090/api/customer
+    @CrossOrigin
     @GetMapping(value = "/customer", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<Customer>> getAllCustomers(){
 
@@ -35,6 +36,7 @@ public class CustomerController {
     }
 
     // http://9090/api/customer
+    @CrossOrigin
     @PostMapping(value = "/customer", consumes= MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Customer> createCustomer( @RequestBody Customer customer){
 

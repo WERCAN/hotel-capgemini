@@ -20,6 +20,7 @@ public class UserController {
     public UserController(UserService userService){this.userService=userService;}
 
     // http://localhost:9090/api/users
+    @CrossOrigin
     @GetMapping(value = "/users", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<User>> getAllUsers(){
 
@@ -31,6 +32,7 @@ public class UserController {
     }
 
     // http://9090/api/users
+    @CrossOrigin
     @PostMapping(value = "/users", consumes= MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createUser( @RequestBody User user){
 
@@ -42,6 +44,7 @@ public class UserController {
 
     }
 
+    @CrossOrigin
     @DeleteMapping(value = "/users/{userId}", produces= MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> deletebyUserId( @PathVariable Long userId){
         System.out.println("Inside deleteUserById");

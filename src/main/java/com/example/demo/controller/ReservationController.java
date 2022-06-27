@@ -17,10 +17,12 @@ public class ReservationController {
     public ReservationController(){
 
     }
+
     @Autowired
     public ReservationController (ReservationService reservationService){this.reservationService=reservationService;}
 
     // http://9090/api/reservations
+    @CrossOrigin
     @GetMapping(value = "/reservations", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<Reservation>> getAllReservations(){
         System.out.println("Inside getAllReservations");
@@ -29,7 +31,9 @@ public class ReservationController {
     }
 
     // http://9090/api/reservations
-    @PostMapping(value = "/reservations", consumes= MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    @PostMapping(value = "/reservations", consumes= MediaType.APPLICATION_JSON_VALUE,
+            produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Reservation> createReservation( @RequestBody Reservation reservation){
         System.out.println("Inside createReservation");
         Reservation reservationCreated = reservationService.createReservation(reservation);
@@ -37,6 +41,7 @@ public class ReservationController {
     }
 
     // http://9090/api/reservations/1
+    @CrossOrigin
     @DeleteMapping(value = "/reservations/{reservationId}", produces= MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> deleteReservationById( @PathVariable Long reservationId){
         System.out.println("Inside deleteReservationById");
