@@ -103,7 +103,7 @@ public class DemoApplication implements CommandLineRunner {
 			List<Customer> customerList = new ArrayList<>();
 			customerList.add(customers.get(i++));
 			customerList.add(customers.get(i++));
-			reservations.add(new Reservation(0,stDate,enDate,true,true,Util.getFakePrice(),Util.getFakePrice(),0.0,6,date,rooms.get(n),customerList));
+			reservations.add(new Reservation(0,stDate,enDate,true,true,true,Util.getFakePrice(),Util.getFakePrice(),0.0,6,date,rooms.get(n),customerList));
 
 		}
 

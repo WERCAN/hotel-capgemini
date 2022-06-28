@@ -28,13 +28,14 @@ public class Reservation {
     private boolean checkedIn;
     private boolean checkedOut;
 
+    private boolean payment;
     private double price;
     private double totalPrice;
     private double roomServicePrice;
     private int babyBed;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "MM/dd/yyyy")
-    private LocalDate nowDate;
+    private LocalDate nowDate = LocalDate.now();
     @ManyToOne
     @JoinTable(name="reservation_room")
     private Room room;
@@ -47,12 +48,13 @@ public class Reservation {
 
     }
 
-    public Reservation(long id, Date startDate, Date endDate, boolean checkedIn, boolean checkedOut, double price, double totalPrice, double roomServicePrice, int babyBed, LocalDate nowDate, Room room, List<Customer> customers) {
+    public Reservation(long id, Date startDate, Date endDate, boolean checkedIn, boolean checkedOut, boolean payment, double price, double totalPrice, double roomServicePrice, int babyBed, LocalDate nowDate, Room room, List<Customer> customers) {
         Id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.checkedIn = checkedIn;
         this.checkedOut = checkedOut;
+        this.payment=payment;
         this.price = price;
         this.totalPrice = totalPrice;
         this.roomServicePrice = roomServicePrice;
