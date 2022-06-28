@@ -6,6 +6,9 @@ import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 public class RoomServiceImpl implements RoomService{
 
@@ -22,7 +25,11 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public Iterable<Room> findAll() {
         Iterable<Room> rooms = roomRepository.findAll();
-        return rooms;
+        List<Room> roomList = new ArrayList<>();
+        rooms.forEach(roomList::add);
+
+        roomList.removeIf(room -> !room.isRoomActive());
+        return roomList;
     }
 
     @Override
