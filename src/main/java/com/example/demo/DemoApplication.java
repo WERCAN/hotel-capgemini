@@ -24,7 +24,7 @@ public class DemoApplication implements CommandLineRunner {
 
 	LocalDate date = LocalDate.now();
 
-//	String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+	String dateFormat = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 //	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 //	@JsonFormat(pattern = "MM/dd/yyyy")
 //	private LocalDate startDate;
@@ -76,19 +76,34 @@ public class DemoApplication implements CommandLineRunner {
 
 
 		List<Room> rooms = new ArrayList<>();
-		rooms.add(new Room("Double",4,2,2,1,true,true,22,2,true,true));
+		rooms.add(new Room("Double",4,2,2,1,true,true,22,2,false,true));
+		rooms.add(new Room("Penthouse",2,1,2,0,true,true,2,2,false,true));
+		rooms.add(new Room("Double",2,1,2,0,true,true,2,2,false,true));
+		rooms.add(new Room("Double",2,1,2,0,true,true,2,2,false,true));
+		rooms.add(new Room("Double",2,1,2,0,true,true,2,2,false,true));
+		rooms.add(new Room("Double",2,1,2,0,true,true,2,2,false,true));
+		rooms.add(new Room("Double",2,1,2,0,true,true,2,2,false,true));
+
 		roomRepository.saveAll(rooms);
+
+
 
 		List<Reservation> reservations = new ArrayList<>();
 
+		Date stDate=Util.getFakeDate();
+		Date enDate=Util.getFakeDate();
+
+		System.out.println(stDate);
+		System.out.println(enDate);
+
 		int i=0;
-		for(int n=0; n<10; n++){
+		for(int n=0; n<2; n++){
 			double price = Util.getFakePrice();
 
 			List<Customer> customerList = new ArrayList<>();
 			customerList.add(customers.get(i++));
 			customerList.add(customers.get(i++));
-			reservations.add(new Reservation(0,Util.getFakeDate(),Util.getFakeDate(),true,true,Util.getFakePrice(),Util.getFakePrice(),0.0,6,date,rooms.get(0),customerList));
+			reservations.add(new Reservation(0,stDate,enDate,true,true,Util.getFakePrice(),Util.getFakePrice(),0.0,6,date,rooms.get(n),customerList));
 
 		}
 

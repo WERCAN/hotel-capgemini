@@ -34,8 +34,11 @@ public class CustomerServiceImpl implements CustomerService{
         return customerCreated;
     }
 
-
-
+    @Override
+    public boolean deleteCustomer(long customerId) {
+        customerRepository.deleteById(customerId);
+        return true;
+    }
 
 
 }

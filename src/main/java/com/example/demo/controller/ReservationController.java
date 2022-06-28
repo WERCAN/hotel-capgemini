@@ -1,13 +1,17 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Customer;
+import com.example.demo.model.Filter;
 import com.example.demo.model.Reservation;
+import com.example.demo.model.Room;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api")
@@ -28,6 +32,13 @@ public class ReservationController {
         System.out.println("Inside getAllReservations");
         Iterable<Reservation> reservations = reservationService.findAll();
         return ResponseEntity.ok( reservations);
+    }
+
+    @PostMapping(value = "/reservations/availableRooms", consumes= MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Iterable<Room>> getAvailableRooms(@RequestBody Filter filter){
+        System.out.println("Inside getAvailableRooms");
+        Iterable<Room> availableRooms = reservationService.getAvailableRooms(filter);
+        return ResponseEntity.ok(availableRooms);
     }
 
     // http://9090/api/reservations

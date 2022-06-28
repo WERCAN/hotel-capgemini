@@ -48,4 +48,12 @@ public class CustomerController {
 
     }
 
+
+    @DeleteMapping(value = "/customer/{customerId}", produces= MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<String> deleteCustomerById( @PathVariable Long customerId){
+        System.out.println("Inside deleteCustomerById");
+        customerService.deleteCustomer(customerId);
+        return ResponseEntity.ok( "Customer with id: " + customerId + " is deleted");
+    }
+
 }
