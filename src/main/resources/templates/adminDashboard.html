@@ -435,13 +435,13 @@
                                                 <div class="form-group mt-2" id="isCleanNewRoom">
                                                     <span>isClean: </span>
                                                     <div class="form-check form-check-inline ms-2">
-                                                        <input class="form-check-input" type="radio" name="isCleanNewRoomName" id="newRoomIsCleanIdYes">
+                                                        <input class="form-check-input" type="radio" name="isCleanNewRoomName" value="yes" id="newRoomIsCleanIdYes">
                                                         <label class="form-check-label" for="newRoomIsCleanIdYes">
                                                             Yes
                                                         </label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="isCleanNewRoomName" id="newRoomIsCleanIdNo" checked>
+                                                        <input class="form-check-input" type="radio" name="isCleanNewRoomName" value="no" id="newRoomIsCleanIdNo" checked>
                                                         <label class="form-check-label" for="newRoomIsCleanIdNo">
                                                             No
                                                         </label>
@@ -450,13 +450,13 @@
                                                 <div class="form-group isDisabledNewRoom mt-2" id="isDisabledNewRoom">
                                                     <span>Disabled: </span>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="isDisabledNewRoomName" id="newRoomIsDisabledIdYes">
+                                                        <input class="form-check-input" type="radio" name="isDisabledNewRoomName" value="yes" id="newRoomIsDisabledIdYes">
                                                         <label class="form-check-label" for="newRoomIsDisabledIdYes">
                                                             Yes
                                                         </label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="isDisabledNewRoomName" id="newRoomIsDisabledIdNo" checked>
+                                                        <input class="form-check-input" type="radio" name="isDisabledNewRoomName" value="no" id="newRoomIsDisabledIdNo" checked>
                                                         <label class="form-check-label" for="newRoomIsDisabledIdNo">
                                                             No
                                                         </label>
@@ -465,13 +465,13 @@
                                                 <div class="form-group isSmokingNewRoom mt-2" id="isSmokeNewRoom">
                                                     <span>Smoking: </span>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="isSmokedNewRoomName" id="newRoomIsSmokeIdYes">
+                                                        <input class="form-check-input" type="radio" name="isSmokedNewRoomName" value="yes" id="newRoomIsSmokeIdYes">
                                                         <label class="form-check-label" for="newRoomIsSmokeIdYes">
                                                             Yes
                                                         </label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="isSmokedNewRoomName" id="newRoomIsSmokeIdNo" checked>
+                                                        <input class="form-check-input" type="radio" name="isSmokedNewRoomName" value="no" id="newRoomIsSmokeIdNo">
                                                         <label class="form-check-label" for="newRoomIsSmokeIdNo">
                                                             No
                                                         </label>
@@ -480,7 +480,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group mt-2">
-                                            <button id="addNewRoomButton" button type="submit" class="btn btn-primary">
+                                            <button id="addNewRoomButton" type="submit" class="btn btn-primary">
                                                 Save
                                             </button>
                                             <button id="roomCloseButton" type="button" class="btn btn-default bg-secondary bg-opacity-25" data-bs-dismiss="modal">

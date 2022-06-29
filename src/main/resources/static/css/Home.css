@@ -473,15 +473,15 @@ table thead td {
 .sel2,
 .range {
   color: #fff;
-  background: rgb(116, 0, 184, 0.8);
+  background: blue;
   text-decoration: underline !important;
 }
 table td.range i {
-  background: lighten(#7400b8, 10%);
+  background: blue;
   text-decoration: underline !important;
 }
 table td.sel1 i {
-  background:#7400b8;
+  background:blue;
   color: white;
   text-decoration: underline !important;
 }
@@ -527,7 +527,7 @@ p.sub {
 p.sub i {
   font-size: 1.2rem;
   text-transform: uppercase;
-  color: #7400b8;
+  color: blue;
   font-weight: 700;
   line-height: 140%;
 }
@@ -538,7 +538,7 @@ p.sub i {
   height: 60px;
   line-height: 60px;
   font-size: 18px;
-  background: #7400b8;
+  background: blue;
   color: #fff;
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer */
@@ -624,7 +624,7 @@ p.sub i {
 }
 
 #calHelp .active i {
-  background:#7400b8;
+  background:blue;
 }
 #calHelp .disabled {
   opacity: 0.3;
