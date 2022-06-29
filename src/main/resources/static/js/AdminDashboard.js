@@ -798,7 +798,7 @@ function initRoomsTable() {
             "data": "roomType" },
         { "title":  "Adults",
             "data": "sizePerson"},
-        { "title":  "Childs",
+        { "title":  "Children",
             "data": "childrenPlace"},
         { "title":  "Single Bed",
             "data": "singleBedAmount"},
@@ -811,14 +811,7 @@ function initRoomsTable() {
                        return "<span class='yes'>YES</span>";
                        } else { return "<span class='no'>NO</span>";}
          }},
-        { "title":  "isActive",
-             "data": "roomActive",
-             render: function(data,type,row){
-                     if(data === true){
-                      return "<span class='yes'>YES</span>";
-                     } else {return "<span class='no'>NO</span>";}
-          }},
-        { "title":  "Prise",
+        { "title":  "Price",
             "data": "price"},
         { "title":  "Disabled",
             "data": "disabled",
@@ -856,7 +849,7 @@ function initRoomsTable() {
         columnDefs: [
           { targets: '_all', className: 'dt-left' },
           {
-            targets: 12,
+            targets: 11,
             render: function(){
                    return infoBtn
                  },
