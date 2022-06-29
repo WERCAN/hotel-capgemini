@@ -1,6 +1,6 @@
 var RESERVATION_API = "http://localhost:9090/api/reservations" ;
 var CUSTOMERS_API="http://localhost:9090/api/customer";
-// var HOME_ROUTE = "http://localhost:9090/home" ;
+var HOME_ROUTE = "http://localhost:9090/home" ;
 var ROOMS_API = "http://localhost:9090/api/rooms";
 var USERS_API="http://localhost:9090/api/users";
 
@@ -26,8 +26,8 @@ function init() {
    initUsersTable();
    getUsersData();
 
-  // Add event listener for opening and closing details
-  $("#reservationsTable tbody").on("click", "#information", function () {
+     // Add event listener for opening and closing details
+     $("#reservationsTable tbody").on("click", "#information", function () {
     var tr = $(this).closest("tr");
     var row = reservationTable.row(tr);
 
@@ -42,7 +42,7 @@ function init() {
     }
   });
 
-  $("#reservationsTable tbody, #customersTable tbody, #roomsTable tbody, #usersTable tbody").on("click", "tr", function () {
+     $("#reservationsTable tbody, #customersTable tbody, #roomsTable tbody, #usersTable tbody").on("click", "tr", function () {
     console.log("Clicking on row");
     if ($(this).hasClass("selected")) {
       $(this).removeClass("selected");
@@ -58,19 +58,17 @@ function init() {
     }
   });
 
-   //******* Edit Reservation ********
-  $("#editReservationButton").click( function () {
+     //******* Edit Reservation ********
+     $("#editReservationButton").click( function () {
     console.log("Inside click of editReservationButton");
     // Get the data from selected row and fill fields in modal
     if (reservationTable.row($('.selected')).data() == undefined) {
         alert("Select reservation first");
     }else{
         var reservationInfoEdit = reservationTable.row($('.selected')).data();
-        const startDate = new Date(reservationInfoEdit.startDate);
-        const endDate = new Date(reservationInfoEdit.endDate);
 
-         $("#editStartDate").val(startDate.toISOString().substring(0, 10));
-         $("#editEndDate").val(endDate.toISOString().substring(0, 10));
+         $("#editStartDate").val(reservationInfoEdit.startDate);
+         $("#editEndDate").val(reservationInfoEdit.endDate);
          $("#editBabyBed").val(reservationInfoEdit.babyBed);
          $("#editPrice").val(reservationInfoEdit.price);
          $("#editServicePrice").val(reservationInfoEdit.roomServicePrice);
@@ -80,15 +78,15 @@ function init() {
     }
     });
 
-  $('#editReservationModal').on('submit', function(e){
+     $('#editReservationModal').on('submit', function(e){
     e.preventDefault();
     console.log("Submitting Edit Customer Modal Form!");
     createReservation();
-    $('#editCustomerModal').modal('hide');
+    $('#editReservationModal').modal('hide');
   });
 
-    //---Delete reservation
-    $("#deleteReservationButton").click(function () {
+     //---Delete reservation
+     $("#deleteReservationButton").click(function () {
       console.log("Inside click of deleteReservationButton");
       if (reservationTable.row($('.selected')).data() == undefined) {
         alert("Select customer first");
@@ -97,14 +95,14 @@ function init() {
     }
     });
 
-    // Delete Button in modal
-    $("#deleteReservationConfirmButton").click(function () {
+     // Delete Button in modal
+     $("#deleteReservationConfirmButton").click(function () {
       console.log("Inside click of deleteCustomerButton");
       deleteReservation();
       $("#reservationDeleteModal").modal("hide");
     });
 
-    // Datatable Search Filtering
+     // Datatable Search Filtering
      $("#filterReservations").keyup(function () {
         reservationTable.search(this.value).draw();
       });
@@ -115,8 +113,8 @@ function init() {
         customersTable.search(this.value).draw();
       });
 
-   //******* Edit Customer ********
-  $("#editReCustomerButton").click( function () {
+     //******* Edit Customer ********
+     $("#editReCustomerButton").click( function () {
     console.log("Inside click of editReservationButton");
     // Get the data from selected row and fill fields in modal
     if (reservationTable.row($('.selected')).data() == undefined) {
@@ -124,32 +122,33 @@ function init() {
     }else{
         var customerInfoEdit = reservationTable.row($('.selected')).data();
 
-         $("#editName").val(customerInfoEdit.customers[0].firstName);
-         $("#editGuests").val(customerInfoEdit.customers.length);
+         $("#editReFirstName").val(customerInfoEdit.customers[0].firstName);
+         $("#editReLastName").val(customerInfoEdit.customers[0].lastName);
          $("#editEmail").val(customerInfoEdit.customers[0].email);
          $("#editPhone").val(customerInfoEdit.customers[0].phone);
          $("#editDocumentType").val(customerInfoEdit.customers[0].typeOfDocument);
+         $("#editReAddress").val(customerInfoEdit.customers[0].address);
 
          $('#editReCustomerModal').modal('show');
     }
     });
 
-  $('#editReCustomerModal').on('submit', function(e){
+     $('#editReCustomerModal').on('submit', function(e){
   e.preventDefault();
     console.log("Submitting Edit Customer Modal Form!");
-    createCustomer();
+    updateCustomerInfo();
     $('#editReCustomerModal').modal('hide');
   });
 
 
-  //******* Edit Room ********
-  $("#editRoomButton").click( function (e) {
-    e.preventDefault();
-    console.log("Inside click of editRoomButton");
-    // Get the data from selected row and fill fields in modal
-    if (roomsTable.row($('.selected')).data() == undefined) {
-        alert("Select room first!");
-    }else{
+     //******* Edit Room ********
+     $("#editRoomButton").click( function () {
+
+        console.log("Inside click of editRoomButton");
+        // Get the data from selected row and fill fields in modal
+        if (roomsTable.row($('.selected')).data() == undefined) {
+            alert("Select room first!");
+        }else{
         var roomInfoEdit = roomsTable.row($('.selected')).data();
         var selectType=roomInfoEdit.roomType;
         var indx;
@@ -204,15 +203,57 @@ function init() {
     }
     });
 
-  $('#editRoomModal').on('submit', function(e){
-    e.preventDefault();
-    console.log("Edit Room Modal Form submitted!");
-    createRoom();
-    $('#editCustomerModal').modal('hide');
+     $('#editRoomModal').on('submit', function(e){
+        e.preventDefault();
+        console.log("Edit Room Modal Form submitted!");
+        updateRoom();
+        $('#editRoomModal').modal('hide');
+     });
+
+     $('#addRoomModal').on('submit', function(e){
+         e.preventDefault();
+         console.log("ADD Room Modal Form submitted!");
+         createRoom();
+         $('#addRoomModal').modal('hide');
+     });
+
+     $("#deleteRoomButton").click(function () {
+    console.log("Inside click of deleteRoomButton");
+    if (roomsTable.row($('.selected')).data() == undefined) {
+      alert("Select room first");
+  }else{
+
+    var roomInfoActivateEdit = roomsTable.row($('.selected')).data();
+    if(roomInfoActivateEdit.roomActive == true){
+      roomInfoActivateEdit.roomActive = false;
+    }
+    console.log(roomInfoActivateEdit);
+    var roomJson=JSON.stringify(roomInfoActivateEdit);
+    console.log(roomInfoActivateEdit);
+    $.ajax({
+      url: ROOMS_API,
+      type: "post",
+      contentType:"application/json",
+      datatype: "json",
+      data: roomJson,
+      // success: function(reservations, textStatus, jqXHR){
+      success: function(response){
+          if (response) {
+             console.log("Success!!!!!!");
+             getRoomsData();
+          }else{
+            console.log("NOT Success!!!!!!");
+          }
+      },
+      fail: function (error) {
+          console.log('Error: ' + error);
+      }
+  });
+  }
   });
 
-    // Add event listener for opening and closing details
-    $('#customersTable tbody').on('click', '#infoCustomer', function () {
+     // Add event listener for opening and closing details
+     $('#customersTable tbody').on('click', '#infoCustomer', function () {
       var tr = $(this).closest('tr');
       var row = customersTable.row(tr);
 
@@ -227,8 +268,66 @@ function init() {
       }
   });
 
+//-----------------
+//----  User ------
+//-----------------
 
-  $('#usersTable tbody').on('click', '#infoUser', function () {
+     //Create User
+     $('#addUserModal').on('submit', function(e){
+    e.preventDefault();
+    console.log("Submitting Add New User!");
+    createUser();
+    $('#addUserModal').modal('hide');
+    });
+
+     //Update User
+     $("#editUserButton").click( function (e) {
+        e.preventDefault();
+        console.log("Inside click of editUserButton");
+        // Get the data from selected row and fill fields in modal
+        if (usersTable.row($('.selected')).data() == undefined) {
+            alert("Select user first");
+        }else{
+            var userInfoEdit = usersTable.row($('.selected')).data();
+            var selectRole=userInfoEdit.role;
+            var indexRole;
+            switch (selectRole) {
+              case "AD":
+                indexRole = 1;
+                break;
+              case "GM":
+                indexRole = 2;
+                break;
+              case "RE":
+                indexRole = 3;
+                break;
+              case "RC":
+                indexRole = 4;
+                break;
+            }
+
+             $("#editUserFirstName").val(userInfoEdit.firstName);
+             $("#editUserLastName").val(userInfoEdit.lastName);
+             $("#editUserEmail").val(userInfoEdit.emailAddress);
+             $("#editUserAddress").val(userInfoEdit.address);
+             $("#editUserPassword").val(userInfoEdit.password);
+             $("#editUserBirthdate").val(userInfoEdit.birthDate);
+             $("#editUserUsername").val(userInfoEdit.username);
+             document.getElementById("selectUserRole").selectedIndex=indexRole;
+
+             $('#editUserModal').modal('show');
+        }
+        });
+
+     $('#editUserModal').on('submit', function(e){
+        e.preventDefault();
+        console.log("Submitting Edit USER Modal Form!");
+        updateUserInfo();
+        $('#editCustomerModal').modal('hide');
+      });
+
+     //User Info Show
+     $('#usersTable tbody').on('click', '#infoUser', function () {
     var tr = $(this).closest('tr');
     var row = usersTable.row(tr);
 
@@ -243,6 +342,28 @@ function init() {
     }
 });
 
+     //---Delete User
+     $("#deleteUserButton").click(function () {
+         console.log("Inside click of deleteReservationButton");
+         if (usersTable.row($('.selected')).data() == undefined) {
+           alert("Select User first");
+       }else{
+           $('#userDeleteModal').modal('show');
+       }
+       });
+
+       // Delete User Confirmation
+     $("#deleteUserConfirmButton").click(function () {
+        console.log("Inside click of deleteUserButton");
+        deleteUser();
+        $("#userDeleteModal").modal("hide");
+      });
+
+      //-----------------
+      //--- LOG OUT -----
+     $("#logoutConfirmButton").click(function(){
+          window.location.href = HOME_ROUTE;
+     });
 }
 
 //------- RESERVATIONS -------
@@ -250,8 +371,9 @@ function init() {
 function initReservationTable() {
     console.log('inside initReservationTable' );
     // Create columns (with titles) for datatable: id, name, address, age
-    var checkedIn='<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">'
-    var checkedOut='<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">'
+     var checkTrue=`<i class="fa-solid fa-check checkTrueIcon"></i>`;
+     var checkFalse=`<i class="fa-solid fa-check checkFalseIcon"></i>`;
+
     var infoBtn='<div><button type="button" class="btn btn-info p-1 m-0" id="information">Info</button></div>'
     columns = [
         { "title": "ID",
@@ -265,16 +387,22 @@ function initReservationTable() {
             return (date.getMonth()+1)+'/' + date.getDate() + '/'+ date.getFullYear();
             }
         },
-        { "title":  "Checked -in",
-            "data": "startDate",
+        { "title": "Checked -in",
+          "data": "startDate",
           render: function(data, type,row){
-            return data + checkedIn;
-          } },
+              if (row.checkedIn == true) {
+                 return data + checkTrue;
+              }else{return data + checkFalse;
+              }
+        } },
         { "title":  "Checked-out",
-            "data": "endDate",
-            render: function(data, type,row){
-              return data + checkedIn;
-            } },
+          "data": "endDate",
+          render: function(data, type,row){
+              if (row.checkedOut == true) {
+                 return data + checkTrue;
+              }else{return data + checkFalse;
+              }
+        } },
         { "title": "Name",
             "data": "customers.0.firstName"},
         { "title": "Room Type",
@@ -368,6 +496,20 @@ function createReservation(){
     reservationInfoEdit.totalPrice = $("#editTotalPrice").val();
     reservationInfoEdit.roomServicePrice = $("#editServicePrice").val();
 
+    var checkedIn= $("#checkedIn  input[name='checkedInRadioName']:checked").val();
+            if(checkedIn == "yes"){
+              reservationInfoEdit.checkedIn = true;
+            }else{
+              reservationInfoEdit.checkedIn = false;
+            }
+
+        var checkedOut= $("#checkedOut  input[name='checkedInRadioName']:checked").val();
+            if(checkedOut == "yes"){
+              reservationInfoEdit.checkedOut = true;
+            }else{
+              reservationInfoEdit.checkedOut = false;
+            }
+
      var reservationJson = JSON.stringify(reservationInfoEdit);
      console.log(reservationJson);
     // var reservationJson1 = JSON.parse(reservationInfoEdit);
@@ -383,12 +525,46 @@ function createReservation(){
       success: function(response){
           if (response) {
              console.log("Success!!!!!!");
+           getReservationData();
           }
       },
       fail: function (error) {
           console.log('Error: ' + error);
       }
   });
+}
+
+function updateCustomerInfo(){
+  console.log("Updating Customer Info");
+  var customerInfoEdit = reservationTable.row($('.selected')).data().customers[0];
+//console.log('CUSTOMER INFO : ', customerInfoEdit);
+  customerInfoEdit.firstName=$("#editReFirstName").val();
+  customerInfoEdit.lastName=$("#editReLastName").val();
+  customerInfoEdit.email= $("#editEmail").val();
+  customerInfoEdit.phone=$("#editPhone").val();
+  customerInfoEdit.typeOfDocument= $("#editDocumentType").val();
+  customerInfoEdit.address=$("#editReAddress").val();
+
+  var updatedJson = JSON.stringify(customerInfoEdit);
+
+  $.ajax({
+    url: CUSTOMERS_API,
+    type: "post",
+    contentType:"application/json",
+    datatype: "json",
+    data: updatedJson,
+    // success: function(reservations, textStatus, jqXHR){
+    success: function(response){
+        if (response) {
+           console.log("Customer HAS BEEN CHANGED!!!!!!");
+
+           getReservationData();
+        }
+    },
+    fail: function (error) {
+        console.log('Error: ' + error);
+    }
+});
 }
 
 // Format Customer Information Table that is inside Reservation Table
@@ -480,19 +656,6 @@ function initCustomersTable() {
   // Create columns (with titles) for datatable: id, name, address, age
   var infoBtn='<div><button type="button" class="btn btn-info p-1 m-0" id="infoCustomer">Info</button></div>'
   columns = [
-    { "title": "Room No",
-    "data": null ,
-    "width": "350px",
-    render: function(data,type,row){
-     // console.log(customerInfo);
-      customerInfo.forEach(item => {
-        if(item.firstName == row.firstName && item.lastName == row.lastName){
-               return " Yess";
-        }
-      });
-      return "255";
-    }
-    },
       { "title": "ID",
       "data": "id"
       },
@@ -513,30 +676,17 @@ function initCustomersTable() {
           "data": "typeOfDocument"
       }
   ];
-
-//   {
-//     "id": 1,
-//     "firstName": "Ansley",
-//     "lastName": "Hahn",
-//     "address": "Apt. 785 67609 Hudson Village, Katharinaport, UT 79687",
-//     "email": "providenci.kulas@yahoo.com",
-//     "phone": "525.840.7866",
-//     "typeOfDocument": "Passport"
-// }
-
   // Define new table with above columns
   customersTable = $("#customersTable").DataTable( {
-      "order": [[ 1, "asc" ]],
+      "order": [[ 0, "asc" ]],
       "columns": columns,
       columnDefs: [
-        { targets: [ 4 ], width: '200px' },
+        { targets: [ 3 ], width: '200px' },
         { targets: '_all', className: 'dt-left' },
-        {
-          targets: 7,
-          render: function(){
-                 return infoBtn
-               },
-        },
+        { targets: 6, render: function(){
+                               return infoBtn
+                            }
+        }
                   ],
       pageLength: 6,
       "lengthMenu": [ 5, 10, 15, 20 ],
@@ -742,14 +892,11 @@ function getRoomsData(){
     });
 }
 
-function createRoom(){
- // console.log('create Room FUNCTION!');
-
+function updateRoom(){
+  // console.log('create Room FUNCTION!');
   var roomInfoEdit = roomsTable.row($('.selected')).data();
 
   //Put room data from page in Javascript object
-
-  roomInfoEdit.id=0;
   roomInfoEdit.roomType = $("#selectRoom :selected").text();
   roomInfoEdit.roomNumber = $("#editRoomNo").val();
   roomInfoEdit.sizePerson = $("#editRoomGuests").val();
@@ -759,17 +906,11 @@ function createRoom(){
   roomInfoEdit.doubleBedAmount = $("#editDoubleBed").val();
 
   var isClean= $("#isClean  input[name='isCleanRadioName']:checked").val();
+  console.log("isClean: "+ isClean);
   if(isClean == "yes"){
     roomInfoEdit.cleanRoom = true;
   }else{
     roomInfoEdit.cleanRoom = false;
-  }
-
-  var isActive= $("#isActive  input[name='isActiveRadioName']:checked").val();
-  if(isActive == "yes"){
-    roomInfoEdit.roomActive = true;
-  }else{
-    roomInfoEdit.roomActive = false;
   }
 
   var isDisabled= $("#isDisabled  input[name='isDisabledRadioName']:checked").val();
@@ -797,7 +938,8 @@ function createRoom(){
       // success: function(reservations, textStatus, jqXHR){
       success: function(response){
           if (response) {
-             console.log("Success!!!!!!");
+             console.log("ROOM UPDATED Success!!!!!!");
+             getRoomsData();
           }else{
             console.log("NOT Success!!!!!!");
           }
@@ -807,6 +949,158 @@ function createRoom(){
       }
   });
 }
+
+
+function createRoom(){
+ console.log('create Room FUNCTION!');
+
+   var isSmokeResult;
+   var isSmokeNew= $("#isSmokeNewRoom  input[name='isSmokedNewRoomName']:checked").val();
+   console.log(isSmokeNew);
+   if(isSmokeNew == "yes"){
+     isSmokeResult = true;
+   }else{
+     isSmokeResult = false;
+   }
+      console.log(isSmokeNew);
+
+ var isDisabledResult;
+ var isDisabledNew = $("#isDisabledNewRoom  input[name='isDisabledNewRoomName']:checked").val();
+     console.log(isDisabledNew);
+
+ if(isDisabledNew == "yes"){
+   isDisabledResult= true;
+ }else{
+   isDisabledResult = false;
+ }
+
+ var isCleanResult;
+ var isCleanNew = $("#isCleanNewRoom  input[name='isCleanNewRoomName']:checked").val();
+    console.log(isCleanNew);
+   if(isCleanNew == "yes"){
+     isCleanResult = true;
+   }else{
+     isCleanResult = false;
+   }
+
+   var newRoom={
+
+      roomType: $("#newSelectRoomType :selected").text(),
+
+      sizePerson:$("#newRoomGuests").val(),
+
+      roomNumber: $("#newRoomNumber").val(),
+
+      singleBedAmount: $("#newRoomSingleBed").val(),
+
+      doubleBedAmount: $("#newRoomDoubleBed").val(),
+
+      cleanRoom: isCleanResult,
+
+      roomActive: true,
+
+      price: $("#newRoomPrice").val(),
+
+      childrenPlace: $("#newRoomBaby").val(),
+
+      disabled: isDisabledResult,
+
+      smoke: isSmokeResult,
+
+      id: 0
+    }
+
+    console.log(newRoom);
+
+  var newRoomJson=JSON.stringify(newRoom);
+    console.log(newRoomJson);
+
+    $.ajax({
+      url: ROOMS_API,
+      type: "post",
+      contentType:"application/json",
+      datatype: "json",
+      data: newRoomJson,
+      // success: function(reservations, textStatus, jqXHR){
+      success: function(response){
+          if (response) {
+             console.log("Success!!!!!!");
+             //Refresh
+             getRoomsData();
+          }else{
+            console.log("NOT Success!!!!!!");
+          }
+      },
+      fail: function (error) {
+          console.log('Error: ' + error);
+      }
+  });
+}
+
+//function createRoom(){
+//  // console.log('create Room FUNCTION!');
+//
+//  var roomIsClean;
+//  var isClean= $("#isCleanNewRoom  input[name='isCleanRadioNameNew']:checked").val();
+//   if(isClean == "yes"){
+//    roomIsClean = true;
+//   }else{
+//    roomIsClean = false;
+//   }
+//
+//   var roomIsDisabled;
+//   var isDisabled= $("#isDisabledNewRoom  input[name='isDisabledRadioNameNew']:checked").val();
+//   if(isDisabled == "yes"){
+//     roomIsDisabled = true;
+//   }else{
+//     roomIsDisabled = false;
+//   }
+//
+//   var roomIsSmoke;
+//   var isSmoke= $("#isSmoke  input[name='isSmokingRadioName']:checked").val();
+//   if(isSmoke == "yes"){
+//    roomIsSmoke = true;
+//   }else{
+//    roomIsSmoke = false;
+//   }
+//
+//  var newRoom={
+//    roomType: $("#selectRoom :selected").text(),
+//    sizePerson: $("#editRoomGuests").val(),
+//    roomNumber: $("#editRoomNo").val(),
+//    singleBedAmount: $("#editSingleBed").val(),
+//    doubleBedAmount: $("#editDoubleBed").val(),
+//    cleanRoom: roomIsClean,
+//    roomActive: false,
+//    price:$("#editRoomPrice").val(),
+//    childrenPlace: $("#editBaby").val(),
+//    disabled: roomIsDisabled,
+//    smoke: roomIsSmoke,
+//    id:0
+//  }
+//
+//   var newRoomJson=JSON.stringify(newRoom);
+//
+//     $.ajax({
+//       url: ROOMS_API,
+//       type: "post",
+//       contentType:"application/json",
+//       datatype: "json",
+//       data: newRoomJson,
+//       // success: function(reservations, textStatus, jqXHR){
+//       success: function(response){
+//           if (response) {
+//              console.log("NEW ROOM Success!!!!!!");
+//              getRoomsData();
+//           }else{
+//             console.log("NOT Success!!!!!!");
+//           }
+//       },
+//       fail: function (error) {
+//           console.log('Error: ' + error);
+//       }
+//   });
+//}
 
 function formatUserPage(d) {
   // `d` is the original data object for the row
@@ -848,11 +1142,7 @@ function initUsersTable() {
            "data": "username"
       },
       { "title":  "BirthDate",
-           "data": "birthDate",
-           render: function ( data, type, row ) {
-            var dateSplit = data.split('-');
-            return (dateSplit[1] +'/'+ dateSplit[2] +'/'+ dateSplit[0]);
-        }
+           "data": "birthDate"
       }
   ];
 
@@ -907,6 +1197,111 @@ function getUsersData(){
   });
 }
 
+function updateUserInfo(){
+
+  var userInfo = usersTable.row($('.selected')).data();
+
+  userInfo.firstName = $("#editUserFirstName").val();
+  userInfo.lastName = $("#editUserLastName").val();
+  userInfo.emailAddress = $("#editUserEmail").val();
+  userInfo.address = $("#editUserAddress").val();
+  userInfo.password = $("#editUserPassword").val();
+  userInfo.birthDate = $("#editUserBirthdate").val();
+  userInfo.username = $("#editUserUsername").val();
+  userInfo.role = $("#selectUserRole :selected").value;
+
+  var userJson=JSON.stringify(userInfo);
+
+  $.ajax({
+    url: USERS_API,
+    type: "post",
+    contentType:"application/json",
+    datatype: "json",
+    data: userJson,
+    // success: function(reservations, textStatus, jqXHR){
+    success: function(response){
+        if (response) {
+           console.log("Success!!!!!!");
+           getUsersData();
+        }else{
+          console.log("NOT Success!!!!!!");
+        }
+    },
+    fail: function (error) {
+        console.log('Error: ' + error);
+    }
+});
+
+}
+
+function createUser(){
+
+  var newUser={
+        id : 0,
+        firstName: $("#newUserFirstName").val(),
+        lastName : $("#newUserLastName").val(),
+        username:$("#newUserName").val(),
+        password : $("#newUserPassword").val(),
+        role : $("#newUserRole").val(),
+        emailAddress : $("#newUserEmail").val(),
+        birthDate : $("#newUserBirthdate").val(),
+        address : $("#newUserAddress").val()
+        }
+
+var userJson=JSON.stringify(newUser);
+    console.log(newUser);
+
+    $.ajax({
+          url: USERS_API,
+          type: "post",
+          contentType:"application/json",
+          datatype: "json",
+          data: userJson,
+          // success: function(reservations, textStatus, jqXHR){
+          success: function(response){
+              if (response) {
+                 console.log("Success!!!!!!");
+                 //Refresh
+                 getUsersData();
+              }else{
+                console.log("NOT Success!!!!!!");
+              }
+          },
+          fail: function (error) {
+              console.log('Error: ' + error);
+          }
+      });
+
+}
+
+function deleteUser(){
+    if (usersTable.row($('.selected')).data() == undefined) {
+        alert("Select user first");
+    }else{
+        var user = usersTable.row($('.selected')).data();
+        // http:9090/api/user/2
+        console.log(USERS_API + '/' + user.id);
+        console.log(user);
+
+            $.ajax({
+                url: USERS_API + '/' + user.id,
+                contentType: "application/json",
+                type: 'DELETE',
+                dataType: "text",  // get back from frontend
+                // success: function(reservation, textStatus, jqXHR){
+                success: function(message){
+                  console.log(message);
+                  alert("User deleted");
+                  // Refresh table data
+                  getUsersData();
+                },
+                fail: function (error) {
+                  console.log('Error: ' + error);
+                }
+            });
+    }
+}
+
 //------ Date  -----
 $( function() {
   var dateFormat = "mm/dd/yy",
@@ -914,6 +1309,8 @@ $( function() {
       .datepicker({
         defaultDate: "+1w",
         changeMonth: true,
+        changeYear: true,
+        yearRange: "2021:2025",
         numberOfMonths: 1
       })
       .on( "change", function() {
@@ -922,6 +1319,8 @@ $( function() {
     to = $( "#editEndDate" ).datepicker({
       defaultDate: "+1w",
       changeMonth: true,
+      changeYear: true,
+      yearRange: "2021:2025",
       numberOfMonths: 1
     })
     .on( "change", function() {

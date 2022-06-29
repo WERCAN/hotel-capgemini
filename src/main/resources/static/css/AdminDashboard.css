@@ -367,6 +367,18 @@ table thead tr{
     padding: 4px 8px;
   }
 
+  .checkTrueIcon{
+      margin-left: 2px;
+      color: green;
+      font-size: large;
+    }
+
+    .checkFalseIcon{
+      margin-left: 2px;
+      color: red;
+      font-size: large;
+    }
+
 
 
 
