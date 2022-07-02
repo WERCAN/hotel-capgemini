@@ -74,6 +74,24 @@ function init() {
          $("#editServicePrice").val(reservationInfoEdit.roomServicePrice);
          $("#editTotalPrice").val(reservationInfoEdit.totalPrice);
 
+          if(reservationInfoEdit.payment == true){
+                       $("#paymentPaidRadio").prop("checked", true);
+                     }else{
+                       $("#paymentUnPaidRadio").prop("checked", true);
+                     }
+
+                     if(reservationInfoEdit.checkedIn == true){
+                       $("#checkedInYesRadioId").prop("checked", true);
+                     }else{
+                       $("#checkedInNoRadioId").prop("checked", true);
+                     }
+
+                     if(reservationInfoEdit.checkedOut == true){
+                       $("#checkedOutYesRadioId").prop("checked", true);
+                     }else{
+                       $("#checkedOutNoRadioId").prop("checked", true);
+                     }
+
          $('#editReservationModal').modal('show');
     }
     });
@@ -408,7 +426,7 @@ function initReservationTable() {
         { "title": "Room Type",
           "data": "room.roomType"},
         { "title":  "Payment",
-             "data": "room.disabled",
+             "data": "payment",
              render: function(data,type,row){
                       if(data === true){
                        return "<span class='paid'>Paid</span>";
@@ -503,12 +521,19 @@ function createReservation(){
               reservationInfoEdit.checkedIn = false;
             }
 
-        var checkedOut= $("#checkedOut  input[name='checkedInRadioName']:checked").val();
+        var checkedOut= $("#checkedOut  input[name='checkedOutRadioName']:checked").val();
             if(checkedOut == "yes"){
               reservationInfoEdit.checkedOut = true;
             }else{
               reservationInfoEdit.checkedOut = false;
             }
+
+        var paymentStatus= $("#paymentStatus  input[name='paymentRadioName']:checked").val();
+        if(paymentStatus == "paid"){
+          reservationInfoEdit.payment = true;
+        }else{
+          reservationInfoEdit.payment = false;
+        }
 
      var reservationJson = JSON.stringify(reservationInfoEdit);
      console.log(reservationJson);
