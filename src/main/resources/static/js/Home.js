@@ -321,6 +321,8 @@ console.log('Inside checkValidUser');
               if(validUser){
                    console.log('inside if validUser statement' );
                    window.location.href = 'http://localhost:9090/adminDashboard';
+              }else{
+              alert("Username or password is wrong.")
               }
             },
             fail: function (error) {

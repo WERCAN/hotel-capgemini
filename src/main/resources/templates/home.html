@@ -72,14 +72,21 @@
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form>
+            <form class="login validate" novalidate>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">User name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                    <label for="exampleInputEmail1" class="form-label"><span>*</span>User name</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required/>
+                    <div class="invalid-feedback">
+                        Please enter a username.
+                    </div>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" />
+                    <label for="exampleInputPassword1" class="form-label"><span>*</span>Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1"
+                           aria-required="true" aria-invalid="true" required/>
+                    <div class="invalid-feedback">
+                        Please enter a password.
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary" id="submitLoginButton">Submit</button>
             </form>

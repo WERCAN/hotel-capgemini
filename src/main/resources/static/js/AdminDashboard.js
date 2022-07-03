@@ -1154,6 +1154,11 @@ function createUser(){
         birthDate : $("#newUserBirthdate").val(),
         address : $("#newUserAddress").val()
         }
+        if(checkPassword(newUser.password) == true){
+        console.log("Success!!!!!!")}
+        else{
+        return}
+
 
 var userJson=JSON.stringify(newUser);
     console.log(newUser);
@@ -1207,6 +1212,21 @@ function deleteUser(){
                 }
             });
     }
+}
+//Check Password
+function checkPassword(password)
+{
+var passw=  /^[A-Za-z]\w{7,14}$/;
+if(password.match(passw))
+{
+//alert('Correct, try another...')
+return true;
+}
+else
+{
+alert('Password must be between 7 to 16 characters which contain only characters,numeric digits, underscore and first character must be a letter!')
+return false;
+}
 }
 
 //------ Date  -----
