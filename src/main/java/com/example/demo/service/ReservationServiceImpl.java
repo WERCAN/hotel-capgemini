@@ -51,9 +51,9 @@ public class ReservationServiceImpl implements ReservationService{
     @Override
     public List<Room> getAvailableRooms(Filter filter) {
         Iterable<Room> allRooms = roomService.findAll();
-        List <Room> availableRooms= new ArrayList<Room>();
         List<Room> rooms = new ArrayList<Room>();
         allRooms.forEach(rooms :: add);
+        List <Room> availableRooms= new ArrayList<Room>();
 
 
         Iterable<Reservation> allReservations = reservationRepository.findAll();
@@ -66,14 +66,29 @@ public class ReservationServiceImpl implements ReservationService{
             }
         }
 
+        rooms.removeIf(room -> !room.isCleanRoom());
+
+        rooms.removeIf(room -> room.isSmoke() == !filter.isSmoking());
+
+        rooms.removeIf(room -> room.isDisabled() == !filter.isDisabled());
+
         for (Room room : rooms) {
-            if(room.getRoomType().equals(filter.getRoomType())&&room.getSizePerson()>=filter.getAdultSize()&&room.getChildrenPlace()>= filter.getChildrenSize()){
-                if(room.isSmoke()== filter.isSmoking() ||room.isSmoke()!= filter.isNonsmoking() ||
-                        (room.isDisabled()== filter.isDisabled())&&room.isCleanRoom()==true){
+            if(room.getRoomType().equals(filter.getRoomType())&&
+                    room.getSizePerson()>=filter.getAdultSize()&&
+                    room.getChildrenPlace()>= filter.getChildrenSize()){
                     availableRooms.add(room);
-                }
             }
         }
+
+
+
+
+
+
+//        if((room.isSmoke()== filter.isSmoking() ||
+//                room.isDisabled()== filter.isDisabled())&&room.isCleanRoom()==true){
+//            availableRooms.add(room);
+//            }
         
         
         return availableRooms;

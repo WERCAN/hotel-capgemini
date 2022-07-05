@@ -77,13 +77,13 @@ public class DemoApplication implements CommandLineRunner {
 
 
 		List<Room> rooms = new ArrayList<>();
-		rooms.add(new Room("Double",4,2,2,1,true,true,22,2,false,true));
-		rooms.add(new Room("Penthouse",2,1,2,0,true,true,2,2,false,true));
-		rooms.add(new Room("Double",2,1,2,0,true,true,2,2,false,true));
-		rooms.add(new Room("Double",2,1,2,0,true,true,2,2,false,true));
-		rooms.add(new Room("Double",2,1,2,0,true,true,2,2,false,true));
-		rooms.add(new Room("Double",2,1,2,0,true,true,2,2,false,true));
-		rooms.add(new Room("Double",2,1,2,0,true,true,2,2,false,true));
+		rooms.add(new Room("Double",4,1,2,1,true,true,22,2,false,true));
+		rooms.add(new Room("Penthouse",2,2,2,0,true,true,2,2,false,true));
+		rooms.add(new Room("Double",2,3,2,0,true,true,2,2,false,true));
+		rooms.add(new Room("Double",2,4,2,0,true,true,2,2,false,true));
+		rooms.add(new Room("Double",2,5,2,0,true,true,2,2,false,true));
+		rooms.add(new Room("Double",2,6,2,0,true,true,2,2,false,true));
+		rooms.add(new Room("Double",2,7,2,0,true,true,2,2,false,true));
 
 		roomRepository.saveAll(rooms);
 
@@ -92,7 +92,7 @@ public class DemoApplication implements CommandLineRunner {
 		List<Reservation> reservations = new ArrayList<>();
 
 		Date stDate=Util.getFakeDate();
-		Date enDate=Util.getFakeDate();
+		Date enDate=new Date(stDate.getTime() + 3600 * 1000 * 24 * 10);
 
 		System.out.println(stDate);
 		System.out.println(enDate);

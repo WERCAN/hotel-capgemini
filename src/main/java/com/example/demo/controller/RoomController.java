@@ -34,13 +34,13 @@ public class RoomController {
     // http://localhost:9090/api/rooms
     @CrossOrigin
     @PostMapping(value = "/rooms", consumes= MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Room> createRoom( @RequestBody Room room){
+    public boolean createRoom( @RequestBody Room room){
 
         System.out.println("Inside createRoom");
 
-        Room createdRoom = roomService.createRoom(room);
+        boolean checkSaved = roomService.createRoom(room);
 
-        return ResponseEntity.ok( createdRoom);
+        return checkSaved;
 
     }
 

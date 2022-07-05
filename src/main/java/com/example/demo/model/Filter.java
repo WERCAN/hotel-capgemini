@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 public class Filter {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "MM/dd/yyyy")
@@ -23,25 +23,23 @@ public class Filter {
     private String roomType;
     private int adultSize;
     private int childrenSize;
-    private boolean isSmoking;
-    private boolean isNonsmoking;
+    private boolean smoking;
+    //private boolean isNonsmoking;
     private boolean disabled;
-
-
 
 
     public Filter() {
     }
 
-    public Filter(long id, Date startDate, Date endDate, String roomType, int adultSize, int childrenSize, boolean isSmoking, boolean isNonsmoking, boolean disabled) {
+    public Filter(long id, Date startDate, Date endDate, String roomType, int adultSize, int childrenSize, boolean isSmoking, boolean disabled) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.roomType = roomType;
         this.adultSize = adultSize;
         this.childrenSize = childrenSize;
-        this.isSmoking = isSmoking;
-        this.isNonsmoking = isNonsmoking;
+        this.smoking = isSmoking;
+        //this.isNonsmoking = isNonsmoking;
         this.disabled = disabled;
     }
 
@@ -94,19 +92,11 @@ public class Filter {
     }
 
     public boolean isSmoking() {
-        return isSmoking;
+        return smoking;
     }
 
     public void setSmoking(boolean smoking) {
-        isSmoking = smoking;
-    }
-
-    public boolean isNonsmoking() {
-        return isNonsmoking;
-    }
-
-    public void setNonsmoking(boolean nonsmoking) {
-        isNonsmoking = nonsmoking;
+        this.smoking = smoking;
     }
 
     public boolean isDisabled() {
@@ -117,3 +107,13 @@ public class Filter {
         this.disabled = disabled;
     }
 }
+
+
+//    public boolean isNonsmoking() {
+//        return isNonsmoking;
+//    }
+//
+//    public void setNonsmoking(boolean nonsmoking) {
+//        isNonsmoking = nonsmoking;
+//    }
+
