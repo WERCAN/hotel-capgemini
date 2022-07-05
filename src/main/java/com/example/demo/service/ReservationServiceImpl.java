@@ -67,7 +67,7 @@ public class ReservationServiceImpl implements ReservationService{
         }
 
         for (Room room : rooms) {
-            if(room.getRoomType().equals(filter.getRoomType())&&room.getSizePerson()==filter.getAdultSize()&&room.getChildrenPlace()== filter.getChildrenSize()){
+            if(room.getRoomType().equals(filter.getRoomType())&&room.getSizePerson()>=filter.getAdultSize()&&room.getChildrenPlace()>= filter.getChildrenSize()){
                 if(room.isSmoke()== filter.isSmoking() ||room.isSmoke()!= filter.isNonsmoking() ||
                         (room.isDisabled()== filter.isDisabled())&&room.isCleanRoom()==true){
                     availableRooms.add(room);
