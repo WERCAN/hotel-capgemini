@@ -202,20 +202,16 @@
                                                 <label for="editServicePrice">Service Price:</label>
                                                 <input type="number" step="0.01" class="form-control" id="editServicePrice" />
                                             </div>
-                                            <div class="form-group">
-                                                <label for="editTotalPrice">Total Price:</label>
-                                                <input type="number" step="0.01" class="form-control" id="editTotalPrice" />
-                                            </div>
                                             <div class="form-group checkStatus mt-2" id="checkedIn">
                                                 <span>checked-in: </span>
                                                 <div class="form-check form-check-inline me-0 ms-2">
-                                                    <input class="form-check-input" type="radio" name="checkedInRadioName" id="checkedInYesRadioId">
+                                                    <input class="form-check-input" type="radio" name="checkedInRadioName" value="yes" id="checkedInYesRadioId">
                                                     <label class="form-check-label" for="checkedInYesRadioId">
                                                         Yes
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="checkedInRadioName" id="checkedInNoRadioId" checked>
+                                                    <input class="form-check-input" type="radio" name="checkedInRadioName" value="no" id="checkedInNoRadioId" checked>
                                                     <label class="form-check-label" for="checkedInNoRadioId">
                                                         No
                                                     </label>
@@ -224,15 +220,30 @@
                                             <div class="form-group checkStatus mt-2" id="checkedOut">
                                                 <span>checked-out: </span>
                                                 <div class="form-check form-check-inline me-0">
-                                                    <input class="form-check-input" type="radio" name="checkedOutRadioName" id="checkedOutYesRadioId">
+                                                    <input class="form-check-input" type="radio" name="checkedOutRadioName" value="yes" id="checkedOutYesRadioId">
                                                     <label class="form-check-label" for="checkedOutYesRadioId">
                                                         Yes
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="checkedOutRadioName" id="checkedOutNoRadioId" checked>
+                                                    <input class="form-check-input" type="radio" name="checkedOutRadioName" value="no" id="checkedOutNoRadioId" checked>
                                                     <label class="form-check-label" for="checkedOutNoRadioId">
                                                         No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group paymentStatus mt-2" id="paymentStatus">
+                                                <span>Payment: </span>
+                                                <div class="form-check form-check-inline me-0">
+                                                    <input class="form-check-input" type="radio" name="paymentRadioName" value="paid" id="paymentPaidRadio">
+                                                    <label class="form-check-label" for="paymentPaidRadio">
+                                                        Paid
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="paymentRadioName" value="unpaid" id="paymentUnPaidRadio" >
+                                                    <label class="form-check-label" for="paymentUnPaidRadio">
+                                                        UnPaid
                                                     </label>
                                                 </div>
                                             </div>
@@ -368,7 +379,7 @@
                     <!-- Search Tool -->
                     <div class="d-flex align-items-center justify-content-sm-between m-2">
                         <div class="btn-wrapper ">
-                            <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#addRoomModal">
+                            <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#addRoomModal">
                                 Add new Room
                             </button>
                         </div>
@@ -637,35 +648,35 @@
                                 <form id="userForm">
                                     <div class="form-group">
                                         <label for="newUserFirstName">First Name:</label>
-                                        <input type="text" class="form-control" id="newUserFirstName" />
+                                        <input type="text" class="form-control" id="newUserFirstName" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="newUserLastName">Last Name:</label>
-                                        <input type="text" class="form-control" id="newUserLastName" />
+                                        <input type="text" class="form-control" id="newUserLastName" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="newUserName">UserName:</label>
-                                        <input type="text" class="form-control" id="newUserName" />
+                                        <input type="text" class="form-control" id="newUserName" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="newUserPassword">Password:</label>
-                                        <input type="text" class="form-control" id="newUserPassword" />
+                                        <input type="text" class="form-control" id="newUserPassword" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="newUserRole">Role:</label>
-                                        <input type="text" class="form-control" id="newUserRole" />
+                                        <input type="text" class="form-control" id="newUserRole" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="newUserEmail">Email:</label>
-                                        <input type="email" class="form-control" id="newUserEmail" />
+                                        <input type="email" class="form-control" id="newUserEmail"  required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="newUserAddress">address:</label>
-                                        <input type="text" class="form-control" id="newUserAddress" />
+                                        <input type="text" class="form-control" id="newUserAddress" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="newUserBirthdate">BirthDate:</label>
-                                        <input type="text" class="form-control" id="newUserBirthdate" />
+                                        <input type="text" class="form-control" id="newUserBirthdate" required/>
                                     </div>
 
 
@@ -786,7 +797,7 @@
                     </div>
 
                     <div class="form-wrapper w-50 d-inline">
-                        <form class="form d-flex" role="search">
+                        <form class="form d-flex" role="search" novalidate>
                             <input id="filterUsers" class="form-control w-50" type="search" placeholder="Search"
                                    aria-label="Search" />
                         </form>

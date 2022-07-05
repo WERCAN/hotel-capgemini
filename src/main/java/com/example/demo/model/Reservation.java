@@ -159,4 +159,12 @@ public class Reservation {
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
     }
+
+    public boolean isPayment() {
+        return payment;
+    }
+
+    public void setPayment(boolean payment) {
+        this.payment = payment;
+    }
 }

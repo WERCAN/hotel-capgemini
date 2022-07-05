@@ -72,7 +72,24 @@ function init() {
          $("#editBabyBed").val(reservationInfoEdit.babyBed);
          $("#editPrice").val(reservationInfoEdit.price);
          $("#editServicePrice").val(reservationInfoEdit.roomServicePrice);
-         $("#editTotalPrice").val(reservationInfoEdit.totalPrice);
+
+          if(reservationInfoEdit.payment == true){
+                       $("#paymentPaidRadio").prop("checked", true);
+                     }else{
+                       $("#paymentUnPaidRadio").prop("checked", true);
+                     }
+
+                     if(reservationInfoEdit.checkedIn == true){
+                       $("#checkedInYesRadioId").prop("checked", true);
+                     }else{
+                       $("#checkedInNoRadioId").prop("checked", true);
+                     }
+
+                     if(reservationInfoEdit.checkedOut == true){
+                       $("#checkedOutYesRadioId").prop("checked", true);
+                     }else{
+                       $("#checkedOutNoRadioId").prop("checked", true);
+                     }
 
          $('#editReservationModal').modal('show');
     }
@@ -408,7 +425,7 @@ function initReservationTable() {
         { "title": "Room Type",
           "data": "room.roomType"},
         { "title":  "Payment",
-             "data": "room.disabled",
+             "data": "payment",
              render: function(data,type,row){
                       if(data === true){
                        return "<span class='paid'>Paid</span>";
@@ -493,7 +510,7 @@ function createReservation(){
     reservationInfoEdit.endDate   = $("#editEndDate").val();
     reservationInfoEdit.babyBed = $("#editBabyBed").val();
     reservationInfoEdit.price = $("#editPrice").val();
-    reservationInfoEdit.totalPrice = $("#editTotalPrice").val();
+    reservationInfoEdit.totalPrice = parseFloat( $("#editPrice").val()) + parseFloat( $("#editServicePrice").val());
     reservationInfoEdit.roomServicePrice = $("#editServicePrice").val();
 
     var checkedIn= $("#checkedIn  input[name='checkedInRadioName']:checked").val();
@@ -503,18 +520,22 @@ function createReservation(){
               reservationInfoEdit.checkedIn = false;
             }
 
-        var checkedOut= $("#checkedOut  input[name='checkedInRadioName']:checked").val();
+        var checkedOut= $("#checkedOut  input[name='checkedOutRadioName']:checked").val();
             if(checkedOut == "yes"){
               reservationInfoEdit.checkedOut = true;
             }else{
               reservationInfoEdit.checkedOut = false;
             }
 
+        var paymentStatus= $("#paymentStatus  input[name='paymentRadioName']:checked").val();
+        if(paymentStatus == "paid"){
+          reservationInfoEdit.payment = true;
+        }else{
+          reservationInfoEdit.payment = false;
+        }
+
      var reservationJson = JSON.stringify(reservationInfoEdit);
      console.log(reservationJson);
-    // var reservationJson1 = JSON.parse(reservationInfoEdit);
-    // console.log(reservationJson1);
-
     $.ajax({
       url: RESERVATION_API,
       type: "post",
@@ -725,11 +746,6 @@ function createCustomer(){
 
     reservationInfoEdit.startDate = $("#editStartDate").val();
     reservationInfoEdit.endDate   = $("#editEndDate").val();
-        //  name :$("#editName").val(),
-        //  guests :$("#editGuests").val(),
-        //  email :$("#editEmail").val(),
-        //  phone :$("#editPhone").val(),
-        //  typeOfDocument :$("#editDocumentType").val(),
     reservationInfoEdit.babyBed = $("#editBabyBed").val();
     reservationInfoEdit.price = $("#editPrice").val();
     reservationInfoEdit.totalPrice = $("#editTotalPrice").val();
@@ -754,16 +770,6 @@ function createCustomer(){
           console.log('Error: ' + error);
       }
   });
-
-  //         {
-  //             "id": 1,
-  //             "firstName": "Ramon",
-  //             "lastName": "Berge",
-  //             "address": "12977 Matt Creek, East Erick, NV 29812-3934",
-  //             "email": "price.shields@gmail.com",
-  //             "phone": "214.181.8129",
-  //             "typeOfDocument": "Passport"
-  //         }
 }
 
 /* Formatting function for row details - modify as you need */
@@ -828,19 +834,6 @@ function initRoomsTable() {
                     }else{return "<span class='no'>NO</span>"; }
           }},
     ];
-
-//            "roomType": "Double",
-//            "sizePerson": 4,
-//            "roomNumber": 2,
-//            "singleBedAmount": 2,
-//            "doubleBedAmount": 1,
-//            "cleanRoom": true,
-//            "roomActive": true,
-//            "price": 22.0,
-//            "childrenPlace": 2,
-//            "disabled": true,
-//            "smoke": true,
-//            "id": 215
 
     // Define new table with above columns
     roomsTable = $("#roomsTable").DataTable( {
@@ -943,7 +936,6 @@ function updateRoom(){
   });
 }
 
-
 function createRoom(){
  console.log('create Room FUNCTION!');
 
@@ -1030,71 +1022,6 @@ function createRoom(){
   });
 }
 
-//function createRoom(){
-//  // console.log('create Room FUNCTION!');
-//
-//  var roomIsClean;
-//  var isClean= $("#isCleanNewRoom  input[name='isCleanRadioNameNew']:checked").val();
-//   if(isClean == "yes"){
-//    roomIsClean = true;
-//   }else{
-//    roomIsClean = false;
-//   }
-//
-//   var roomIsDisabled;
-//   var isDisabled= $("#isDisabledNewRoom  input[name='isDisabledRadioNameNew']:checked").val();
-//   if(isDisabled == "yes"){
-//     roomIsDisabled = true;
-//   }else{
-//     roomIsDisabled = false;
-//   }
-//
-//   var roomIsSmoke;
-//   var isSmoke= $("#isSmoke  input[name='isSmokingRadioName']:checked").val();
-//   if(isSmoke == "yes"){
-//    roomIsSmoke = true;
-//   }else{
-//    roomIsSmoke = false;
-//   }
-//
-//  var newRoom={
-//    roomType: $("#selectRoom :selected").text(),
-//    sizePerson: $("#editRoomGuests").val(),
-//    roomNumber: $("#editRoomNo").val(),
-//    singleBedAmount: $("#editSingleBed").val(),
-//    doubleBedAmount: $("#editDoubleBed").val(),
-//    cleanRoom: roomIsClean,
-//    roomActive: false,
-//    price:$("#editRoomPrice").val(),
-//    childrenPlace: $("#editBaby").val(),
-//    disabled: roomIsDisabled,
-//    smoke: roomIsSmoke,
-//    id:0
-//  }
-//
-//   var newRoomJson=JSON.stringify(newRoom);
-//
-//     $.ajax({
-//       url: ROOMS_API,
-//       type: "post",
-//       contentType:"application/json",
-//       datatype: "json",
-//       data: newRoomJson,
-//       // success: function(reservations, textStatus, jqXHR){
-//       success: function(response){
-//           if (response) {
-//              console.log("NEW ROOM Success!!!!!!");
-//              getRoomsData();
-//           }else{
-//             console.log("NOT Success!!!!!!");
-//           }
-//       },
-//       fail: function (error) {
-//           console.log('Error: ' + error);
-//       }
-//   });
-//}
-
 function formatUserPage(d) {
   // `d` is the original data object for the row
   return (
@@ -1138,19 +1065,6 @@ function initUsersTable() {
            "data": "birthDate"
       }
   ];
-
-//   {
-//     "id": 21,
-//     "firstName": "Halid",
-//     "lastName": "Karabiyik",
-//     "emailAddress": "user@gmail.com",
-//     "password": "Konya42",
-//     "address": "hoptillepad",
-//     "birthDate": "20-08-1996",
-//     "username": "Adminuser",
-//     "role": "AD"
-// }
-
   // Define new table with above columns
   usersTable = $("#usersTable").DataTable( {
       "order": [[ 0, "asc" ]],
@@ -1240,6 +1154,11 @@ function createUser(){
         birthDate : $("#newUserBirthdate").val(),
         address : $("#newUserAddress").val()
         }
+        if(checkPassword(newUser.password) == true){
+        console.log("Success!!!!!!")}
+        else{
+        return}
+
 
 var userJson=JSON.stringify(newUser);
     console.log(newUser);
@@ -1294,6 +1213,21 @@ function deleteUser(){
             });
     }
 }
+//Check Password
+function checkPassword(password)
+{
+var passw=  /^[A-Za-z]\w{7,14}$/;
+if(password.match(passw))
+{
+//alert('Correct, try another...')
+return true;
+}
+else
+{
+alert('Password must be between 7 to 16 characters which contain only characters,numeric digits, underscore and first character must be a letter!')
+return false;
+}
+}
 
 //------ Date  -----
 $( function() {
@@ -1304,6 +1238,8 @@ $( function() {
         changeMonth: true,
         changeYear: true,
         yearRange: "2021:2025",
+        minDate: new Date(),
+        firstDay: 1,
         numberOfMonths: 1
       })
       .on( "change", function() {
