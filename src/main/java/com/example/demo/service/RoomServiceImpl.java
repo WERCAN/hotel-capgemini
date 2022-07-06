@@ -34,10 +34,11 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     public boolean createRoom(Room room) {
-        if(checkRoomNumber(room.getRoomNumber())) {
+        if(checkRoomNumber(room)) {
             Room createdRoom = roomRepository.save(room);
             return true;
-        }else if(room.getId()!=0){
+        }else if(room.getId()!=0&&checkEditRoomNumber(room)){
+
             Room editedRoom = roomRepository.save(room);
             return true;
         }
@@ -51,16 +52,30 @@ public class RoomServiceImpl implements RoomService{
         return true;
     }
 
-    public boolean checkRoomNumber (int roomNumber){
+    public boolean checkRoomNumber (Room roomNumber){
         Iterable<Room> rooms;
         List<Room> roomList = new ArrayList<>();
         rooms=roomRepository.findAll();
         rooms.forEach(roomList :: add);
 
         for (Room room : roomList) {
-            if(roomNumber==room.getRoomNumber()) {return false;}
+            if(roomNumber.getRoomNumber()==room.getRoomNumber()) {return false;}
         }
         return true;
+    }
+
+
+
+    public boolean checkEditRoomNumber(Room room){
+        Iterable<Room> rooms;
+        List<Room> roomList = new ArrayList<>();
+        rooms=roomRepository.findAll();
+        rooms.forEach(roomList :: add);
+
+        for (Room room1 : roomList) {
+            if(room1.getId()==room.getId()&&room1.getRoomNumber()==room.getRoomNumber()){return true;}
+        }
+        return false;
     }
 
 
