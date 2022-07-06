@@ -200,7 +200,7 @@ function getRoomsData(){
 function createReservation(){
 
 //   {
-//     "startDate": "07/07/2022",
+//     "startDate": "07/07/2022",s
 //     "endDate": "07/08/2022",
 //     "checkedIn": true,
 //     "checkedOut": true,

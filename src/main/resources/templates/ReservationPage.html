@@ -55,10 +55,10 @@
     </div>
     <div class="flags">
         <div class="flagEn">
-            <img src="/static/assests/englishIcon.png"/>
+            <img src="/assests/englishIcon.png"/>
         </div>
         <div class="flagCn">
-            <img src="/static/assests/China-icon.png"/>
+            <img src="/assests/China-icon.png"/>
         </div>
     </div>
 </nav>
@@ -67,22 +67,22 @@
     <div class="checkinAndOut">
         <div class="checkIn">
             <label for="checkIn" class="form-label">Check in</label>
-            <input class="form-control" type="text" id="checkIn" autocomplete="off">
+            <input class="form-control" type="text" id="checkIn" autocomplete="off" required>
         </div>
         <div class="checkOut">
             <label for="checkOut" class="form-label">Check out</label>
-            <input class="form-control" type="text" id="checkOut" autocomplete="off">
+            <input class="form-control" type="text" id="checkOut" autocomplete="off" required>
         </div>
     </div>
     <div class="Guests">
         <div class="mb-1">Guests</div>
-        <input type="number" class="form-control mb-1" placeholder="Adults" aria-label="Adults" id="adults">
+        <input type="number" class="form-control mb-1" placeholder="Adults" aria-label="Adults" id="adults" required>
         <input type="number" class="form-control" placeholder="Child" aria-label="Child" id="children">
 
     </div>
     <div class="selectRoomType">
         <div class="mb-1">Room Type</div>
-        <select class="form-select mb-3" aria-label="Default select room" id="selectRoomType">
+        <select class="form-select mb-3" aria-label="Default select room" id="selectRoomType" required>
             <option value="1" selected>Single</option>
             <option value="2">Double</option>
             <option value="3">2x Double</option>
@@ -116,8 +116,8 @@
 </header>
 
 <div class="float-end checkAvailability">
-    <button id="checkRoomsButton" button type="submit" class="btn btn-primary">
-        Check Avalibility
+    <button id="checkRoomsButton" type="submit" class="btn btn-primary">
+        Check Availability
     </button>
 </div>
 
@@ -137,10 +137,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="customerForm" class="needs-validation" novalidate>
+                <form id="customerForm" class="needs-validation" >
                 <div class="customerInfoForm">
                     <div class="form-group">
-                        <label for="firstName">Fisrt Name:</label>
+                        <label for="firstName">First Name:</label>
                         <input type="text" class="form-control" id="firstName" required/>
                         <div class="valid-feedback">
                             Looks good!
@@ -164,12 +164,17 @@
                         <label for="phone">Phone:</label>
                         <input type="text" class="form-control" id="phone" required/>
                     </div>
-                    <div class="form-group">
-                        <label for="documentType">Document:</label>
-                        <input type="text" class="form-control" id="documentType" required/>
+                    <div class="form-group mt-2">
+                        <div class="mb-1">Document</div>
+                        <select class="form-select" id="documentType" aria-label="Default select document" required>
+                            <option selected>ID</option>
+                            <option value="1">Password</option>
+                            <option value="2">Driver License</option>
+                            <option value="3">Travel Document</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="address">Adress:</label>
+                        <label for="address">Address:</label>
                         <input type="text" class="form-control" id="address" />
                     </div>
                 </div>
