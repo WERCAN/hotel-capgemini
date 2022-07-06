@@ -34,6 +34,7 @@ public class ReservationController {
         return ResponseEntity.ok( reservations);
     }
 
+    @CrossOrigin
     @PostMapping(value = "/reservations/availableRooms", consumes= MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<Room>> getAvailableRooms(@RequestBody Filter filter){
         System.out.println("Inside getAvailableRooms");

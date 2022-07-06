@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;1,100&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    padding: 5px 2%;
+}
+
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-logo h1 {
+  font-family: "Alex Brush", cursive;
+  font-size: 36px;
+  font-weight: 600;
+  color: darkblue;
+}
+
+.logo {
+  width: 90px;
+  height: 90px;
+}
+
+.brand-logo a, .login .login-btn a {
+  text-decoration: none;
+}
+
+.flags{
+    /* width: 60px;
+    height: 80px; */
+}
+
+.flagEn img{
+    padding: 0;
+    margin: 0;
+    width: 40px;
+    height: 40px;
+}
+.flagCn img{
+    padding: 0;
+    margin-top: -10px;
+    width: 40px;
+    height: 35px;
+}
+
+header{
+    margin-top: 20px;
+    margin-left: 60px;
+    display: flex;
+    justify-content: space-evenly;
+    color: blueviolet;
+    font-size: medium;
+    font-weight: 600;
+    /* border: 1px solid blue; */
+
+}
+
+.checkinAndOut{
+    padding-top: 10px;
+    /* padding-left: 20px; */
+    /* border: 1px solid blue; */
+    flex: 2;
+    display: flex;
+    justify-content: space-around;
+}
+
+.checkinAndOut input, .checkinAndOut label{
+    display: block;
+}
+
+.Guests{
+    padding: 10px ;
+    flex: 1;
+    /* border: 1px solid firebrick; */
+}
+
+.selectRoomType{
+    padding: 10px ;
+    flex: 1;
+    /* border: 1px solid green; */
+}
+.comments{
+    padding: 10px ;
+    padding-top: 15px;
+    flex: 1;
+    /* border: 1px solid hotpink; */
+}
+
+#filters-form{
+width: 100%;
+height: auto;
+}
+
+.checkAvailability{
+    margin-right: 70px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.rooms{
+    z-index: 1;
+}
+
+.roomSelectedBtn{
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 4;
+}
