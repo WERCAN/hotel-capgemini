@@ -57,7 +57,7 @@ $( function() {
           changeMonth: true,
           changeYear: true,
           yearRange: "2022:2025",
-          minDate: new Date(),
+          minDate: "+1d",
           firstDay: 1,
           numberOfMonths: 1
         })
@@ -69,6 +69,7 @@ $( function() {
         changeMonth: true,
         changeYear: true,
         yearRange: "2022:2025",
+        firstDay: 1,
         numberOfMonths: 1
       })
       .on( "change", function() {
@@ -86,6 +87,12 @@ $( function() {
       return date;
     }
   });
+
+CheckOutAddOne = function(){
+    CheckIn = $('#checkIn').datepicker('getDate');
+    CheckOut = CheckIn.setDate(CheckIn.getDate() + 1);
+    $('#checkOut').datepicker( "option", "minDate", new Date(CheckOut) );
+}
 
 //------- ROOMS -------
 //------- INIT Rooms Table -------
@@ -110,7 +117,7 @@ function initRoomsTable() {
       { "title":  "Price",
           "data": "price",
           render: function(data,type,row){
-            return "$" + data;
+            return "¥" + data;
       }},
       { "title":  "Disabled",
           "data": "disabled",

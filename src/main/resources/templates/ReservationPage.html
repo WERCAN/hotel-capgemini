@@ -42,160 +42,159 @@
 
 </head>
 <body>
-<!-- Navbar -->
-<nav>
-    <!-- Brand logo -->
-    <div class="brand-logo">
-        <a href="#">
-            <img src="/assests/Company Logo.jpg" alt="logo" class="logo" />
-        </a>
-        <a href="#">
-            <h1>Molveno Lake Resort</h1>
-        </a>
-    </div>
-    <div class="flags">
-        <div class="flagEn">
-            <img src="/assests/englishIcon.png"/>
+    <!-- Navbar -->
+    <nav>
+        <!-- Brand logo -->
+        <div class="brand-logo">
+            <a href="#">
+                <img src="/assests/Company Logo.jpg" alt="logo" class="logo" />
+            </a>
+            <a href="#">
+                <h1>Molveno Lake Resort</h1>
+            </a>
         </div>
-        <div class="flagCn">
-            <img src="/assests/China-icon.png"/>
-        </div>
-    </div>
-</nav>
-
-<header>
-    <div class="checkinAndOut">
-        <div class="checkIn">
-            <label for="checkIn" class="form-label">Check in</label>
-            <input class="form-control" type="text" id="checkIn" autocomplete="off" required>
-        </div>
-        <div class="checkOut">
-            <label for="checkOut" class="form-label">Check out</label>
-            <input class="form-control" type="text" id="checkOut" autocomplete="off" required>
-        </div>
-    </div>
-    <div class="Guests">
-        <div class="mb-1">Guests</div>
-        <input type="number" class="form-control mb-1" placeholder="Adults" aria-label="Adults" id="adults" required>
-        <input type="number" class="form-control" placeholder="Child" aria-label="Child" id="children">
-
-    </div>
-    <div class="selectRoomType">
-        <div class="mb-1">Room Type</div>
-        <select class="form-select mb-3" aria-label="Default select room" id="selectRoomType" required>
-            <option value="1" selected>Single</option>
-            <option value="2">Double</option>
-            <option value="3">2x Double</option>
-            <option value="4">Penthouse</option>
-        </select>
-        <div class="babyBed">
-            <label for="babyBed">Baby Bed</label>
-            <input type="checkbox" name="babyBed" id="babyBed">
-        </div>
-    </div>
-    <div class="comments">
-        <div class="form-check mb-2">
-            <label class="form-check-label" for="smoking">
-                Smoking
-            </label>
-            <input class="form-check-input" type="radio" name="comments" id="smoking">
-        </div>
-        <div class="form-check mb-2">
-            <input class="form-check-input" type="radio" name="comments" id="nonSmoking" checked>
-            <label class="form-check-label" for="nonSmoking">
-                Non Smoking
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="comments" id="disabled" checked>
-            <label class="form-check-label" for="disabled">
-                Disabled
-            </label>
-        </div>
-    </div>
-</header>
-
-<div class="float-end checkAvailability">
-    <button id="checkRoomsButton" type="submit" class="btn btn-primary">
-        Check Availability
-    </button>
-</div>
-
-<div class="float-end roomSelectedBtn">
-    <button id="selectedRoomButton" class="btn btn-primary">
-        Continue
-    </button>
-</div>
-
-<!-- Completing Reservation Modal -->
-<div id="continueModal" class="modal fade " role="dialog">
-    <div class="modal-dialog">
-        <!-- Content-->
-        <div class="modal-content w-75">
-            <div class="modal-header bg-warning">
-                <h4 class="modal-title">Registration</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="flags">
+            <div class="flagEn">
+                <img src="/assests/englishIcon.png"/>
             </div>
-            <div class="modal-body">
-                <form id="customerForm" class="needs-validation" >
-                <div class="customerInfoForm">
-                    <div class="form-group">
-                        <label for="firstName">First Name:</label>
-                        <input type="text" class="form-control" id="firstName" required/>
-                        <div class="valid-feedback">
-                            Looks good!
+            <div class="flagCn">
+                <img src="/assests/China-icon.png"/>
+            </div>
+        </div>
+    </nav>
+
+    <!--    Filtering Rooms for Reservation  -->
+    <header>
+        <div class="checkinAndOut">
+            <div class="checkIn">
+                <label for="checkIn" class="form-label">Check in</label>
+                <input class="form-control" type="text" id="checkIn" autocomplete="off" required onchange="CheckOutAddOne()">
+            </div>
+            <div class="checkOut">
+                <label for="checkOut" class="form-label">Check out</label>
+                <input class="form-control" type="text" id="checkOut" autocomplete="off" required>
+            </div>
+        </div>
+        <div class="Guests">
+            <div class="mb-1">Guests</div>
+            <input type="number" class="form-control mb-1" placeholder="Adults" aria-label="Adults" id="adults" required>
+            <input type="number" class="form-control mb-1" placeholder="Child" aria-label="Child" id="children">
+            <input type="number" class="form-control" placeholder="Baby Bed" aria-label="babyBed" id="babyBed">
+        </div>
+        <div class="selectRoomType">
+            <div class="mb-1">Room Type</div>
+            <select class="form-select mb-2" aria-label="Default select room" id="selectRoomType" required>
+                <option value="1" selected>Single</option>
+                <option value="2">Double</option>
+                <option value="3">2x Double</option>
+                <option value="4">Penthouse</option>
+            </select>
+        </div>
+        <div class="comments">
+            <div class="form-check mb-1">
+                <label class="form-check-label" for="smoking">
+                    Smoking
+                </label>
+                <input class="form-check-input" type="radio" name="comments" id="smoking">
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" name="comments" id="nonSmoking" checked>
+                <label class="form-check-label" for="nonSmoking">
+                    Non Smoking
+                </label>
+            </div>
+            <div class="form-check mb-4">
+                <input class="form-check-input" type="radio" name="comments" id="disabled" checked>
+                <label class="form-check-label" for="disabled">
+                    Disabled
+                </label>
+            </div>
+
+            <div class="checkAvailability">
+                <button id="checkRoomsButton" type="button" class="btn btn-primary">
+                    Check Availability
+                </button>
+            </div>
+        </div>
+    </header>
+
+
+
+    <div class="float-end roomSelectedBtn">
+        <button id="selectedRoomButton" class="btn btn-primary">
+            Continue
+        </button>
+    </div>
+
+    <!-- Completing Reservation Modal -->
+    <div id="continueModal" class="modal fade " role="dialog">
+        <div class="modal-dialog">
+            <!-- Content-->
+            <div class="modal-content w-75">
+                <div class="modal-header bg-warning">
+                    <h4 class="modal-title">Registration</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="customerForm" class="needs-validation" >
+                    <div class="customerInfoForm">
+                        <div class="form-group">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" class="form-control" id="firstName" required/>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" class="form-control" id="lastName" required/>
-                        <div class="valid-feedback">
-                            Looks good!
+                        <div class="form-group">
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" class="form-control" id="lastName" required/>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="form-label">Email address:</label>
-                        <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
-                        <div class="invalid-feedback">
-                            Please provide a valid email address.
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email address:</label>
+                            <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid email address.
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone:</label>
-                        <input type="text" class="form-control" id="phone" required/>
+                        <div class="form-group">
+                            <label for="phone">Phone:</label>
+                            <input type="text" class="form-control" id="phone" required/>
+                        </div>
+                        <div class="form-group mt-2">
+                            <div class="mb-1">Document</div>
+                            <select class="form-select" id="documentType" aria-label="Default select document" required>
+                                <option selected>ID</option>
+                                <option value="1">Password</option>
+                                <option value="2">Driver License</option>
+                                <option value="3">Travel Document</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address:</label>
+                            <input type="text" class="form-control" id="address" />
+                        </div>
                     </div>
                     <div class="form-group mt-2">
-                        <div class="mb-1">Document</div>
-                        <select class="form-select" id="documentType" aria-label="Default select document" required>
-                            <option selected>ID</option>
-                            <option value="1">Password</option>
-                            <option value="2">Driver License</option>
-                            <option value="3">Travel Document</option>
-                        </select>
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                        <button id="closeButton" type="button" class="btn btn-default" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label for="address">Address:</label>
-                        <input type="text" class="form-control" id="address" />
-                    </div>
+                    </form>
                 </div>
-                <div class="form-group mt-2">
-                    <button type="submit" class="btn btn-primary">
-                        Submit
-                    </button>
-                    <button id="closeButton" type="button" class="btn btn-default" data-bs-dismiss="modal">
-                        Cancel
-                    </button>
-                </div>
-                </form>
             </div>
         </div>
     </div>
-</div>
 
-<div class="rooms container" id="rooms">
-    <!-- Rooms TABLE -->
-    <table id="roomsTable" class="table table-striped ">
-    </table>
-</div>
+    <div class="rooms container" id="rooms">
+        <!-- Rooms TABLE -->
+        <table id="roomsTable" class="table table-striped ">
+        </table>
+    </div>
 </body>
 </html>

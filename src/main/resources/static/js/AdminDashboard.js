@@ -1,8 +1,10 @@
 var RESERVATION_API = "http://localhost:9090/api/reservations" ;
 var CUSTOMERS_API="http://localhost:9090/api/customer";
-var HOME_ROUTE = "http://localhost:9090/home" ;
 var ROOMS_API = "http://localhost:9090/api/rooms";
 var USERS_API="http://localhost:9090/api/users";
+
+var RESERVATION_PAGE_ROUTE="http://localhost:9090/reservation/reservationpage";
+var HOME_ROUTE = "http://localhost:9090/home" ;
 
 var jsonData={"data":{"First":[{"Id":1,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":2,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":3,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":4,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":5,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":6,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":7,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":8,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":240},{"Id":9,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":240},{"Id":10,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Disabled room","Prijzen ":380},{"Id":11,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":12,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed","Comments":"Non Smoking","Prijzen ":380},{"Id":13,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Non Smoking","Prijzen ":220},{"Id":14,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Non Smoking","Prijzen ":220},{"Id":15,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":16,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":17,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":18,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":19,"Room":"2 x Double","Adults":4,"Childeren/baby":2,"Bed":"2xD 1XS 1XBaby beds","Comments":"Non Smoking","Prijzen ":550}],"Second floor":[{"Id":1,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":2,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":3,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":4,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":5,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":6,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":7,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":220},{"Id":8,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":240},{"Id":9,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":240},{"Id":10,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Disabled room","Prijzen ":380},{"Id":11,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":12,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed","Comments":"Non Smoking","Prijzen ":380},{"Id":13,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Non Smoking","Prijzen ":220},{"Id":14,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Non Smoking","Prijzen ":220},{"Id":15,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":16,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":17,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":380},{"Id":18,"Room":"Double","Adults":4,"Childeren/baby":2,"Bed":"2xD 1xS 1xBaby beds","Comments":"Non Smoking","Prijzen ":550},{"Id":19,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed","Comments":"Non Smoking","Prijzen ":380}],"Third floor":[{"Id":1,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":2,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":3,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":4,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":5,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":6,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":7,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Non Smoking","Prijzen ":0},{"Id":8,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":0},{"Id":9,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":0},{"Id":10,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Disabled room","Prijzen ":0},{"Id":11,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":0},{"Id":12,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed","Comments":"Non Smoking","Prijzen ":0},{"Id":13,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Non Smoking","Prijzen ":0},{"Id":14,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Non Smoking","Prijzen ":0},{"Id":15,"Room":"2x Double","Adults":4,"Childeren/baby":2,"Bed":"2x D 1xS 1xBaby beds","Comments":"Non Smoking","Prijzen ":0},{"Id":16,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":0},{"Id":17,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":0},{"Id":18,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed ","Comments":"Non Smoking","Prijzen ":0},{"Id":19,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed","Comments":"Non Smoking","Prijzen ":0}],"Fourth floor":[{"Id":41,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Smoking","Prijzen ":0},{"Id":42,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Smoking","Prijzen ":0},{"Id":43,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Smoking","Prijzen ":0},{"Id":44,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Smoking","Prijzen ":220},{"Id":45,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Smoking","Prijzen ":220},{"Id":46,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Smoking","Prijzen ":0},{"Id":47,"Room":"Single","Adults":1,"Childeren/baby":1,"Bed":"Single ","Comments":"Smoking","Prijzen ":0},{"Id":48,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":0},{"Id":49,"Room":"Single","Adults":1,"Childeren/baby":0,"Bed":"Single ","Comments":"Disabled room","Prijzen ":0},{"Id":410,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Disabled room","Prijzen ":0},{"Id":411,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed ","Comments":"Smoking","Prijzen ":0},{"Id":412,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"Double bed","Comments":"Smoking","Prijzen ":0},{"Id":413,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Smoking","Prijzen ":0},{"Id":414,"Room":"Double","Adults":2,"Childeren/baby":0,"Bed":"2 Single bed","Comments":"Smoking","Prijzen ":0},{"Id":415,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Smoking","Prijzen ":0},{"Id":416,"Room":"Double","Adults":2,"Childeren/baby":1,"Bed":"Double bed ","Comments":"Smoking","Prijzen ":0},{"Id":417,"Room":"Double","Adults":2,"Childeren/baby":2,"Bed":"Double bed ","Comments":"Smoking","Prijzen ":0},{"Id":418,"Room":"Penthouse","Adults":8,"Childeren/baby":2,"Bed":"2xD 4XS 2XBaby beds","Comments":"Smoking","Prijzen ":800},{"Id":419,"Room":"Penthouse","Adults":8,"Childeren/baby":2,"Bed":"2xD 4XS 2XBaby beds","Comments":"Smoking","Prijzen ":800}]}};
 var reservationTable;
@@ -381,6 +383,12 @@ function init() {
      $("#logoutConfirmButton").click(function(){
           window.location.href = HOME_ROUTE;
      });
+
+     //----------------------------------
+     //--- ROUTING RESERVATION PAGE -----
+     $("#addNewReservationBtn").click(function(){
+       window.location.href = RESERVATION_PAGE_ROUTE;
+     });
 }
 
 //------- RESERVATIONS -------
@@ -396,7 +404,7 @@ function initReservationTable() {
         { "title": "ID",
             "data": "id" },
         { "title":  "Room",
-            "data": "room.id" },
+            "data": "room.roomNumber" },
         { "title":  "Date",
             "data": "startDate",
             render: function(data,type,row){
@@ -434,7 +442,7 @@ function initReservationTable() {
         { "title": "Total Price",
             "data": "totalPrice",
             render: function ( data, type, row ) {
-              return '$'+ data;
+              return '¥'+ data;
           }}
     ];
 
@@ -622,11 +630,11 @@ function format(d) {
           <p>${d.babyBed}</p>
         </div>
         <div class="roomPrice">
-          <span>Room Price: $</span>
+          <span>Room Price: ¥</span>
           <p>${d.room.price}</p>
         </div>
         <div class="servicePrice">
-          <span>Service Price: $</span>
+          <span>Service Price: ¥</span>
           <p>${d.roomServicePrice}</p>
         </div>
         <div class="detail">
@@ -816,23 +824,26 @@ function initRoomsTable() {
                       if(data === true){
                        return "<span class='yes'>YES</span>";
                        } else { return "<span class='no'>NO</span>";}
-         }},
+        }},
         { "title":  "Price",
-            "data": "price"},
+            "data": "price",
+            render: function(data,type,row){
+                      return "¥" + data;
+        }},
         { "title":  "Disabled",
             "data": "disabled",
              render: function(data,type,row){
                      if(data === true){
                       return "<span class='yes'>YES</span>";
                      } else {return "<span class='no'>NO</span>"; }
-          }},
+        }},
         { "title": "Smoke",
             "data": "smoke",
             render: function(data,type,row){
                     if(data === true){
                      return "<span class='yes'>YES</span>";
                     }else{return "<span class='no'>NO</span>"; }
-          }},
+        }},
     ];
 
     // Define new table with above columns
@@ -1229,41 +1240,51 @@ return false;
 }
 }
 
+
+
 //------ Date  -----
 $( function() {
-  var dateFormat = "mm/dd/yy",
-    from = $( "#editStartDate" )
-      .datepicker({
-        defaultDate: "+1w",
+  var d=new Date();
+    var dateFormat = "mm/dd/yy",
+      from = $( "#editStartDate" )
+        .datepicker({
+          defaultDate: new Date(),
+          changeMonth: true,
+          changeYear: true,
+          yearRange: "2022:2025",
+          minDate: "+1d",
+          firstDay: 1,
+          numberOfMonths: 1,
+        })
+        .on( "change", function() {
+          to.datepicker( "option", "minDate", getDate( this ) );
+        }),
+      to = $( "#editEndDate" ).datepicker({
+        defaultDate: "+1d",
         changeMonth: true,
         changeYear: true,
-        yearRange: "2021:2025",
-        minDate: new Date(),
+        yearRange: "2022:2025",
         firstDay: 1,
         numberOfMonths: 1
       })
       .on( "change", function() {
-        to.datepicker( "option", "minDate", getDate( this ) );
-      }),
-    to = $( "#editEndDate" ).datepicker({
-      defaultDate: "+1w",
-      changeMonth: true,
-      changeYear: true,
-      yearRange: "2021:2025",
-      numberOfMonths: 1
-    })
-    .on( "change", function() {
-      from.datepicker( "option", "maxDate", getDate( this ) );
-    });
+        from.datepicker( "option", "maxDate", getDate( this ) );
+      });
 
-  function getDate( element ) {
-    var date;
-    try {
-      date = $.datepicker.parseDate( dateFormat, element.value );
-    } catch( error ) {
-      date = null;
+    function getDate( element ) {
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
+      }
+
+      return date;
     }
+  });
 
-    return date;
-  }
-} );
+CheckOutAddOne = function(){
+    CheckIn = $('#editStartDate').datepicker('getDate');
+    CheckOut = CheckIn.setDate(CheckIn.getDate() + 1);
+    $('#editEndDate').datepicker( "option", "minDate", new Date(CheckOut) );
+}
