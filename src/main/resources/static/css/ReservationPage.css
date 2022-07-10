@@ -55,14 +55,20 @@ nav {
 }
 
 header{
-    margin-left: 60px;
+    padding: 0px 10px 0 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid blue; */
+}
+
+#checkRoomsForm{
+    width: 100%;
     display: flex;
     justify-content: space-evenly;
     color: blueviolet;
     font-size: medium;
     font-weight: 600;
-    /* border: 1px solid blue; */
-
 }
 
 .checkinAndOut{

@@ -65,57 +65,59 @@
 
     <!--    Filtering Rooms for Reservation  -->
     <header>
-        <div class="checkinAndOut">
-            <div class="checkIn">
-                <label for="checkIn" class="form-label">Check in</label>
-                <input class="form-control" type="text" id="checkIn" autocomplete="off" required onchange="CheckOutAddOne()">
+        <form id="checkRoomsForm" class="needs-validation" novalidate>
+            <div class="checkinAndOut">
+                <div class="checkIn">
+                    <label for="checkIn" class="form-label">Check in</label>
+                    <input class="form-control" type="text" id="checkIn" autocomplete="off" onchange="CheckOutAddOne()" required>
+                </div>
+                <div class="checkOut">
+                    <label for="checkOut" class="form-label">Check out</label>
+                    <input class="form-control" type="text" id="checkOut" autocomplete="off" required>
+                </div>
             </div>
-            <div class="checkOut">
-                <label for="checkOut" class="form-label">Check out</label>
-                <input class="form-control" type="text" id="checkOut" autocomplete="off" required>
+            <div class="Guests">
+                <div class="mb-1">Guests</div>
+                <input type="number" class="form-control mb-1" placeholder="Adults" aria-label="Adults" id="adults" required>
+                <input type="number" class="form-control mb-1" placeholder="Child" aria-label="Child" id="children">
+                <input type="number" class="form-control" placeholder="Baby Bed" aria-label="babyBed" id="babyBed">
             </div>
-        </div>
-        <div class="Guests">
-            <div class="mb-1">Guests</div>
-            <input type="number" class="form-control mb-1" placeholder="Adults" aria-label="Adults" id="adults" required>
-            <input type="number" class="form-control mb-1" placeholder="Child" aria-label="Child" id="children">
-            <input type="number" class="form-control" placeholder="Baby Bed" aria-label="babyBed" id="babyBed">
-        </div>
-        <div class="selectRoomType">
-            <div class="mb-1">Room Type</div>
-            <select class="form-select mb-2" aria-label="Default select room" id="selectRoomType" required>
-                <option value="1" selected>Single</option>
-                <option value="2">Double</option>
-                <option value="3">2x Double</option>
-                <option value="4">Penthouse</option>
-            </select>
-        </div>
-        <div class="comments">
-            <div class="form-check mb-1">
-                <label class="form-check-label" for="smoking">
-                    Smoking
-                </label>
-                <input class="form-check-input" type="radio" name="comments" id="smoking">
+            <div class="selectRoomType">
+                <div class="mb-1">Room Type</div>
+                <select class="form-select mb-2" aria-label="Default select room" id="selectRoomType" required>
+                    <option value="1" selected>Single</option>
+                    <option value="2">Double</option>
+                    <option value="3">2x Double</option>
+                    <option value="4">Penthouse</option>
+                </select>
             </div>
-            <div class="form-check mb-1">
-                <input class="form-check-input" type="radio" name="comments" id="nonSmoking" checked>
-                <label class="form-check-label" for="nonSmoking">
-                    Non Smoking
-                </label>
-            </div>
-            <div class="form-check mb-4">
-                <input class="form-check-input" type="radio" name="comments" id="disabled" checked>
-                <label class="form-check-label" for="disabled">
-                    Disabled
-                </label>
-            </div>
+            <div class="comments">
+                <div class="form-check mb-1">
+                    <label class="form-check-label" for="smoking">
+                        Smoking
+                    </label>
+                    <input class="form-check-input" type="radio" name="comments" id="smoking">
+                </div>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="comments" id="nonSmoking" >
+                    <label class="form-check-label" for="nonSmoking">
+                        Non Smoking
+                    </label>
+                </div>
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="radio" name="comments" id="disabled" >
+                    <label class="form-check-label" for="disabled">
+                        Disabled
+                    </label>
+                </div>
 
-            <div class="checkAvailability">
-                <button id="checkRoomsButton" type="button" class="btn btn-primary">
-                    Check Availability
-                </button>
+                <div class="checkAvailability">
+                    <button id="checkRoomsButton" type="submit" class="btn btn-primary">
+                        Check Availability
+                    </button>
+                </div>
             </div>
-        </div>
+        </form>
     </header>
 
 
@@ -136,7 +138,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="customerForm" class="needs-validation" >
+                    <form id="customerForm" class="needs-validation" novalidate>
                     <div class="customerInfoForm">
                         <div class="form-group">
                             <label for="firstName">First Name:</label>

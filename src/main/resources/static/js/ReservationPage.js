@@ -22,9 +22,10 @@ function init(){
 
   initRoomsTable();
 
-  $("#checkRoomsButton").click(function(){
-    getRoomsData();
-  });
+  $("#checkRoomsForm").on("submit",function(event){
+      event.preventDefault();
+      getRoomsData();
+    });
 
   $("#roomsTable tbody").on("click", "tr", function () {
     console.log("Clicking on row");
@@ -46,6 +47,20 @@ function init(){
         $('#continueModal').modal('show');
     }
   });
+
+     //---- VALIDATIONS ---------
+     // Fetch all the forms we want to apply custom Bootstrap validation styles to
+     const forms = document.querySelectorAll('.needs-validation');
+     // Loop over them and prevent submission
+     Array.from(forms).forEach(form => {
+       form.addEventListener('submit', event => {
+         if (!form.checkValidity()) {
+           event.preventDefault();
+           event.stopPropagation();
+         }
+         form.classList.add('was-validated');
+       }, false)
+     });
 }
 
 //------ Date  -----
@@ -256,22 +271,3 @@ function createReservation(){
 
 }
 
-
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(() => {
-  'use strict'
-
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll('.needs-validation')
-
-  // Loop over them and prevent submission
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()

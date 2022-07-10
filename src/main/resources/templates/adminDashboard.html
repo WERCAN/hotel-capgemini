@@ -382,15 +382,15 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="roomForm">
+                                    <form id="roomForm" class="needs-validation" novalidate>
                                         <div class="reservationFormContent">
                                             <div class="newRoomForm">
                                                 <div class="form-group">
                                                     <label for="newRoomNumber">Room No:</label>
-                                                    <input type="number" class="form-control" id="newRoomNumber" />
+                                                    <input type="number" class="form-control" id="newRoomNumber" required/>
                                                 </div>
                                                 <div class="form-group mt-2">
-                                                    <select class="form-select" id="newSelectRoomType" aria-label="Default select room">
+                                                    <select class="form-select" id="newSelectRoomType" aria-label="Default select room" required>
                                                         <option selected>Room Type</option>
                                                         <option value="1">Single</option>
                                                         <option value="2">Double</option>
@@ -400,17 +400,17 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="newRoomGuests">Guests:</label>
-                                                    <input type="number" class="form-control" id="newRoomGuests" />
+                                                    <input type="number" class="form-control" id="newRoomGuests" required/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="newRoomBaby">Children:</label>
-                                                    <input type="number" class="form-control" id="newRoomBaby" />
+                                                    <input type="number" class="form-control" id="newRoomBaby" required/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="newRoomPrice">Price: </label>
                                                     <div class="input-group">
                                                         <span class="input-group-text">¥</span>
-                                                        <input type="number" class="form-control" id="newRoomPrice"/>
+                                                        <input type="number" class="form-control" id="newRoomPrice" required/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -420,11 +420,11 @@
                                             <div class="customerInfoForm">
                                                 <div class="form-group">
                                                     <label for="newRoomSingleBed">Single Bed:</label>
-                                                    <input type="number" class="form-control" id="newRoomSingleBed" />
+                                                    <input type="number" class="form-control" id="newRoomSingleBed" required/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="newRoomDoubleBed">Double Bed:</label>
-                                                    <input type="number" class="form-control" id="newRoomDoubleBed" />
+                                                    <input type="number" class="form-control" id="newRoomDoubleBed" required/>
                                                 </div>
                                                 <div class="form-group mt-2" id="isCleanNewRoom">
                                                     <span>isClean: </span>
@@ -518,7 +518,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="editBaby">Children:</label>
-                                                    <input type="number" class="form-control" id="editBaby"/>
+                                                    <input type="number" class="form-control" id="editBaby" />
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="editRoomPrice">Price: </label>
@@ -631,14 +631,23 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form id="userForm">
+                                <form id="userForm" class="needs-validation" novalidate>
                                     <div class="form-group">
                                         <label for="newUserFirstName">First Name:</label>
                                         <input type="text" class="form-control" id="newUserFirstName" required/>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please provide the required fields.
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="newUserLastName">Last Name:</label>
                                         <input type="text" class="form-control" id="newUserLastName" required/>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="newUserName">UserName:</label>
@@ -647,6 +656,9 @@
                                     <div class="form-group">
                                         <label for="newUserPassword">Password:</label>
                                         <input type="text" class="form-control" id="newUserPassword" required/>
+                                        <div class="invalid-feedback">
+                                            Password must include at least a capital letter, a lowercase letter, a number.
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="newUserRole">Role:</label>
@@ -655,6 +667,9 @@
                                     <div class="form-group">
                                         <label for="newUserEmail">Email:</label>
                                         <input type="email" class="form-control" id="newUserEmail"  required/>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid email.
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="newUserAddress">address:</label>
@@ -713,20 +728,23 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form id="editUserForm">
+                                <form id="editUserForm" class="needs-validation" novalidate>
                                     <div class="reservationFormContent">
                                         <div class="customerInfoForm">
                                             <div class="form-group">
                                                 <label for="editUserFirstName">First Name:</label>
-                                                <input type="text" class="form-control" id="editUserFirstName" />
+                                                <input type="text" class="form-control" id="editUserFirstName" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="editUserLastName">Last Name:</label>
-                                                <input type="text" class="form-control" id="editUserLastName" />
+                                                <input type="text" class="form-control" id="editUserLastName" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="editUserEmail" class="form-label">Email address:</label>
-                                                <input type="email" class="form-control" id="editUserEmail" placeholder="name@example.com">
+                                                <input type="email" class="form-control" id="editUserEmail" placeholder="name@example.com" required>
+                                                <div class="invalid-feedback">
+                                                    Please provide a valid email.
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="editUserAddress">Adress:</label>
@@ -739,11 +757,14 @@
                                         <div class="customerInfoForm">
                                             <div class="form-group">
                                                 <label for="editUserPassword">Password:</label>
-                                                <input type="text" class="form-control" id="editUserPassword" />
+                                                <input type="text" class="form-control" id="editUserPassword" required/>
+                                                <div class="invalid-feedback">
+                                                    Password must include at least a capital letter, a lowercase letter, a number.
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="editUserUsername">Username:</label>
-                                                <input type="text" class="form-control" id="editUserUsername" />
+                                                <input type="text" class="form-control" id="editUserUsername" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="editUserBirthdate">Birthdate:</label>
