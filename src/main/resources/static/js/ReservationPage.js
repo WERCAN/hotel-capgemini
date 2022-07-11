@@ -48,6 +48,7 @@ function init(){
     console.log("Inside reservationSubmit");
     customerCreate();
     reservationCreate();
+    getRoomsData();
   })
 }
 
@@ -266,7 +267,7 @@ function customerCreate(){
          address : $("#address").val(),
          email : $("#email").val(),
          phone : $("#phone").val(),
-         typeOfDocument : $("#documentType").val().text()
+         typeOfDocument : $("#documentType :selected").text()
      }
 
      var customerInfoJson=JSON.stringify(customerInfo);
