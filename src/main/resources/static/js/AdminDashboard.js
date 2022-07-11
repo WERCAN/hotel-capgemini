@@ -10,6 +10,7 @@ var jsonData={"data":{"First":[{"Id":1,"Room":"Single","Adults":1,"Childeren/bab
 var reservationTable;
 var roomsTable;
 var customerInfo=[];
+var roomInfoEdit;
 
 // INIT
 function init() {
@@ -93,22 +94,22 @@ function init() {
          $("#editServicePrice").val(reservationInfoEdit.roomServicePrice);
 
           if(reservationInfoEdit.payment == true){
-                       $("#paymentPaidRadio").prop("checked", true);
-                     }else{
-                       $("#paymentUnPaidRadio").prop("checked", true);
-                     }
+           $("#paymentPaidRadio").prop("checked", true);
+         }else{
+           $("#paymentUnPaidRadio").prop("checked", true);
+         }
 
-                     if(reservationInfoEdit.checkedIn == true){
-                       $("#checkedInYesRadioId").prop("checked", true);
-                     }else{
-                       $("#checkedInNoRadioId").prop("checked", true);
-                     }
+         if(reservationInfoEdit.checkedIn == true){
+           $("#checkedInYesRadioId").prop("checked", true);
+         }else{
+           $("#checkedInNoRadioId").prop("checked", true);
+         }
 
-                     if(reservationInfoEdit.checkedOut == true){
-                       $("#checkedOutYesRadioId").prop("checked", true);
-                     }else{
-                       $("#checkedOutNoRadioId").prop("checked", true);
-                     }
+         if(reservationInfoEdit.checkedOut == true){
+           $("#checkedOutYesRadioId").prop("checked", true);
+         }else{
+           $("#checkedOutNoRadioId").prop("checked", true);
+         }
 
          $('#editReservationModal').modal('show');
     }
@@ -548,8 +549,10 @@ function createReservation(){
         var checkedOut= $("#checkedOut  input[name='checkedOutRadioName']:checked").val();
             if(checkedOut == "yes"){
               reservationInfoEdit.checkedOut = true;
+              reservationInfoEdit.room.cleanRoom=false;
             }else{
               reservationInfoEdit.checkedOut = false;
+              reservationInfoEdit.room.cleanRoom=true;
             }
 
         var paymentStatus= $("#paymentStatus  input[name='paymentRadioName']:checked").val();
@@ -558,9 +561,31 @@ function createReservation(){
         }else{
           reservationInfoEdit.payment = false;
         }
-
+        //update if the room is clean
+     var reservationRoomJson = JSON.stringify(reservationInfoEdit.room);
      var reservationJson = JSON.stringify(reservationInfoEdit);
      console.log(reservationJson);
+     $.ajax({
+           url: ROOMS_API,
+           type: "post",
+           contentType:"application/json",
+           datatype: "json",
+           data: reservationRoomJson,
+           // success: function(reservations, textStatus, jqXHR){
+           success: function(response){
+               if (response) {
+                  console.log("ROOM ISCLEAN UPDATED Success!!!!!!");
+                  getRoomsData();
+               }else{
+                 console.log("NOT ISCLEAN Success!!!!!!");
+               }
+           },
+           fail: function (error) {
+               console.log('Error: ' + error);
+           }
+       });
+
+
     $.ajax({
       url: RESERVATION_API,
       type: "post",
@@ -572,6 +597,7 @@ function createReservation(){
           if (response) {
              console.log("Success!!!!!!");
            getReservationData();
+           getRoomsData();
           }
       },
       fail: function (error) {
@@ -777,6 +803,9 @@ function createCustomer(){
     reservationInfoEdit.roomServicePrice = $("#editServicePrice").val();
 
     console.log(reservationInfoEdit);
+
+
+
     $.ajax({
       url: RESERVATION_API,
       type: "post",
