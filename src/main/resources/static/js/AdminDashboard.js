@@ -440,7 +440,7 @@ function initReservationTable() {
         { "title":  "Checked-out",
           "data": "endDate",
           render: function(data, type,row){
-              if (row.checkedOut == true) {
+              if (row.checkedOut == true && row.checkedIn == true) {
                  return data + checkTrue;
               }else{return data + checkFalse;
               }

@@ -48,22 +48,22 @@
     </div>
     <!-- Navbar pages links buttons -->
     <ul class="nav-links">
-        <li class="nav-link"><a href="#about"> About us </a></li>
-        <li class="nav-link"><a href="#footer"> Contact </a></li>
+        <li class="nav-link"><a href="#about" id="aboutBtn"> About us </a></li>
+        <li class="nav-link"><a href="#footer" id="contactBtn"> Contact </a></li>
         <li class="login">
             <!-- Button trigger modal so login form-->
             <button class="nav-link login-btn" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
-                <a href="#"> Log in </a>
+                <a href="#" id="loginBtn"> Log in </a>
             </button>
         </li>
     </ul>
 
-    <div class="d-flex flags">
+    <div class="flags">
         <div class="flagEn">
-            <img src="/assests/englishIcon.png"/>
+            <a href="#" id="enImg"><img src="/assests/englishIcon.png"/></a>
         </div>
         <div class="flagCn">
-            <img src="/assests/China-icon.png"/>
+            <a href="#" id="cnImg"><img src="/assests/China-icon.png"/></a>
         </div>
     </div>
 </nav>
@@ -74,14 +74,14 @@
         <div class="modal-content">
             <form class="login validate needs-validation" novalidate>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label"><span>*</span>User name</label>
+                    <label for="exampleInputEmail1" class="form-label" id="username">User name</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required/>
                     <div class="invalid-feedback">
                         Please enter a username.
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label"><span>*</span>Password</label>
+                    <label for="exampleInputPassword1" class="form-label" id="password">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1"
                            aria-required="true" aria-invalid="true" required/>
                     <div class="invalid-feedback">
@@ -102,9 +102,9 @@
                 <div class="calendarModal">
                     <div id="calHelp">
                         <div class="first active">
-                            <i>Check-in</i> <b id="sel1text">SELECT DEPART</b>
+                            <i id="checkin">Check-in</i> <b id="sel1text">SELECT DEPART</b>
                         </div>
-                        <div class="disabled"><i>Check-out</i> <b id="sel2text">RETURN</b></div>
+                        <div class="disabled" id="checkout"><i>Check-out</i> <b id="sel2text">RETURN</b></div>
                     </div>
                     <div id="disp">
                         <div id="prev" class="nav">&larr;</div>
@@ -117,36 +117,36 @@
                 <div class="reservationModalRight">
                     <div class="selectRoomModal">
                         <select class="form-select m-1" aria-label="Default select room">
-                            <option selected>Room</option>
-                            <option value="1">Single</option>
-                            <option value="2">Double</option>
-                            <option value="3">2x Double</option>
-                            <option value="4">Penthouse</option>
+                            <option selected id="room">Room</option>
+                            <option value="1" id="single">Single</option>
+                            <option value="2" id="double">Double</option>
+                            <option value="3" id="x2Double">2x Double</option>
+                            <option value="4" id="penthouse">Penthouse</option>
                         </select>
                     </div>
 
                     <div class="reservationModalAdultandChild">
-                        <input type="number" class="form-control m-2" placeholder="Adults" aria-label="Adults">
-                        <input type="number" class="form-control m-2" placeholder="Child" aria-label="Child">
-                        <input type="number" class="form-control m-2" placeholder="Baby Bed" aria-label="Baby">
+                        <input type="number" class="form-control m-2" placeholder="Adults" aria-label="Adults" id="adults">
+                        <input type="number" class="form-control m-2" placeholder="Child" aria-label="Child" id="child">
+                        <input type="number" class="form-control m-2" placeholder="Baby Bed" aria-label="Baby" id="babyBed">
                     </div>
 
                     <div class="reservationModalRadio m-2">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault">
-                            <label class="form-check-label" for="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1" id="smoking">
                                 Smoking
                             </label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
-                            <label class="form-check-label" for="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2" id="nonSmoking">
                                 Non Smoking
                             </label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                            <label class="form-check-label" for="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2" id="disabled">
                                 Disabled
                             </label>
                         </div>
@@ -168,25 +168,11 @@
     <img class="mySlides" src="/assests/hotel-foto3.jpg" />
 
     <div class="home-main-text">
-        <p>Some nice texts coming here</p>
-        <p>Some nice texts coming here</p>
-        <button type="button" data-bs-toggle="modal" data-bs-target="#reservationModal">
+        <p id="text-p1">Some nice texts coming here</p>
+        <p id="text-p2">Some nice texts coming here</p>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#reservationModal" id="reservationBtn">
             Reservation
         </button>
-    </div>
-
-    <!-- Reservation Modal -->
-    <div class="modal fade" id="reservationModalButton" tabindex="-1" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <h1>Reservation Modal</h1>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Check</button>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -198,7 +184,7 @@
 
     <div class="about-text">
         <div class="about-title">
-            <h2>About us</h2>
+            <h2 id="aboutUs">About us</h2>
         </div>
         <div class="about-text-body">
             <p>
@@ -221,7 +207,7 @@
 <footer id="footer">
     <div class="main-content">
         <div class="left box">
-            <h2>Socials</h2>
+            <h2 id="social">Socials</h2>
             <div class="content">
                 <p>
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui cum
@@ -238,7 +224,7 @@
         </div>
 
         <div class="center box">
-            <h2>Address</h2>
+            <h2 id="address">Address</h2>
             <div class="content">
                 <div class="place">
                     <a href="#">

@@ -7,6 +7,17 @@ function init(){
     carousel();
     calendarFnc();
 
+    $("#enImg").click(function(){
+        setLanguage('en');
+        getLanguage();
+        console.log(localStorage.getItem('language'));
+      })
+      $("#cnImg").click(function(){
+        setLanguage('cn');
+        getLanguage();
+        console.log(localStorage.getItem('language'));
+      })
+
 
       // -------------------------
       // ----  VALIDATIONS -------
@@ -346,4 +357,49 @@ console.log('Inside checkValidUser');
               console.log('Error: ' + error);
             }
         });
+}
+
+//--- LANGUAGE ----
+//-----------------
+var language;
+function getLanguage() {
+  (localStorage.getItem('language') == null) ? setLanguage('en') : false;
+
+  var url= '/language/' +  localStorage.getItem('language') + '.json';
+
+  $.getJSON(url, function(data){
+    $("#aboutBtn").text(data.aboutUs);
+    $("#contactBtn").text(data.contact);
+    $("#loginBtn").text(data.logIn);
+    $("#userName").text(data.username);
+    $("#password").text(data.password);
+    $("#submitLoginButton").text(data.submit);
+    $("#text-p1").text(data.textp1);
+    $("#text-p2").text(data.textp2);
+    $("#reservationBtn").text(data.reservation);
+    $("#checkIn").text(data.checkIn);
+    $("#checkOut").text(data.checkOut);
+    $("#room").text(data.room);
+    $("#single").text(data.single);
+    $("#double").text(data.double);
+    $("#x2double").text(data.x2double);
+    $("#pentHouse").text(data.pentHouse);
+    $("#adults").text(data.adults);
+    $("#child").text(data.child);
+    $("#smoking").text(data.smoking);
+    $("#nonSmoking").text(data.nonSmoking);
+    $("#disabled").text(data.disabled);
+    $("#aboutUsText").text(data.aboutUsText);
+    $("#social").text(data.social);
+    $("#socialDescription").text(data.socialDescription);
+    $("#address").text(data.address);
+
+  }).fail(function(){
+      console.log("An error has occurred.");
+  });
+
+}
+
+function setLanguage(lang) {
+  localStorage.setItem('language', lang);
 }
