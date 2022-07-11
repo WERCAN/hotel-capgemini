@@ -246,7 +246,6 @@ selectedRoom=roomsTable.row($('.selected')).data();
 
 
 //var xx = [];
-//customerInfo.id=trial;
 //xx.push(customerInfo);
 console.log(customerInfoList.toString());
 
@@ -313,55 +312,6 @@ reservationInfo={
 
 }
 
-//   {
-//     "startDate": "07/07/2022",
-//     "endDate": "07/08/2022",
-//     "checkedIn": true,
-//     "checkedOut": true,
-//     "payment": true,
-//     "price": 641.76,
-//     "totalPrice": 641.76,
-//     "roomServicePrice": 0.0,
-//     "babyBed": 6,
-//     "nowDate": "07/06/2022",
-//     "room": {
-//         "roomType": "Double",
-//         "sizePerson": 4,
-//         "roomNumber": 1,
-//         "singleBedAmount": 2,
-//         "doubleBedAmount": 1,
-//         "cleanRoom": true,
-//         "roomActive": true,
-//         "price": 22.0,
-//         "childrenPlace": 2,
-//         "disabled": false,
-//         "smoke": true,
-//         "id": 35
-//     },
-//     "customers": [
-//         {
-//             "id": 1,
-//             "firstName": "Marlene",
-//             "lastName": "Jones",
-//             "address": "8554 Casper Plaza, North Rahul, NY 85427",
-//             "email": "cordia.towne@yahoo.com",
-//             "phone": "(408) 383-0656",
-//             "typeOfDocument": "Passport"
-//         },
-//         {
-//             "id": 2,
-//             "firstName": "Monserrate",
-//             "lastName": "Kautzer",
-//             "address": "Suite 130 688 Lebsack Pines, South Khalid, ME 66714-3545",
-//             "email": "flavio.ziemann@yahoo.com",
-//             "phone": "1-329-106-5789",
-//             "typeOfDocument": "Passport"
-//         }
-//     ],
-//     "id": 42
-// }
-
-
 
 
 
@@ -385,7 +335,7 @@ customerInfo={
 
          console.log(customerInfoJson);
 
-                               console.log("just before customer create ajax");
+         console.log("just before customer create ajax");
 
          $.ajax({
                url: customersApi,
@@ -420,44 +370,7 @@ customerInfo={
                }
            });
 
-                                          console.log("just after customer create ajax");
-
-
-
-
-//             $.ajax({
-//                   url: lastCustomerApi,
-//                   type: "get",
-//                   dataType: "json",
-//                   success: function(returnLastCustomer){
-//                       customerInfoList[0]=returnLastCustomer;
-//                       console.log(customerInfoList[0]);
-//                   },
-//                   fail: function (error) {
-//                       console.log('Error: ' + error);
-//                   }
-//               });
-
+            console.log("just after customer create ajax");
 
 
 }
-
-
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(() => {
-  'use strict'
-
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll('.needs-validation')
-
-  // Loop over them and prevent submission
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()
