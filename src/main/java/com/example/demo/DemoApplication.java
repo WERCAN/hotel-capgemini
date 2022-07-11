@@ -9,11 +9,15 @@ import com.example.demo.repository.CustomerRepository;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.RoomRepository;
 import com.example.demo.repository.UserRepository;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -74,18 +78,23 @@ public class DemoApplication implements CommandLineRunner {
 		userRepository.saveAll(users);
 
 
+		List<Room> rooms;
 
-
-		List<Room> rooms = new ArrayList<>();
-		rooms.add(new Room("Double",4,1,2,1,true,true,22,2,false,true));
-		rooms.add(new Room("Penthouse",2,2,2,0,true,true,2,2,false,true));
-		rooms.add(new Room("Double",2,3,2,0,true,true,2,2,false,true));
-		rooms.add(new Room("Double",2,4,2,0,true,true,2,2,false,true));
-		rooms.add(new Room("Double",2,5,2,0,true,true,2,2,false,true));
-		rooms.add(new Room("Double",2,6,2,0,true,true,2,2,false,true));
-		rooms.add(new Room("Double",2,7,2,0,true,true,2,2,false,true));
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = Files.readString(Paths.get("src/main/resources/rooms.json"));
+		TypeReference<List<Room>> mapType = new TypeReference<List<Room>>() {};
+		rooms = objectMapper.readValue(json, mapType);
 
 		roomRepository.saveAll(rooms);
+//		rooms.add(new Room("Double",4,1,2,1,true,true,22,2,false,true));
+//		rooms.add(new Room("Penthouse",2,2,2,0,true,true,2,2,false,true));
+//		rooms.add(new Room("Double",2,3,2,0,true,true,2,2,false,true));
+//		rooms.add(new Room("Double",2,4,2,0,true,true,2,2,false,true));
+//		rooms.add(new Room("Double",2,5,2,0,true,true,2,2,false,true));
+//		rooms.add(new Room("Double",2,6,2,0,true,true,2,2,false,true));
+//		rooms.add(new Room("Double",2,7,2,0,true,true,2,2,false,true));
+//
+//		roomRepository.saveAll(rooms);
 
 
 
@@ -109,6 +118,8 @@ public class DemoApplication implements CommandLineRunner {
 		}
 
 		reservationRepository.saveAll(reservations);
+
+
 
 
 

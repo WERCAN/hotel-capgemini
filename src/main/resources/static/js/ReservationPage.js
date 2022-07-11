@@ -32,9 +32,10 @@ function init(){
 
   initRoomsTable();
 
-  $("#checkRoomsButton").click(function(){
-    getRoomsData();
-  });
+  $("#checkRoomsForm").on("submit",function(event){
+      event.preventDefault();
+      getRoomsData();
+    });
 
   $("#roomsTable tbody").on("click", "tr", function () {
     console.log("Clicking on row");
@@ -64,6 +65,20 @@ function init(){
 
   });
 
+
+     //---- VALIDATIONS ---------
+     // Fetch all the forms we want to apply custom Bootstrap validation styles to
+     const forms = document.querySelectorAll('.needs-validation');
+     // Loop over them and prevent submission
+     Array.from(forms).forEach(form => {
+       form.addEventListener('submit', event => {
+         if (!form.checkValidity()) {
+           event.preventDefault();
+           event.stopPropagation();
+         }
+         form.classList.add('was-validated');
+       }, false)
+     });
 }
 
 //------ Date  -----
@@ -75,7 +90,7 @@ $( function() {
           changeMonth: true,
           changeYear: true,
           yearRange: "2022:2025",
-          minDate: new Date(),
+          minDate: "+1d",
           firstDay: 1,
           numberOfMonths: 1
         })
@@ -87,6 +102,7 @@ $( function() {
         changeMonth: true,
         changeYear: true,
         yearRange: "2022:2025",
+        firstDay: 1,
         numberOfMonths: 1
       })
       .on( "change", function() {
@@ -104,6 +120,12 @@ $( function() {
       return date;
     }
   });
+
+CheckOutAddOne = function(){
+    CheckIn = $('#checkIn').datepicker('getDate');
+    CheckOut = CheckIn.setDate(CheckIn.getDate() + 1);
+    $('#checkOut').datepicker( "option", "minDate", new Date(CheckOut) );
+}
 
 //------- ROOMS -------
 //------- INIT Rooms Table -------
@@ -128,7 +150,7 @@ function initRoomsTable() {
       { "title":  "Price",
           "data": "price",
           render: function(data,type,row){
-            return "$" + data;
+            return "¥" + data;
       }},
       { "title":  "Disabled",
           "data": "disabled",

@@ -7,6 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 @RestController
 @RequestMapping("api")
 public class RoomController {
@@ -37,11 +40,8 @@ public class RoomController {
     public boolean createRoom( @RequestBody Room room){
 
         System.out.println("Inside createRoom");
-
         boolean checkSaved = roomService.createRoom(room);
-
         return checkSaved;
-
     }
 
     @DeleteMapping(value = "/rooms/{roomId}", produces= MediaType.TEXT_PLAIN_VALUE)

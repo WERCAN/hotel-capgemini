@@ -37,13 +37,12 @@ public class RoomServiceImpl implements RoomService{
         if(checkRoomNumber(room)) {
             Room createdRoom = roomRepository.save(room);
             return true;
-        }else if(room.getId()!=0&&checkEditRoomNumber(room)){
+        }else if(room.getId() !=0 && checkEditRoomNumber(room)){
 
             Room editedRoom = roomRepository.save(room);
             return true;
         }
         return false;
-
     }
 
     @Override
