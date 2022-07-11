@@ -14,21 +14,6 @@ var trial;
 var customerInfoList = [];
 
 function init(){
-  $.ajax({
-    url: ROOMS_API,
-    type: "get",
-    datatype: "json",
-    success: function(rooms){
-        if (rooms) {
-            roomsTable.clear();
-            roomsTable.rows.add(rooms);
-            roomsTable.columns.adjust().draw();
-        }
-    },
-    fail: function (error) {
-        console.log('Error: ' + error);
-    }
-  });
 
   initRoomsTable();
 
@@ -58,27 +43,12 @@ function init(){
     }
   });
 
-  $("#reservationSubmit").click(function () {
-      console.log("Inside reservationSubmit");
-      customerCreate();
-      reservationCreate();
-
-  });
-
-
-     //---- VALIDATIONS ---------
-     // Fetch all the forms we want to apply custom Bootstrap validation styles to
-     const forms = document.querySelectorAll('.needs-validation');
-     // Loop over them and prevent submission
-     Array.from(forms).forEach(form => {
-       form.addEventListener('submit', event => {
-         if (!form.checkValidity()) {
-           event.preventDefault();
-           event.stopPropagation();
-         }
-         form.classList.add('was-validated');
-       }, false)
-     });
+  $("#customerForm").on('submit',function(e){
+    e.preventDefault();
+    console.log("Inside reservationSubmit");
+    customerCreate();
+    reservationCreate();
+  })
 }
 
 //------ Date  -----
@@ -238,88 +208,58 @@ function getRoomsData(){
 }
 
 function reservationCreate(){
+    selectedRoom=roomsTable.row($('.selected')).data();
 
-console.log("reservationCreate");
+    let date = new Date();
+    let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 
-selectedRoom=roomsTable.row($('.selected')).data();
+    reservationInfo={
+     id:0,
+     startDate : $("#checkIn").val(),
+     endDate : $("#checkOut").val(),
+     checkedIn : false,
+     checkedOut : false,
+     payment : false,
+     price : 0,
+     totalPrice : 0,
+     roomServicePrice : 0,
+     babyBed : 0,
+     nowDate : currentDate,
+     room: selectedRoom,
+     customers: customerInfoList
+     }
 
+     var reservationInfoJson=JSON.stringify(reservationInfo);
+     $.ajax({
+        url: reservationApi,
+        type: "post",
+        contentType:"application/json",
+        datatype: "json",
+        data: reservationInfoJson,
+        success: function(reservation){
+        console.log("Reservation is saved successfully");
+        $('#continueModal').modal('hide');
+        },
+        fail: function (error) {
+            console.log('Error: ' + error);
+        }
+    });
 
-
-//var xx = [];
-//xx.push(customerInfo);
-console.log(customerInfoList.toString());
-
-let date = new Date();
-  let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-
-reservationInfo={
-         id:0,
-         startDate : $("#checkIn").val(),
-         endDate : $("#checkOut").val(),
-         checkedIn : false,
-         checkedOut : false,
-         payment : false,
-         price : 0,
-         totalPrice : 0,
-         roomServicePrice : 0,
-         babyBed : 0,
-         nowDate : currentDate,
-         room: selectedRoom,
-         customers: customerInfoList
+     $( function getDate( element ) {
+         var dateFormat = "mm/dd/yy";
+         var date;
+         try {
+           date = $.datepicker.parseDate( dateFormat, element.value );
+         } catch( error ) {
+           date = null;
          }
-
-         var reservationInfoJson=JSON.stringify(reservationInfo);
-
-           console.log(typeof reservationInfoJson);
-           console.log(reservationInfoJson);
-
-           console.log("just before reservation create ajax")
-
-         $.ajax({
-
-                        url: reservationApi,
-                        type: "post",
-                        contentType:"application/json",
-                        datatype: "json",
-                        data: reservationInfoJson,
-                        success: function(reservation){
-                        console.log("Reservation is saved successfully")
-                        },
-                        fail: function (error) {
-                            console.log('Error: ' + error);
-                        }
-                    });
-
-                               console.log("just after reservation create ajax");
-
-
-
-
-
-
-         $( function getDate( element ) {
-             var dateFormat = "mm/dd/yy";
-             var date;
-             try {
-               date = $.datepicker.parseDate( dateFormat, element.value );
-             } catch( error ) {
-               date = null;
-             }
-             return date;
-           }
-         );
-
-
+         return date;
+       }
+     );
 }
 
-
-
-
 function customerCreate(){
-
-console.log("Customercreate function");
-
-customerInfo={
+    customerInfo={
          id:0,
          firstName : $("#firstName").val(),
          lastName : $("#lastName").val(),
@@ -327,35 +267,21 @@ customerInfo={
          email : $("#email").val(),
          phone : $("#phone").val(),
          typeOfDocument : $("#documentType").val()
-         }
+     }
 
+     var customerInfoJson=JSON.stringify(customerInfo);
+     console.log(customerInfoJson);
 
-
-         var customerInfoJson=JSON.stringify(customerInfo);
-
-         console.log(customerInfoJson);
-
-         console.log("just before customer create ajax");
-
-         $.ajax({
-               url: customersApi,
-               type: "post",
-               contentType:"application/json",
-               datatype: "json",
-               async: false,
-               data: customerInfoJson,
-               success: function(returnCustomers){
-              // console.log(typeof returnCustomers);
-              customerInfoList[0]=returnCustomers;
+     $.ajax({
+           url: customersApi,
+           type: "post",
+           contentType:"application/json",
+           datatype: "json",
+           async: false,
+           data: customerInfoJson,
+           success: function(returnCustomers){
+               customerInfoList[0]=returnCustomers;
                console.log(returnCustomers);
-               //console.log("abcdef");
-               //console.log(JSON.parse('returnCustomers'));
-//               Array.prototype.push.apply(customerInfoList,returnCustomers);
-//               console.log(customerInfoList.toString());
-               //trial=returnCustomers[0].id;
-               //console.log(trial)
-
-
                    if (returnCustomers) {
                        $("#firstName").val('');
                        $("#lastName").val('');
@@ -365,12 +291,8 @@ customerInfo={
                        $("#documentType").val('');
                    }
                },
-               fail: function (error) {
-                   console.log('Error: ' + error);
-               }
-           });
-
-            console.log("just after customer create ajax");
-
-
+           fail: function (error) {
+               console.log('Error: ' + error);
+           }
+       });
 }
