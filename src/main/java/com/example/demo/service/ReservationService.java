@@ -12,4 +12,5 @@ public interface ReservationService {
     public Reservation createReservation(Reservation reservation);
     public boolean deleteReservation(long reservationId);
     public List<Room> getAvailableRooms(Filter filter);
+    public Customer findLastCustomer();
 }

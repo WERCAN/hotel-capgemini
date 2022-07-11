@@ -1,7 +1,17 @@
 var ROOMS_API = "http://localhost:9090/api/rooms";
 var AVAILABLE_ROOMS_API="http://localhost:9090/api/reservations/availableRooms";
+var customersApi = "http://localhost:9090/api/customer"
+var reservationApi = "http://localhost:9090/api/reservations";
+var lastCustomerApi = "http://localhost:9090/api/reservations/lastcustomer"
 
+var customerInfo;
+var selectedRoom;
+var createdCustomer;
 var roomsTable;
+var reservationInfo;
+
+var trial;
+var customerInfoList = [];
 
 function init(){
   $.ajax({
@@ -46,6 +56,14 @@ function init(){
         $('#continueModal').modal('show');
     }
   });
+
+  $("#reservationSubmit").click(function () {
+      console.log("Inside reservationSubmit");
+      customerCreate();
+      reservationCreate();
+
+  });
+
 }
 
 //------ Date  -----
@@ -197,7 +215,81 @@ function getRoomsData(){
   });
 }
 
-function createReservation(){
+function reservationCreate(){
+
+console.log("reservationCreate");
+
+selectedRoom=roomsTable.row($('.selected')).data();
+
+
+
+//var xx = [];
+//customerInfo.id=trial;
+//xx.push(customerInfo);
+console.log(customerInfoList.toString());
+
+let date = new Date();
+  let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+reservationInfo={
+         id:0,
+         startDate : $("#checkIn").val(),
+         endDate : $("#checkOut").val(),
+         checkedIn : false,
+         checkedOut : false,
+         payment : false,
+         price : 0,
+         totalPrice : 0,
+         roomServicePrice : 0,
+         babyBed : 0,
+         nowDate : currentDate,
+         room: selectedRoom,
+         customers: customerInfoList
+         }
+
+         var reservationInfoJson=JSON.stringify(reservationInfo);
+
+           console.log(typeof reservationInfoJson);
+           console.log(reservationInfoJson);
+
+           console.log("just before reservation create ajax")
+
+         $.ajax({
+
+                        url: reservationApi,
+                        type: "post",
+                        contentType:"application/json",
+                        datatype: "json",
+                        data: reservationInfoJson,
+                        success: function(reservation){
+                        console.log("Reservation is saved successfully")
+                        },
+                        fail: function (error) {
+                            console.log('Error: ' + error);
+                        }
+                    });
+
+                               console.log("just after reservation create ajax");
+
+
+
+
+
+
+         $( function getDate( element ) {
+             var dateFormat = "mm/dd/yy";
+             var date;
+             try {
+               date = $.datepicker.parseDate( dateFormat, element.value );
+             } catch( error ) {
+               date = null;
+             }
+             return date;
+           }
+         );
+
+
+}
 
 //   {
 //     "startDate": "07/07/2022",
@@ -246,6 +338,85 @@ function createReservation(){
 //     ],
 //     "id": 42
 // }
+
+
+
+
+
+function customerCreate(){
+
+console.log("Customercreate function");
+
+customerInfo={
+         id:0,
+         firstName : $("#firstName").val(),
+         lastName : $("#lastName").val(),
+         address : $("#address").val(),
+         email : $("#email").val(),
+         phone : $("#phone").val(),
+         typeOfDocument : $("#documentType").val()
+         }
+
+
+
+         var customerInfoJson=JSON.stringify(customerInfo);
+
+         console.log(customerInfoJson);
+
+                               console.log("just before customer create ajax");
+
+         $.ajax({
+               url: customersApi,
+               type: "post",
+               contentType:"application/json",
+               datatype: "json",
+               async: false,
+               data: customerInfoJson,
+               success: function(returnCustomers){
+              // console.log(typeof returnCustomers);
+              customerInfoList[0]=returnCustomers;
+               console.log(returnCustomers);
+               //console.log("abcdef");
+               //console.log(JSON.parse('returnCustomers'));
+//               Array.prototype.push.apply(customerInfoList,returnCustomers);
+//               console.log(customerInfoList.toString());
+               //trial=returnCustomers[0].id;
+               //console.log(trial)
+
+
+                   if (returnCustomers) {
+                       $("#firstName").val('');
+                       $("#lastName").val('');
+                       $("#address").val('');
+                       $("#email").val('');
+                       $("#phone").val('');
+                       $("#documentType").val('');
+                   }
+               },
+               fail: function (error) {
+                   console.log('Error: ' + error);
+               }
+           });
+
+                                          console.log("just after customer create ajax");
+
+
+
+
+//             $.ajax({
+//                   url: lastCustomerApi,
+//                   type: "get",
+//                   dataType: "json",
+//                   success: function(returnLastCustomer){
+//                       customerInfoList[0]=returnLastCustomer;
+//                       console.log(customerInfoList[0]);
+//                   },
+//                   fail: function (error) {
+//                       console.log('Error: ' + error);
+//                   }
+//               });
+
+
 
 }
 
