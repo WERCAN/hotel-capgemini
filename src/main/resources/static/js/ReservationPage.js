@@ -1,7 +1,17 @@
 var ROOMS_API = "http://localhost:9090/api/rooms";
 var AVAILABLE_ROOMS_API="http://localhost:9090/api/reservations/availableRooms";
+var customersApi = "http://localhost:9090/api/customer"
+var reservationApi = "http://localhost:9090/api/reservations";
+var lastCustomerApi = "http://localhost:9090/api/reservations/lastcustomer"
 
+var customerInfo;
+var selectedRoom;
+var createdCustomer;
 var roomsTable;
+var reservationInfo;
+
+var trial;
+var customerInfoList = [];
 
 function init(){
   $.ajax({
@@ -47,6 +57,14 @@ function init(){
         $('#continueModal').modal('show');
     }
   });
+
+  $("#reservationSubmit").click(function () {
+      console.log("Inside reservationSubmit");
+      customerCreate();
+      reservationCreate();
+
+  });
+
 
      //---- VALIDATIONS ---------
      // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -219,55 +237,140 @@ function getRoomsData(){
   });
 }
 
-function createReservation(){
+function reservationCreate(){
 
-//   {
-//     "startDate": "07/07/2022",s
-//     "endDate": "07/08/2022",
-//     "checkedIn": true,
-//     "checkedOut": true,
-//     "payment": true,
-//     "price": 641.76,
-//     "totalPrice": 641.76,
-//     "roomServicePrice": 0.0,
-//     "babyBed": 6,
-//     "nowDate": "07/06/2022",
-//     "room": {
-//         "roomType": "Double",
-//         "sizePerson": 4,
-//         "roomNumber": 1,
-//         "singleBedAmount": 2,
-//         "doubleBedAmount": 1,
-//         "cleanRoom": true,
-//         "roomActive": true,
-//         "price": 22.0,
-//         "childrenPlace": 2,
-//         "disabled": false,
-//         "smoke": true,
-//         "id": 35
-//     },
-//     "customers": [
-//         {
-//             "id": 1,
-//             "firstName": "Marlene",
-//             "lastName": "Jones",
-//             "address": "8554 Casper Plaza, North Rahul, NY 85427",
-//             "email": "cordia.towne@yahoo.com",
-//             "phone": "(408) 383-0656",
-//             "typeOfDocument": "Passport"
-//         },
-//         {
-//             "id": 2,
-//             "firstName": "Monserrate",
-//             "lastName": "Kautzer",
-//             "address": "Suite 130 688 Lebsack Pines, South Khalid, ME 66714-3545",
-//             "email": "flavio.ziemann@yahoo.com",
-//             "phone": "1-329-106-5789",
-//             "typeOfDocument": "Passport"
-//         }
-//     ],
-//     "id": 42
-// }
+console.log("reservationCreate");
+
+selectedRoom=roomsTable.row($('.selected')).data();
+
+
+
+//var xx = [];
+//xx.push(customerInfo);
+console.log(customerInfoList.toString());
+
+let date = new Date();
+  let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+reservationInfo={
+         id:0,
+         startDate : $("#checkIn").val(),
+         endDate : $("#checkOut").val(),
+         checkedIn : false,
+         checkedOut : false,
+         payment : false,
+         price : 0,
+         totalPrice : 0,
+         roomServicePrice : 0,
+         babyBed : 0,
+         nowDate : currentDate,
+         room: selectedRoom,
+         customers: customerInfoList
+         }
+
+         var reservationInfoJson=JSON.stringify(reservationInfo);
+
+           console.log(typeof reservationInfoJson);
+           console.log(reservationInfoJson);
+
+           console.log("just before reservation create ajax")
+
+         $.ajax({
+
+                        url: reservationApi,
+                        type: "post",
+                        contentType:"application/json",
+                        datatype: "json",
+                        data: reservationInfoJson,
+                        success: function(reservation){
+                        console.log("Reservation is saved successfully")
+                        },
+                        fail: function (error) {
+                            console.log('Error: ' + error);
+                        }
+                    });
+
+                               console.log("just after reservation create ajax");
+
+
+
+
+
+
+         $( function getDate( element ) {
+             var dateFormat = "mm/dd/yy";
+             var date;
+             try {
+               date = $.datepicker.parseDate( dateFormat, element.value );
+             } catch( error ) {
+               date = null;
+             }
+             return date;
+           }
+         );
+
 
 }
 
+
+
+
+function customerCreate(){
+
+console.log("Customercreate function");
+
+customerInfo={
+         id:0,
+         firstName : $("#firstName").val(),
+         lastName : $("#lastName").val(),
+         address : $("#address").val(),
+         email : $("#email").val(),
+         phone : $("#phone").val(),
+         typeOfDocument : $("#documentType").val()
+         }
+
+
+
+         var customerInfoJson=JSON.stringify(customerInfo);
+
+         console.log(customerInfoJson);
+
+         console.log("just before customer create ajax");
+
+         $.ajax({
+               url: customersApi,
+               type: "post",
+               contentType:"application/json",
+               datatype: "json",
+               async: false,
+               data: customerInfoJson,
+               success: function(returnCustomers){
+              // console.log(typeof returnCustomers);
+              customerInfoList[0]=returnCustomers;
+               console.log(returnCustomers);
+               //console.log("abcdef");
+               //console.log(JSON.parse('returnCustomers'));
+//               Array.prototype.push.apply(customerInfoList,returnCustomers);
+//               console.log(customerInfoList.toString());
+               //trial=returnCustomers[0].id;
+               //console.log(trial)
+
+
+                   if (returnCustomers) {
+                       $("#firstName").val('');
+                       $("#lastName").val('');
+                       $("#address").val('');
+                       $("#email").val('');
+                       $("#phone").val('');
+                       $("#documentType").val('');
+                   }
+               },
+               fail: function (error) {
+                   console.log('Error: ' + error);
+               }
+           });
+
+            console.log("just after customer create ajax");
+
+
+}

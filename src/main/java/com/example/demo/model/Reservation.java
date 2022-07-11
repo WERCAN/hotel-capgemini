@@ -35,7 +35,7 @@ public class Reservation {
     private int babyBed;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "MM/dd/yyyy")
-    private LocalDate nowDate = LocalDate.now();
+    private Date nowDate = new Date();
     @ManyToOne
     @JoinTable(name="reservation_room")
     private Room room;
@@ -48,7 +48,7 @@ public class Reservation {
 
     }
 
-    public Reservation(long id, Date startDate, Date endDate, boolean checkedIn, boolean checkedOut, boolean payment, double price, double totalPrice, double roomServicePrice, int babyBed, LocalDate nowDate, Room room, List<Customer> customers) {
+    public Reservation(long id, Date startDate, Date endDate, boolean checkedIn, boolean checkedOut, boolean payment, double price, double totalPrice, double roomServicePrice, int babyBed, Date nowDate, Room room, List<Customer> customers) {
         Id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -136,11 +136,11 @@ public class Reservation {
         this.babyBed = babyBed;
     }
 
-    public LocalDate getNowDate() {
+    public Date getNowDate() {
         return nowDate;
     }
 
-    public void setNowDate(LocalDate nowDate) {
+    public void setNowDate(Date nowDate) {
         this.nowDate = nowDate;
     }
 

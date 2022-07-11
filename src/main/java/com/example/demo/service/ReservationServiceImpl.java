@@ -20,6 +20,9 @@ public class ReservationServiceImpl implements ReservationService{
     private ReservationRepository reservationRepository;
 
     @Autowired
+    private CustomerService customerService;
+
+    @Autowired
     public ReservationServiceImpl(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
     }
@@ -92,6 +95,18 @@ public class ReservationServiceImpl implements ReservationService{
         
         
         return availableRooms;
+    }
+
+    @Override
+    public Customer findLastCustomer() {
+
+        Iterable<Customer> customers = customerService.findAll();
+        List<Customer> customerList = new ArrayList<>();
+        customers.forEach(customerList :: add);
+        Customer lastCustomer = customerList.get(customerList.size()-1);
+
+
+        return lastCustomer;
     }
 
 

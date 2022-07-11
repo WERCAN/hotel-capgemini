@@ -27,8 +27,8 @@ import java.util.List;
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
 
-	LocalDate date = LocalDate.now();
-
+	//LocalDate date = LocalDate.now();
+	Date date = new Date();
 	String dateFormat = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 //	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 //	@JsonFormat(pattern = "MM/dd/yyyy")

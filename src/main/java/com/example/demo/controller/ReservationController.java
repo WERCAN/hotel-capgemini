@@ -34,6 +34,15 @@ public class ReservationController {
         return ResponseEntity.ok( reservations);
     }
 
+
+
+    @GetMapping(value = "/reservations/lastcustomer", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Customer> getLastCustomer(){
+        System.out.println("Inside getAllReservations");
+        Customer customer = reservationService.findLastCustomer();
+        return ResponseEntity.ok(customer) ;
+    }
+
     @CrossOrigin
     @PostMapping(value = "/reservations/availableRooms", consumes= MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<Room>> getAvailableRooms(@RequestBody Filter filter){
@@ -60,6 +69,8 @@ public class ReservationController {
         reservationService.deleteReservation(reservationId);
         return ResponseEntity.ok( "Reservation with id: " + reservationId + " is deleted");
     }
+
+
 
 //    @Autowired
 //    public ReservationController(ReservationService reservationService){
