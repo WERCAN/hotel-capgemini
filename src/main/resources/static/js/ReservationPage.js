@@ -150,7 +150,7 @@ function initRoomsTable() {
                }},
                   ],
       responsive: true,
-      dom: '<"top">ct<"top"><"clear">',
+      dom: '<"top">ct<"top"lip><"clear">',
   });
 }
 
@@ -175,14 +175,25 @@ function getRoomsData(){
     children = $("#children").val();
   }
 
+  var smoke=false;
+  var disabled=false;
+  var selectedComment= $("#comments  input[name='comments']:checked").val();
+  if(selectedComment == "smoking"){
+    smoke=true;
+  }else if(selectedComment == "nonSmoking"){
+
+  }else{
+    disabled=true;
+  }
+
   var filterRooms={
     startDate : $("#checkIn").val(),
     endDate : $("#checkOut").val(),
     roomType : $("#selectRoomType :selected").text(),
     adultSize : $("#adults").val(),
     childrenSize : children,
-    smoking : true,
-    disabled : false
+    smoking : smoke,
+    disabled : disabled
   }
 
    let filterRoomsJson=JSON.stringify(filterRooms);

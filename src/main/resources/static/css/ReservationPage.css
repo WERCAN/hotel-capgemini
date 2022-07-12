@@ -121,3 +121,14 @@ height: auto;
     right: 25px;
     z-index: 4;
 }
+
+#roomsTable_wrapper .top{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+div.dataTables_wrapper div.dataTables_length select {
+    width: 50px !important;
+    display: inline-block;
+}
