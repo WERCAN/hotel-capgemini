@@ -360,7 +360,7 @@ function init() {
         e.preventDefault();
         console.log("Submitting Edit USER Modal Form!");
         updateUserInfo();
-        $('#editCustomerModal').modal('hide');
+        $('#editUserModal').modal('hide');
       });
 
      //User Info Show
@@ -1070,6 +1070,7 @@ function createRoom(){
              //Refresh
              getRoomsData();
           }else{
+          alert("Room number exists.")
             console.log("NOT Success!!!!!!");
           }
       },
@@ -1281,7 +1282,7 @@ return true;
 }
 else
 {
-alert('Password must be between 7 to 16 characters which contain only characters,numeric digits, underscore and first character must be a letter!')
+alert('Password must be between 7 to 16 characters which must contain characters,numeric digits, underscore and first character must be a letter!')
 return false;
 }
 }

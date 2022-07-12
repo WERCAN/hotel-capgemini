@@ -50,7 +50,7 @@ public class RoomServiceImpl implements RoomService{
         roomRepository.deleteById(roomId);
         return true;
     }
-
+    @Override
     public boolean checkRoomNumber (Room roomNumber){
         Iterable<Room> rooms;
         List<Room> roomList = new ArrayList<>();
@@ -64,7 +64,7 @@ public class RoomServiceImpl implements RoomService{
     }
 
 
-
+    @Override
     public boolean checkEditRoomNumber(Room room){
         Iterable<Room> rooms;
         List<Room> roomList = new ArrayList<>();
