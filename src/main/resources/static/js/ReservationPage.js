@@ -277,7 +277,7 @@ function customerCreate(){
          address : $("#address").val(),
          email : $("#email").val(),
          phone : $("#phone").val(),
-         typeOfDocument : $("#documentType").val()
+         typeOfDocument : $("#documentType").val().text()
      }
 
      var customerInfoJson=JSON.stringify(customerInfo);
