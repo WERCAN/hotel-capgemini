@@ -10,4 +10,6 @@ public interface RoomService {
     public boolean deleteRoom(long roomId);
     public List<Room> checkedOut();
     public List<Room> checkedIn();
+    public boolean checkRoomNumber (Room roomNumber);
+    public boolean checkEditRoomNumber(Room room);
 }
