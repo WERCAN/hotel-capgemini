@@ -50,7 +50,7 @@ public class RoomServiceImpl implements RoomService{
         roomRepository.deleteById(roomId);
         return true;
     }
-
+    @Override
     public boolean checkRoomNumber (Room roomNumber){
         Iterable<Room> rooms;
         List<Room> roomList = new ArrayList<>();
@@ -64,7 +64,7 @@ public class RoomServiceImpl implements RoomService{
     }
 
 
-
+    @Override
     public boolean checkEditRoomNumber(Room room){
         Iterable<Room> rooms;
         List<Room> roomList = new ArrayList<>();
@@ -77,6 +77,28 @@ public class RoomServiceImpl implements RoomService{
         return false;
     }
 
+    @Override
+    public List<Room> checkedOut(){
+        Iterable<Room> rooms = roomRepository.findAll();
+        List<Room> uncleanedRooms = new ArrayList<>();
+        for(Room r:rooms){
+            if(r.isCleanRoom()==false)
+                uncleanedRooms.add(r);
 
+        }
+        return uncleanedRooms;
+
+    }
+
+    @Override
+    public List<Room> checkedIn() {
+        Iterable<Room> rooms = roomRepository.findAll();
+        List<Room> cleanedRooms = new ArrayList<>();
+        for(Room r: rooms){
+            if(r.isCleanRoom()==true)
+                cleanedRooms.add(r);
+        }
+        return cleanedRooms;
+    }
 
 }

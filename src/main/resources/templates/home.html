@@ -72,12 +72,12 @@
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="login validate needs-validation" novalidate>
+            <form class="loginForm" id="loginForm">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label" id="username">User name</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required/>
                     <div class="invalid-feedback">
-                        Please enter a username.
+                        User name is case-sensitive!
                     </div>
                 </div>
                 <div class="mb-3">
@@ -85,7 +85,7 @@
                     <input type="password" class="form-control" id="exampleInputPassword1"
                            aria-required="true" aria-invalid="true" required/>
                     <div class="invalid-feedback">
-                        Please enter a password.
+                        Password is case-sensitive!
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary" id="submitLoginButton">Submit</button>
@@ -120,8 +120,8 @@
                             <option selected id="room">Room</option>
                             <option value="1" id="single">Single</option>
                             <option value="2" id="double">Double</option>
-                            <option value="3" id="x2Double">2x Double</option>
-                            <option value="4" id="penthouse">Penthouse</option>
+                            <option value="3" id="x2double">2x Double</option>
+                            <option value="4" id="pentHouse">Penthouse</option>
                         </select>
                     </div>
 

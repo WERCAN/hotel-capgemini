@@ -34,6 +34,26 @@ public class RoomController {
 
     }
 
+    @GetMapping(value = "/uncleanedRooms", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Iterable<Room>> getUncleanedRooms(){
+
+        System.out.println("Inside getAllRooms");
+
+        Iterable<Room> rooms = roomService.checkedOut();
+        return ResponseEntity.ok(rooms);
+
+    }
+
+    @GetMapping(value = "/cleanedRooms", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Iterable<Room>> getCleanedRooms(){
+
+        System.out.println("Inside getAllRooms");
+
+        Iterable<Room> rooms = roomService.checkedIn();
+        return ResponseEntity.ok(rooms);
+
+    }
+
     // http://localhost:9090/api/rooms
     @CrossOrigin
     @PostMapping(value = "/rooms", consumes= MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)

@@ -12,33 +12,20 @@ function init(){
         getLanguage();
         console.log(localStorage.getItem('language'));
       })
-      $("#cnImg").click(function(){
+    $("#cnImg").click(function(){
         setLanguage('cn');
         getLanguage();
         console.log(localStorage.getItem('language'));
       })
 
 
-      // -------------------------
-      // ----  VALIDATIONS -------
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      const forms = document.querySelectorAll('.needs-validation')
-      // Loop over them and prevent submission
-      Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-          if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false)
-      });
+   //-- LOG IN FORM MODAL
+    // -------------------------
+   $("#loginForm").on('submit',function(e){
+    e.preventDefault();
 
-   // Add click event to button
-      $("#submitLoginButton").click(function(){
-       console.log("submitLoginButton clicked!!!");
-       checkValidUser();
-      });
+    checkValidUser();
+   });
 }
 
 
@@ -52,6 +39,86 @@ function carousel() {
   if (slideIndex > x.length) {slideIndex = 1}
   x[slideIndex-1].style.display = "block";
   setTimeout(carousel, 4000); // Change image every 2 seconds
+}
+
+
+function checkValidUser () {
+console.log('Inside checkValidUser');
+//Put login data from page in javascript object
+        var loginData = {
+        username: $('#exampleInputEmail1').val(),
+        password: $('#exampleInputPassword1').val(),
+
+    }
+    // Transform Javascript object to json
+    var loginJson = JSON.stringify(loginData);
+
+    $.ajax({
+            url: api,
+            type: "post",
+            data: loginJson,    // json for request body
+            contentType:"application/json; charset=utf-8",   // What we send to frontend
+            dataType: "json",  // get back from frontend
+            // success: function(customer, textStatus, jqXHR){
+            success: function(validUser){
+              if(validUser){
+                   console.log('inside if validUser statement' );
+                   window.location.href = 'http://localhost:9090/adminDashboard';
+              }else{
+              $(".invalid-feedback").css("display","block");
+              alert("Username or password is wrong.");
+              }
+            },
+            fail: function (error) {
+              console.log('Error: ' + error);
+            }
+        });
+}
+
+//--- LANGUAGE ----
+//-----------------
+var language;
+function getLanguage() {
+  (localStorage.getItem('language') == null) ? setLanguage('en') : false;
+
+  var url= '/language/' +  localStorage.getItem('language') + '.json';
+
+  $.getJSON(url, function(data){
+    $("#aboutBtn").text(data.aboutUs);
+    $("#contactBtn").text(data.contact);
+    $("#loginBtn").text(data.logIn);
+    $("#username").text(data.username);
+    $("#password").text(data.password);
+    $("#submitLoginButton").text(data.submit);
+    $("#text-p1").text(data.textp1);
+    $("#text-p2").text(data.textp2);
+    $("#reservationBtn").text(data.reservation);
+    $("#checkIn").text(data.checkIn);
+    $("#checkOut").text(data.checkOut);
+    $("#room").text(data.room);
+    $("#single").text(data.single);
+    $("#double").text(data.double);
+    $("#x2double").text(data.x2double);
+    $("#pentHouse").text(data.penthouse);
+    $("#adults").attr("placeholder", data.adults);
+    $("#child").attr("placeholder", data.child);
+    $("#babyBed").attr("placeholder", data.babyBed);
+    $("#smoking").text(data.smoking);
+    $("#nonSmoking").text(data.nonSmoking);
+    $("#disabled").text(data.disabled);
+    $("#aboutUs").text(data.aboutUs);
+    $("#social").text(data.social);
+    $("#socialDescription").text(data.socialDescription);
+    $("#address").text(data.address);
+
+  }).fail(function(){
+      console.log("An error has occurred.");
+  });
+
+}
+
+function setLanguage(lang) {
+  localStorage.setItem('language', lang);
 }
 
 
@@ -321,85 +388,3 @@ console.log("CALENDAR!!!");
 
   bind(month, year);
 } // end() init
-
-
-function checkValidUser () {
-console.log('Inside checkValidUser');
-//Put login data from page in javascript object
-        var loginData = {
-        username: $('#exampleInputEmail1').val(),
-        password: $('#exampleInputPassword1').val(),
-
-    }
-    // Transform Javascript object to json
-    var loginJson = JSON.stringify(loginData);
-
-    $.ajax({
-            url: api,
-            type: "post",
-            data: loginJson,    // json for request body
-            contentType:"application/json; charset=utf-8",   // What we send to frontend
-            dataType: "json",  // get back from frontend
-            // success: function(customer, textStatus, jqXHR){
-            success: function(validUser){
-              console.log(validUser);
-              // Clear fields in page
-              $("#exampleInputEmail1").val('');
-              $("#exampleInputPassword1").val('');
-              if(validUser){
-                   console.log('inside if validUser statement' );
-                   window.location.href = 'http://localhost:9090/adminDashboard';
-              }else{
-              alert("Username or password is wrong.")
-              }
-            },
-            fail: function (error) {
-              console.log('Error: ' + error);
-            }
-        });
-}
-
-//--- LANGUAGE ----
-//-----------------
-var language;
-function getLanguage() {
-  (localStorage.getItem('language') == null) ? setLanguage('en') : false;
-
-  var url= '/language/' +  localStorage.getItem('language') + '.json';
-
-  $.getJSON(url, function(data){
-    $("#aboutBtn").text(data.aboutUs);
-    $("#contactBtn").text(data.contact);
-    $("#loginBtn").text(data.logIn);
-    $("#userName").text(data.username);
-    $("#password").text(data.password);
-    $("#submitLoginButton").text(data.submit);
-    $("#text-p1").text(data.textp1);
-    $("#text-p2").text(data.textp2);
-    $("#reservationBtn").text(data.reservation);
-    $("#checkIn").text(data.checkIn);
-    $("#checkOut").text(data.checkOut);
-    $("#room").text(data.room);
-    $("#single").text(data.single);
-    $("#double").text(data.double);
-    $("#x2double").text(data.x2double);
-    $("#pentHouse").text(data.pentHouse);
-    $("#adults").text(data.adults);
-    $("#child").text(data.child);
-    $("#smoking").text(data.smoking);
-    $("#nonSmoking").text(data.nonSmoking);
-    $("#disabled").text(data.disabled);
-    $("#aboutUsText").text(data.aboutUsText);
-    $("#social").text(data.social);
-    $("#socialDescription").text(data.socialDescription);
-    $("#address").text(data.address);
-
-  }).fail(function(){
-      console.log("An error has occurred.");
-  });
-
-}
-
-function setLanguage(lang) {
-  localStorage.setItem('language', lang);
-}
