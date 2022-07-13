@@ -1276,21 +1276,18 @@ function deleteUser(){
             });
     }
 }
+
 //Check Password
-function checkPassword(password)
-{
-var passw=  /^[A-Za-z]\w{7,14}$/;
-if(password.match(passw))
-{
-//alert('Correct, try another...')
-return true;
-}
-else
-{
-alert('Password must be between 7 to 16 characters which must contain characters,numeric digits, underscore and first character must be a letter!')
-return false;
-}
-}
+function checkPassword(password){
+    var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/ ;
+    console.log(password.value);
+    if(password.match(passw)){
+     return true;
+    } else {
+        alert('Password must be between 6 to 20 characters which must contain at least a capital letter, a lowercase letter, and a number.!')
+        return false;
+    }
+ }
 
 
 

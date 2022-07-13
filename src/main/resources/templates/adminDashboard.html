@@ -620,7 +620,6 @@
             <!-- Users Page -->
             <div class="tab-pane fade" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab" tabindex="0">
 
-                <!-- User Modal-->
 
                 <!-- Add New User Modal-->
                 <div id="addUserModal" class="modal fade" role="dialog">
@@ -656,16 +655,17 @@
                                     <div class="form-group">
                                         <label for="newUserPassword">Password:</label>
                                         <input type="text" class="form-control" id="newUserPassword" required/>
-                                        <div class="invalid-feedback">
-                                            Password must include at least a capital letter, a lowercase letter, a number.
+                                        <div class="password-policy">
+                                            Password must include at least a capital letter,
+                                            a lowercase letter, and a number and between 6 to 20 characters.
                                         </div>
                                     </div>
                                     <div class="form-group mt-2">
+                                        <label for="newUserRole">User Role:</label>
                                         <select class="form-select " id="newUserRole" aria-label="Default select userRole">
-                                            <option selected>User Role</option>
                                             <option value="ADMIN">Admin</option>
                                             <option value="GM">General Manager</option>
-                                            <option value="RECEPTIONIST">Receptionist</option>
+                                            <option value="RECEPTIONIST" selected>Receptionist</option>
                                             <option value="RC">Room Cleaner</option>
                                         </select>
                                     </div>
@@ -760,13 +760,6 @@
                                         <div class="saperatorLine m-2"></div>
 
                                         <div class="customerInfoForm">
-<!--                                            <div class="form-group">-->
-<!--                                                <label for="editUserPassword">Password:</label>-->
-<!--                                                <input type="text" class="form-control" id="editUserPassword" required/>-->
-<!--                                                <div class="invalid-feedback">-->
-<!--                                                    Password must include at least a capital letter, a lowercase letter, a number.-->
-<!--                                                </div>-->
-<!--                                            </div>-->
                                             <div class="form-group">
                                                 <label for="editUserUsername">Username:</label>
                                                 <input type="text" class="form-control" id="editUserUsername" required/>
@@ -776,11 +769,11 @@
                                                 <input type="text" class="form-control" id="editUserBirthdate" />
                                             </div>
                                             <div class="form-group mt-2">
+                                                <label for="selectUserRole">User Role:</label>
                                                 <select class="form-select " id="selectUserRole" aria-label="Default select room">
-                                                    <option selected>User Role</option>
                                                     <option value="ADMIN">Admin</option>
                                                     <option value="GM">General Manager</option>
-                                                    <option value="RECEPTIONIST">Receptionist</option>
+                                                    <option value="RECEPTIONIST" selected>Receptionist</option>
                                                     <option value="RC">Room Cleaner</option>
                                                 </select>
                                             </div>

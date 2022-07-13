@@ -220,7 +220,7 @@ function getRoomsData(){
 
 function reservationCreate(){
     selectedRoom=roomsTable.row($('.selected')).data();
-
+console.log(selectedRoom.price);
     let date = new Date();
     let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 
@@ -231,8 +231,8 @@ function reservationCreate(){
      checkedIn : false,
      checkedOut : false,
      payment : false,
-     price : 0,
-     totalPrice : 0,
+     price : selectedRoom.price,
+     totalPrice : selectedRoom.price,
      roomServicePrice : 0,
      babyBed : $("#babyBed").val(),
      nowDate : currentDate,

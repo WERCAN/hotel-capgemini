@@ -379,6 +379,11 @@ table thead tr{
       font-size: large;
     }
 
+    .password-policy{
+    font-size: 12px;
+    color: red;
+    }
+
 
 
 
