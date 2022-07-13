@@ -234,7 +234,7 @@ function reservationCreate(){
      price : 0,
      totalPrice : 0,
      roomServicePrice : 0,
-     babyBed : 0,
+     babyBed : $("#babyBed").val(),
      nowDate : currentDate,
      room: selectedRoom,
      customers: customerInfoList
@@ -277,7 +277,7 @@ function customerCreate(){
          address : $("#address").val(),
          email : $("#email").val(),
          phone : $("#phone").val(),
-         typeOfDocument : $("#documentType").val().text()
+         typeOfDocument : $("#documentType :selected").text()
      }
 
      var customerInfoJson=JSON.stringify(customerInfo);

@@ -117,7 +117,7 @@ function init() {
 
      $('#editReservationModal').on('submit', function(e){
     e.preventDefault();
-    console.log("Submitting Edit Customer Modal Form!");
+    console.log("Submitting Edit Reservation Modal Form!");
     createReservation();
     $('#editReservationModal').modal('hide');
   });
@@ -126,7 +126,7 @@ function init() {
      $("#deleteReservationButton").click(function () {
       console.log("Inside click of deleteReservationButton");
       if (reservationTable.row($('.selected')).data() == undefined) {
-        alert("Select customer first");
+        alert("Select reservation first");
     }else{
         $('#reservationDeleteModal').modal('show');
     }
@@ -134,7 +134,7 @@ function init() {
 
      // Delete Button in modal
      $("#deleteReservationConfirmButton").click(function () {
-      console.log("Inside click of deleteCustomerButton");
+      console.log("Inside click of deleteReservationConfirmButton");
       deleteReservation();
       $("#reservationDeleteModal").modal("hide");
     });
@@ -155,7 +155,7 @@ function init() {
     console.log("Inside click of editReservationButton");
     // Get the data from selected row and fill fields in modal
     if (reservationTable.row($('.selected')).data() == undefined) {
-        alert("Select customer first");
+        alert("Select reservation first");
     }else{
         var customerInfoEdit = reservationTable.row($('.selected')).data();
 
@@ -381,7 +381,7 @@ function init() {
 
      //---Delete User
      $("#deleteUserButton").click(function () {
-         console.log("Inside click of deleteReservationButton");
+         console.log("Inside click of deleteUserButton");
          if (usersTable.row($('.selected')).data() == undefined) {
            alert("Select User first");
        }else{
@@ -693,7 +693,7 @@ function format(d) {
 
 function deleteReservation(){
     if (reservationTable.row($('.selected')).data() == undefined) {
-        alert("Select customer first");
+        alert("Select reservation first");
     }else{
         var reservation = reservationTable.row($('.selected')).data();
         // http:9090/api/reservations/2
@@ -1110,9 +1110,11 @@ function initUsersTable() {
       { "title":  "Last Name",
            "data": "lastName"
       },
-      { "title":  "Password",
-           "data": "password",
-      },
+//      { "title":  "Password",
+//           "data": "password",
+//            render: function(data,type,row){
+//                       return "******";}
+//      },
       { "title":  "Email",
            "data": "emailAddress"
       },
@@ -1121,6 +1123,9 @@ function initUsersTable() {
       },
       { "title":  "BirthDate",
            "data": "birthDate"
+      },
+      { "title":  "UserRole",
+           "data": "role"
       }
   ];
   // Define new table with above columns
@@ -1170,10 +1175,10 @@ function updateUserInfo(){
   userInfo.lastName = $("#editUserLastName").val();
   userInfo.emailAddress = $("#editUserEmail").val();
   userInfo.address = $("#editUserAddress").val();
-  userInfo.password = $("#editUserPassword").val();
+  //userInfo.password = $("#editUserPassword").val();
   userInfo.birthDate = $("#editUserBirthdate").val();
   userInfo.username = $("#editUserUsername").val();
-  userInfo.role = $("#selectUserRole :selected").value;
+  userInfo.role = $("#selectUserRole :selected").text();
 
   var userJson=JSON.stringify(userInfo);
 
@@ -1207,7 +1212,7 @@ function createUser(){
         lastName : $("#newUserLastName").val(),
         username:$("#newUserName").val(),
         password : $("#newUserPassword").val(),
-        role : $("#newUserRole").val(),
+        role : $("#newUserRole :selected").text(),
         emailAddress : $("#newUserEmail").val(),
         birthDate : $("#newUserBirthdate").val(),
         address : $("#newUserAddress").val()

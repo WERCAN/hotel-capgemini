@@ -61,13 +61,13 @@ public class DemoApplication implements CommandLineRunner {
 
 		customerRepository.saveAll( customers);
 
-		User adminUser =new User("Halid","Karabiyik","user@gmail.com","Konya42","hoptillepad","20/08/1996","Adminuser","AD");
+		User adminUser =new User("Halid","Karabiyik","user@gmail.com","Konya42","hoptillepad","20/08/1996","Adminuser","Admin");
 		userRepository.save(adminUser);
-		User gmUser =new User("Halid","Karabiyik","user@gmail.com","Konya42","hoptillepad","20/08/1996","Gmuser","GM");
+		User gmUser =new User("Halid","Karabiyik","user@gmail.com","Konya42","hoptillepad","20/08/1996","Gmuser","General Manager");
 		userRepository.save(gmUser);
-		User receptionistUser =new User("Halid","Karabiyik","user@gmail.com","Konya42","hoptillepad","20/08/1996","Reuser","RE");
+		User receptionistUser =new User("Halid","Karabiyik","user@gmail.com","Konya42","hoptillepad","20/08/1996","Reuser","Receptionist");
 		userRepository.save(receptionistUser);
-		User roomCleanerUser =new User("Halid","Karabiyik","user@gmail.com","Konya42","hoptillepad","20/08/1996","Rcuser","RC");
+		User roomCleanerUser =new User("Halid","Karabiyik","user@gmail.com","Konya42","hoptillepad","20/08/1996","Rcuser","Room Cleaner");
 		userRepository.save(roomCleanerUser);
 
 		List<User> users = new ArrayList<>();
