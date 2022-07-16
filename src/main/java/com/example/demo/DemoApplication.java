@@ -72,7 +72,7 @@ public class DemoApplication implements CommandLineRunner {
 
 		List<User> users = new ArrayList<>();
 		for(int n=0; n<10; n++){
-			users.add(new User(Util.getFakeFirstName(),Util.getFakeLastName(),Util.getFakeEmail(),Util.getFakePassword(),Util.getFakeAddress(), String.valueOf(Util.getFakeAge()),Util.getFakeUsername(),"AD"));
+			users.add(new User(Util.getFakeFirstName(),Util.getFakeLastName(),Util.getFakeEmail(),Util.getFakePassword(),Util.getFakeAddress(), String.valueOf(Util.getFakeAge()),Util.getFakeUsername(),"Admin"));
 		}
 
 		userRepository.saveAll(users);

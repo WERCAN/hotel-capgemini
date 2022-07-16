@@ -48,6 +48,7 @@ function init(){
     console.log("Inside reservationSubmit");
     customerCreate();
     reservationCreate();
+    getRoomsData();
   })
 }
 
