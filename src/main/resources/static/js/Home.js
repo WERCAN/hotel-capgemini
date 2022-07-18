@@ -1,4 +1,7 @@
 var api = "http://localhost:9090/api/home" ;
+
+var RESERVATION_PAGE_ROUTE="http://localhost:9090/reservation/reservationpage";
+
 var slideIndex = 0;
 
 
@@ -26,8 +29,59 @@ function init(){
 
     checkValidUser();
    });
+   //----------------------------------
+   //--- ROUTING RESERVATION PAGE -----
+   $('#reservationForm').on('submit', function(e){
+    e.preventDefault();
+    console.log("Submitting reservation Form!");
+    getData();
+    $('#reservationModal').modal('hide');
+    window.location.href = RESERVATION_PAGE_ROUTE;
+
+    });
 }
 
+function getData()
+{
+
+  var babyBedCheckbox;
+  if($("#babyBed").prop('checked')){
+    babyBedCheckbox=true;
+  }else{
+    babyBedCheckbox=false;
+  }
+
+  var children;
+  if($("#child").val() == "undefined"){
+    children = 0;
+  }else{
+    children = $("#child").val();
+  }
+
+  var smoke=false;
+  var disabled=false;
+  var selectedComment= $("#commentsHome  input[name='flexRadioDefault']:checked").val();
+  if(selectedComment == "smoking"){
+    smoke=true;
+  }else if(selectedComment == "nonSmoking"){
+
+  }else{
+    disabled=true;
+  }
+
+  var filterRoomsHome={
+    startDate : $("#sel1text").text(),
+    endDate : $("#sel2text").text(),
+    roomType : $("#selectRoomType :selected").text(),
+    adultSize : $("#adults").val(),
+    childrenSize : children,
+    smoking : smoke,
+    disabled : disabled
+  }
+  //let filterRoomsJson=JSON.stringify(filterRooms);
+  sessionStorage.setItem("filterRoomsHome", JSON.stringify(filterRoomsHome));
+  console.log(filterRoomsHome)
+}
 
 function carousel() {
   var i;

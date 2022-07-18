@@ -15,6 +15,7 @@ var customerInfoList = [];
 
 function init(){
 
+  getHomeData();
   initRoomsTable();
 
   $("#checkRoomsForm").on("submit",function(event){
@@ -217,6 +218,36 @@ function getRoomsData(){
           console.log('Error: ' + error);
       }
   });
+}
+function getHomeData(){
+  console.log('inside getHomeData');
+  // http:/localhost:8080/api/rooms
+  // json list of rooms
+
+  var filterRoomsHome = JSON.parse(sessionStorage.getItem("filterRoomsHome"));
+    let filterRoomsHomeJson=JSON.stringify(filterRoomsHome);
+    console.log(filterRoomsHome)
+     $.ajax({
+          url: AVAILABLE_ROOMS_API,
+          type: "post",
+          contentType:"application/json",
+          datatype: "json",
+          data: filterRoomsHomeJson,
+          success: function(rooms){
+
+              if (rooms) {
+                  roomsTable.clear();
+                  roomsTable.rows.add(rooms);
+                  roomsTable.columns.adjust().draw();
+              }
+          },
+          fail: function (error) {
+              console.log('Error: ' + error);
+          }
+      });
+
+
+
 }
 
 function reservationCreate(){
