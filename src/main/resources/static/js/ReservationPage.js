@@ -126,14 +126,14 @@ function initRoomsTable() {
       { "title":  "Disabled",
           "data": "disabled",
            render: function(data,type,row){
-                   if(data === true){
+                   if(data == true){
                     return "<span class='yes'>YES</span>";
                    } else {return "<span class='no'>NO</span>"; }
       }},
       { "title": "Smoke",
           "data": "smoking",
           render: function(data,type,row){
-                  if(data === true){
+                  if(data == true){
                    return "<span class='yes'>Allowed</span>";
                   }else{return "<span class='no'>Not Allowed</span>"; }
         }},
