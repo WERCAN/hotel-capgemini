@@ -45,11 +45,11 @@ function getData()
 {
 
   var babyBedCheckbox;
-  if($("#babyBed").prop('checked')){
-    babyBedCheckbox=true;
-  }else{
-    babyBedCheckbox=false;
-  }
+  if($("#babyBed").val() == "undefined"){
+      babyBedCheckbox = 0;
+    }else{
+      babyBedCheckbox = $("#babyBed").val();
+    }
 
   var children;
   if($("#child").val() == "undefined"){
@@ -79,7 +79,8 @@ function getData()
     disabled : disabled
   }
   //let filterRoomsJson=JSON.stringify(filterRooms);
-  sessionStorage.setItem("filterRoomsHome", JSON.stringify(filterRoomsHome));
+  localStorage.setItem("filterRoomsHome", JSON.stringify(filterRoomsHome));
+  localStorage.setItem('babyBedCheckbox',babyBedCheckbox)
   console.log(filterRoomsHome)
 }
 
