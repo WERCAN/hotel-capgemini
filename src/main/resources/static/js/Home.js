@@ -1,4 +1,7 @@
 var api = "http://localhost:9090/api/home" ;
+
+var RESERVATION_PAGE_ROUTE="http://localhost:9090/reservation/reservationpage";
+
 var slideIndex = 0;
 
 
@@ -26,8 +29,60 @@ function init(){
 
     checkValidUser();
    });
+   //----------------------------------
+   //--- ROUTING RESERVATION PAGE -----
+   $('#reservationForm').on('submit', function(e){
+    e.preventDefault();
+    console.log("Submitting reservation Form!");
+    getData();
+    $('#reservationModal').modal('hide');
+    window.location.href = RESERVATION_PAGE_ROUTE;
+
+    });
 }
 
+function getData()
+{
+
+  var babyBedCheckbox;
+  if($("#babyBed").val() == "undefined"){
+      babyBedCheckbox = 0;
+    }else{
+      babyBedCheckbox = $("#babyBed").val();
+    }
+
+  var children;
+  if($("#child").val() == "undefined"){
+    children = 0;
+  }else{
+    children = $("#child").val();
+  }
+
+  var smoke=false;
+  var disabled=false;
+  var selectedComment= $("#commentsHome  input[name='flexRadioDefault']:checked").val();
+  if(selectedComment == "smoking"){
+    smoke=true;
+  }else if(selectedComment == "nonSmoking"){
+
+  }else{
+    disabled=true;
+  }
+
+  var filterRoomsHome={
+    startDate : $("#sel1text").text(),
+    endDate : $("#sel2text").text(),
+    roomType : $("#selectRoomType :selected").text(),
+    adultSize : $("#adults").val(),
+    childrenSize : children,
+    smoking : smoke,
+    disabled : disabled
+  }
+  //let filterRoomsJson=JSON.stringify(filterRooms);
+  localStorage.setItem("filterRoomsHome", JSON.stringify(filterRoomsHome));
+  localStorage.setItem('babyBedCheckbox',babyBedCheckbox)
+  console.log(filterRoomsHome)
+}
 
 function carousel() {
   var i;
@@ -58,16 +113,31 @@ console.log('Inside checkValidUser');
             type: "post",
             data: loginJson,    // json for request body
             contentType:"application/json; charset=utf-8",   // What we send to frontend
-            dataType: "json",  // get back from frontend
-            // success: function(customer, textStatus, jqXHR){
-            success: function(validUser){
-              if(validUser){
-                   console.log('inside if validUser statement' );
-                   window.location.href = 'http://localhost:9090/adminDashboard';
-              }else{
-              $(".invalid-feedback").css("display","block");
-              alert("Username or password is wrong.");
-              }
+            dataType: "text",  // get back from frontend
+            success: function(response){
+                switch(response){
+                    case "Admin":
+                        console.log("Admin page returns");
+                        window.location.href = 'http://localhost:9090/adminDashboard';
+                        break;
+                    case "General Manager":
+                        console.log("GM page returns");
+                        window.location.href = 'http://localhost:9090/generalManager';
+                        break;
+                    case "Receptionist":
+                        console.log("RE page returns");
+                        window.location.href = 'http://localhost:9090/receptionist';
+                        break;
+                    case "Room Cleaner":
+                        console.log("RC page returns");
+                        window.location.href = 'http://localhost:9090/roomCleaner';
+                        break;
+                    case "User not found!" :
+                        $(".invalid-feedback").css("display","block");
+                        alert("Username or password is wrong.");
+                        break;
+                    }
+             console.log('validUser ROLE: ' + response );
             },
             fail: function (error) {
               console.log('Error: ' + error);
@@ -180,7 +250,7 @@ console.log("CALENDAR!!!");
         $("#cal").after('<i id="out1"></i>');
       }
 
-      _id("sel1text").innerHTML = e.innerText + "-" + month + "-" + year;
+      _id("sel1text").innerHTML = e.innerText + "/" + month + "/" + year;
     }
 
     // second doesnt exist
@@ -223,7 +293,7 @@ console.log("CALENDAR!!!");
           }
 
           _id("sel2text").innerHTML =
-            e.innerText + "-" + month + "-" + year;
+            e.innerText + "/" + month + "/" + year;
         }
         if (stop) {
           go = 0;

@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;1,100&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+  padding: 5px 2%;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-logo h1 {
+  font-family: "Roboto", sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: darkblue;
+}
+
+.logo {
+  width: 90px;
+  height: 90px;
+}
+
+#roomsTable_wrapper .top{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+#editRoomBtn{
+    margin: 0px auto;
+    width: 180px;
+}
+
+.rooms{
+    display: flex;
+    align-items: center;
+}
+
+.cleanBtn-wrapper{
+    margin-left: 50px;
+}
+
+table{
+    width: 300px !important;
+}
+
+.no{
+color: red;
+}

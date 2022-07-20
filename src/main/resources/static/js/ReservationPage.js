@@ -15,6 +15,7 @@ var customerInfoList = [];
 
 function init(){
 
+  getHomeData();
   initRoomsTable();
 
   $("#checkRoomsForm").on("submit",function(event){
@@ -63,6 +64,7 @@ function init(){
     console.log("Inside reservationSubmit");
     customerCreate();
     reservationCreate();
+    getHomeData();
     getRoomsData();
   })
 }
@@ -141,14 +143,14 @@ function initRoomsTable() {
       { "title":  "Disabled",
           "data": "disabled",
            render: function(data,type,row){
-                   if(data === true){
+                   if(data == true){
                     return "<span class='yes'>YES</span>";
                    } else {return "<span class='no'>NO</span>"; }
       }},
       { "title": "Smoke",
           "data": "smoking",
           render: function(data,type,row){
-                  if(data === true){
+                  if(data == true){
                    return "<span class='yes'>Allowed</span>";
                   }else{return "<span class='no'>Not Allowed</span>"; }
         }},
@@ -174,6 +176,15 @@ function getRoomsData(){
   console.log('inside getRoomsData');
   // http:/localhost:8080/api/rooms
   // json list of rooms
+  var filter = localStorage.getItem('filterRoomsHome')
+  var baby =localStorage.getItem('babyBedCheckbox')
+  if(filter && baby){
+  localStorage.removeItem('filterRoomsHome');
+  localStorage.removeItem('babyBedCheckbox');
+  location.reload();
+  }else{
+
+
   let date = new Date();
   let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 
@@ -232,14 +243,83 @@ function getRoomsData(){
           console.log('Error: ' + error);
       }
   });
+}}
+function getHomeData(){
+  console.log('inside getHomeData');
+  // http:/localhost:8080/api/rooms
+  // json list of rooms
+
+ var filterRoomsHome = JSON.parse(localStorage.getItem("filterRoomsHome"));
+     console.log(filterRoomsHome)
+    if(filterRoomsHome){
+               console.log(filterRoomsHome)
+
+                var indx;
+                switch (filterRoomsHome.roomType) {
+                  case "Single":
+                    indx = 0;
+                    break;
+                  case "Double":
+                    indx = 1;
+                    break;
+                  case "2x Double":
+                    indx = 2;
+                    break;
+                  case "Penthouse":
+                    indx = 3;
+                    break;
+                }
+
+       $("#checkIn").val(filterRoomsHome.startDate);
+       $("#checkOut").val(filterRoomsHome.endDate);
+       document.getElementById("selectRoomType").selectedIndex=indx;
+       $("#adults").val(filterRoomsHome.adultSize);
+       $("#children").val(filterRoomsHome.childrenSize);
+       $("#smoking").val(filterRoomsHome.smoking);
+       $("#nonSmoking").val(filterRoomsHome.nonSmoking);
+       $("#disabled").val(filterRoomsHome.disabled);
+
+
+       let filterRoomsHomeJson=JSON.stringify(filterRoomsHome);
+           console.log(filterRoomsHome)
+            $.ajax({
+                 url: AVAILABLE_ROOMS_API,
+                 type: "post",
+                 contentType:"application/json",
+                 datatype: "json",
+                 data: filterRoomsHomeJson,
+                 success: function(rooms){
+
+                     if (rooms) {
+                         roomsTable.clear();
+                         roomsTable.rows.add(rooms);
+                         roomsTable.columns.adjust().draw();
+                     }
+                 },
+                 fail: function (error) {
+                     console.log('Error: ' + error);
+                 }
+             });
+    }
+
+
+
+
+
+
 }
 
 function reservationCreate(){
     selectedRoom=roomsTable.row($('.selected')).data();
-
+console.log(selectedRoom.price);
     let date = new Date();
     let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-
+     var baby= localStorage.getItem('babyBedCheckbox')
+     var babyBedInit;
+     if(baby){
+         babyBedInit = baby
+     }else{
+         babyBedInit = $("#babyBed").val()}
     reservationInfo={
      id:0,
      startDate : $("#checkIn").val(),
@@ -247,10 +327,10 @@ function reservationCreate(){
      checkedIn : false,
      checkedOut : false,
      payment : false,
-     price : 0,
-     totalPrice : 0,
+     price : selectedRoom.price,
+     totalPrice : selectedRoom.price,
      roomServicePrice : 0,
-     babyBed : 0,
+     babyBed : babyBedInit,
      nowDate : currentDate,
      room: selectedRoom,
      customers: customerInfoList

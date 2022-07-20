@@ -9,8 +9,8 @@ import com.example.demo.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ReservationServiceImpl implements ReservationService{
@@ -33,6 +33,7 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     public Iterable<Reservation> findAll() {
+        calculatePrice();
         Iterable<Reservation> reservations = reservationRepository.findAll();
 
 
@@ -107,6 +108,27 @@ public class ReservationServiceImpl implements ReservationService{
 
 
         return lastCustomer;
+    }
+
+    public void calculatePrice() {
+        Iterable<Reservation> reservations= reservationRepository.findAll();
+        List<Reservation> calculatedReservations = new ArrayList<>();
+        for(Reservation reservation: reservations){
+        double roomPrice= reservation.getRoom().getPrice();
+        double roomServicePrice = reservation.getRoomServicePrice();
+
+        Date startDate = reservation.getStartDate();
+        Date endDate = reservation.getEndDate();
+
+        //Day difference
+        long diffInMillies = Math.abs(endDate.getTime() - startDate.getTime());
+        long difference = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+        reservation.setPrice(roomPrice * difference);
+        reservation.setTotalPrice((roomPrice * difference)+roomServicePrice);
+        calculatedReservations.add(reservation);}
+        reservationRepository.saveAll(calculatedReservations);
+
     }
 
 

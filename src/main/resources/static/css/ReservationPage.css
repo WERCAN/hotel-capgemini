@@ -117,9 +117,14 @@ height: auto;
 
 .roomSelectedBtn{
     position: fixed;
-    bottom: 25px;
+    bottom: 75px;
     right: 25px;
     z-index: 4;
+}
+
+.pagination {
+    --bs-pagination-padding-x: 0.5rem !important;
+    --bs-pagination-padding-y: 0.3rem !important;
 }
 
 @media only screen and (max-width: 900px) {
@@ -129,6 +134,8 @@ height: auto;
 }
 
 #roomsTable_wrapper .top{
+    margin-left: 55px !important;
+    width: 1000px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
