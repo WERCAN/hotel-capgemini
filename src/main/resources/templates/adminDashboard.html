@@ -315,9 +315,14 @@
                                             <label for="editPhone">Phone:</label>
                                             <input type="text" class="form-control" id="editPhone" />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="editDocumentType">Document:</label>
-                                            <input type="text" class="form-control" id="editDocumentType" />
+                                        <div class="form-group mt-2">
+                                            <div class="mb-1">Document</div>
+                                            <select class="form-select" id="editDocumentType" aria-label="Default select document" required>
+                                                <option selected>ID</option>
+                                                <option value="1">Passport</option>
+                                                <option value="2">Driver License</option>
+                                                <option value="3">Travel Document</option>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="editReAddress">Adress:</label>
