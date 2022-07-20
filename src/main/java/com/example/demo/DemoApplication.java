@@ -81,7 +81,7 @@ public class DemoApplication implements CommandLineRunner {
 		List<Room> rooms;
 
 		ObjectMapper objectMapper = new ObjectMapper();
-		String json = Files.readString(Paths.get("src/main/resources/rooms.json"));
+		String json = Files.readString(Paths.get("src/main/resources/roomsnew.json"));
 		TypeReference<List<Room>> mapType = new TypeReference<List<Room>>() {};
 		rooms = objectMapper.readValue(json, mapType);
 
@@ -106,14 +106,19 @@ public class DemoApplication implements CommandLineRunner {
 		System.out.println(stDate);
 		System.out.println(enDate);
 
+
+		Iterable<Room> roomsReservation=roomRepository.findAll();
+		List<Room> roomList = new ArrayList<>();
+		roomsReservation.forEach(roomList :: add);
+
 		int i=0;
-		for(int n=0; n<2; n++){
+		for(int n=0; n<5; n++){
 			double price = Util.getFakePrice();
 
 			List<Customer> customerList = new ArrayList<>();
 			customerList.add(customers.get(i++));
 			customerList.add(customers.get(i++));
-			reservations.add(new Reservation(0,stDate,enDate,true,true,true,Util.getFakePrice(),Util.getFakePrice(),0.0,6,date,rooms.get(n),customerList));
+			reservations.add(new Reservation(0,stDate,enDate,true,true,true,Util.getFakePrice(),Util.getFakePrice(),0.0,6,date,roomList.get(n),customerList));
 
 		}
 

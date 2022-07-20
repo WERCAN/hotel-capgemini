@@ -32,6 +32,21 @@ function init(){
     }
   });
 
+  $("#roomsTable tbody").on("click", "#infoRoom", function () {
+           var tr = $(this).closest("tr");
+           var row = roomsTable.row(tr);
+             console.log(row.data());
+           if (row.child.isShown()) {
+             // This row is already open - close it
+             row.child.hide();
+             tr.removeClass("shown");
+           } else {
+             // Open this row (the format() function would return the data to be shown)
+             row.child(formatRoomFacilities(row.data())).show();
+             tr.addClass("shown");
+           }
+  });
+
    //---  Continue Reservation Modal  -------
   $("#selectedRoomButton").click(function () {
     console.log("Inside click of selectedRoomButton");
@@ -307,4 +322,19 @@ function customerCreate(){
                console.log('Error: ' + error);
            }
        });
+}
+
+
+function formatRoomFacilities(d) {
+  // `d` is the original data object for the row
+  return (
+      '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+      '<tr>' +
+      '<td>Facilities:</td>' +
+      '<td>' +
+      d.facilities +
+      '</td>' +
+      '</tr>' +
+      '</table>'
+  );
 }
