@@ -191,11 +191,12 @@ function getRoomsData(){
   // http:/localhost:8080/api/rooms
   // json list of rooms
   var filter = localStorage.getItem('filterRoomsHome')
-  var baby =localStorage.getItem('babyBedCheckbox')
+  var baby =localStorage.getItem('babyBedCheckbox');
+
   if(filter && baby){
-  localStorage.removeItem('filterRoomsHome');
-  localStorage.removeItem('babyBedCheckbox');
-  location.reload();
+      localStorage.removeItem('filterRoomsHome');
+      localStorage.removeItem('babyBedCheckbox');
+      location.reload();
   }else{
 
 
@@ -208,6 +209,26 @@ function getRoomsData(){
   }else{
     babyBedCheckbox=false;
   }
+
+  var getRoomType;
+
+    switch($("#selectRoomType :selected").val()){
+      case "1":
+        getRoomType = "Single";
+        break;
+      case "2":
+        getRoomType = "Double";
+        break;
+      case "3":
+        getRoomType = "2x Double";
+        break;
+      case "4":
+        getRoomType = "Penthouse";
+        break;
+      default:
+        getRoomType = "Single";
+        break;
+    }
 
   var children;
   if($("#children").val() == "undefined"){
@@ -230,7 +251,7 @@ function getRoomsData(){
   var filterRooms={
     startDate : $("#checkIn").val(),
     endDate : $("#checkOut").val(),
-    roomType : $("#selectRoomType :selected").text(),
+    roomType : getRoomType,
     adultSize : $("#adults").val(),
     childrenSize : children,
     smoking : smoke,
@@ -259,6 +280,7 @@ function getRoomsData(){
       }
   });
 }}
+
 function getHomeData(){
   console.log('inside getHomeData');
   // http:/localhost:8080/api/rooms
