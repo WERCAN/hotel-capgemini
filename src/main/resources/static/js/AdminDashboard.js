@@ -2,6 +2,8 @@ var RESERVATION_API = "http://localhost:9090/api/reservations" ;
 var CUSTOMERS_API="http://localhost:9090/api/customer";
 var ROOMS_API = "http://localhost:9090/api/rooms";
 var USERS_API="http://localhost:9090/api/users";
+var availableRoomsApi="http://localhost:9090/api/reservations/availableRooms";
+
 
 var RESERVATION_PAGE_ROUTE="http://localhost:9090/reservation/reservationpage";
 var HOME_ROUTE = "http://localhost:9090/home" ;
@@ -11,6 +13,8 @@ var reservationTable;
 var roomsTable;
 var customerInfo=[];
 var roomInfoEdit;
+var reRoomsTable;
+var reservationInfoEdit;
 
 // INIT
 function init() {
@@ -28,6 +32,8 @@ function init() {
 
    initUsersTable();
    getUsersData();
+
+   initreRoomstable();
 
      // -------------------------
      // ----  VALIDATIONS -------
@@ -62,7 +68,7 @@ function init() {
     }
   });
 
-     $("#reservationsTable tbody, #customersTable tbody, #roomsTable tbody, #usersTable tbody").on("click", "tr", function () {
+     $("#reservationsTable tbody, #customersTable tbody, #roomsTable tbody, #usersTable tbody, #reRoomsTable tbody").on("click", "tr", function () {
     console.log("Clicking on row");
     if ($(this).hasClass("selected")) {
       $(this).removeClass("selected");
@@ -72,7 +78,7 @@ function init() {
       customersTable.$("tr.selected").removeClass("selected");
       roomsTable.$("tr.selected").removeClass("selected");
       usersTable.$("tr.selected").removeClass("selected");
-
+      reRoomsTable.$("tr.selected").removeClass("selected");
       // emptyRoomModals();
       $(this).addClass("selected");
     }
@@ -85,13 +91,35 @@ function init() {
     if (reservationTable.row($('.selected')).data() == undefined) {
         alert("Select reservation first");
     }else{
-        var reservationInfoEdit = reservationTable.row($('.selected')).data();
+        reservationInfoEdit = reservationTable.row($('.selected')).data();
 
          $("#editStartDate").val(reservationInfoEdit.startDate);
          $("#editEndDate").val(reservationInfoEdit.endDate);
          $("#editBabyBed").val(reservationInfoEdit.babyBed);
-         $("#editPrice").val(reservationInfoEdit.price);
+         $("#editTotalPrice").val(reservationInfoEdit.totalPrice);
          $("#editServicePrice").val(reservationInfoEdit.roomServicePrice);
+         $("#adults").val(reservationInfoEdit.room.sizePerson);
+         $("#children").val(reservationInfoEdit.room.childrenPlace);
+         $("#editBookingPrice").val(reservationInfoEdit.price);
+         //$("#reEditRoomType").val(reservationInfoEdit.room.roomType);
+         var selectType=reservationInfoEdit.room.roomType;
+         var indx;
+                 switch (selectType) {
+                   case "Single":
+                     indx = 1;
+                     break;
+                   case "Double":
+                     indx = 2;
+                     break;
+                   case "2x Double":
+                     indx = 3;
+                     break;
+                   case "Penthouse":
+                     indx = 4;
+                     break;
+                 };
+         document.getElementById("reEditRoomType").selectedIndex=indx-1;
+
 
           if(reservationInfoEdit.payment == true){
            $("#paymentPaidRadio").prop("checked", true);
@@ -109,18 +137,91 @@ function init() {
            $("#checkedOutYesRadioId").prop("checked", true);
          }else{
            $("#checkedOutNoRadioId").prop("checked", true);
+
+
+         }
+
+         if(reservationInfoEdit.room.smoke == true){
+           $("#smoking").prop("checked", true);
+         }else{
+           $("#nonSmoking").prop("checked", true);
+         }
+
+         if(reservationInfoEdit.room.disabled == true){
+            $("#disabled").prop("checked", true);
          }
 
          $('#editReservationModal').modal('show');
     }
     });
 
-     $('#editReservationModal').on('submit', function(e){
-    e.preventDefault();
-    console.log("Submitting Edit Reservation Modal Form!");
-    createReservation();
-    $('#editReservationModal').modal('hide');
+
+    $("#reRoomsTable tbody").on("click", "#infoReRoom", function () {
+             var tr = $(this).closest("tr");
+             var row = reRoomsTable.row(tr);
+               console.log(row.data());
+             if (row.child.isShown()) {
+               // This row is already open - close it
+               row.child.hide();
+               tr.removeClass("shown");
+             } else {
+               // Open this row (the format() function would return the data to be shown)
+               row.child(formatRoomFacilities(row.data())).show();
+               tr.addClass("shown");
+             }
+           });
+        //Edit Submit
+     $('#reEditSubmitButton').click(function(e){
+
+
+
+         if(reservationInfoEdit.startDate==$("#editStartDate").val()
+         && reservationInfoEdit.endDate==$("#editEndDate").val()
+         && reservationInfoEdit.room.roomType==$("#reEditRoomType :selected").text()
+         && reservationInfoEdit.room.sizePerson==$("#adults").val()
+         && reservationInfoEdit.room.childrenPlace==$("#children").val()
+         && ((reservationInfoEdit.room.smoke==true && document.getElementById('smoking').checked==true)
+         || (reservationInfoEdit.room.smoke==false && document.getElementById('nonSmoking').checked==true)
+         || (reservationInfoEdit.room.disabled==true && document.getElementById('disabled').checked==true))
+         ){
+         console.log("submit button");
+         editBasicReservationInfo();
+         $('#editReservationModal').modal('hide');
+         }else{
+
+
+
+         if ( reRoomsTable.rows( '.selected' ).any() ){
+                      console.log("submit button");
+                      editReservation(); //burada
+                      getReservationData();
+                      $('#editReservationModal').modal('hide');
+         }else{alert("Please check the availability");}
+
+
+
+     }
+
+
+
+
+
+
+
+
+
+//    e.preventDefault();
+//    console.log("submit button");
+//    editReservation(); //burada
+//    getReservationData();
+//
+//    $('#editReservationModal').modal('hide');
   });
+
+  $("#reEditCheckRoomsButton").click( function (){
+          console.log("inside check availability button!");
+          checkAvailability();
+      });
 
      //---Delete reservation
      $("#deleteReservationButton").click(function () {
@@ -210,6 +311,9 @@ function init() {
          $("#editRoomModal #editRoomPrice").val(roomInfoEdit.price);
          $("#editRoomModal #editSingleBed").val(roomInfoEdit.singleBedAmount);
          $("#editRoomModal #editDoubleBed").val(roomInfoEdit.doubleBedAmount);
+         $("#editRoomModal #editFacilities").val(roomInfoEdit.facilities);
+         //  $("#editFacilities").val(roomInfoEdit.facilities);
+
          document.getElementById("selectRoom").selectedIndex=indx;
 
          if(roomInfoEdit.cleanRoom == true){
@@ -253,6 +357,21 @@ function init() {
          createRoom();
          $('#addRoomModal').modal('hide');
      });
+
+      $("#roomsTable tbody").on("click", "#infoRoom", function () {
+         var tr = $(this).closest("tr");
+         var row = roomsTable.row(tr);
+           console.log(row.data());
+         if (row.child.isShown()) {
+           // This row is already open - close it
+           row.child.hide();
+           tr.removeClass("shown");
+         } else {
+           // Open this row (the format() function would return the data to be shown)
+           row.child(formatRoomFacilities(row.data())).show();
+           tr.addClass("shown");
+         }
+       });
 
      $("#deleteRoomButton").click(function () {
     console.log("Inside click of deleteRoomButton");
@@ -535,8 +654,8 @@ function createReservation(){
     reservationInfoEdit.startDate = $("#editStartDate").val();
     reservationInfoEdit.endDate   = $("#editEndDate").val();
     reservationInfoEdit.babyBed = $("#editBabyBed").val();
-    reservationInfoEdit.price = $("#editPrice").val();
-    reservationInfoEdit.totalPrice = parseFloat( $("#editPrice").val()) + parseFloat( $("#editServicePrice").val());
+    reservationInfoEdit.price = $("#editTotalPrice").val();
+    reservationInfoEdit.totalPrice = parseFloat( $("#editTotalPrice").val()) + parseFloat( $("#editServicePrice").val());
     reservationInfoEdit.roomServicePrice = $("#editServicePrice").val();
 
     var checkedIn= $("#checkedIn  input[name='checkedInRadioName']:checked").val();
@@ -721,6 +840,261 @@ function deleteReservation(){
 
 }
 
+
+function editReservation(){
+
+console.log("editReservation function");
+
+
+
+    var selectedNewRoom =reRoomsTable.row($('.selected')).data();
+    console.log(selectedNewRoom);
+
+    var checkedIn= $("#checkedIn  input[name='checkedInRadioName']:checked").val();
+    var infoCheckIn;
+                if(checkedIn == "yes"){
+                  infoCheckIn = true;
+                }else{
+                  infoCheckIn = false;
+                }
+
+    var checkedOut= $("#checkedOut  input[name='checkedOutRadioName']:checked").val();
+    var infoCheckOut;
+                if(checkedOut == "yes"){
+                  infoCheckOut = true;
+                }else{
+                  infoCheckOut = false;
+                }
+
+    var paymentStatus= $("#paymentStatus  input[name='paymentRadioName']:checked").val();
+    var infoPayment;
+            if(paymentStatus == "paid"){
+              infoPayment = true;
+            }else{
+              infoPayment = false;
+            }
+
+    let date = new Date();
+    let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+
+       console.log(reservationInfoEdit.id.toString());
+
+    var reservationInfoEditSave={
+        id: reservationInfoEdit.id,
+        startDate:  $("#editStartDate").val(),
+        endDate : $("#editEndDate").val(),
+        checkedIn : infoCheckIn,
+        checkedOut : infoCheckOut,
+        payment: infoPayment,
+        price :$("#editBookingPrice").val(),
+        totalPrice: parseFloat( $("#editBookingPrice").val()) + parseFloat( $("#editServicePrice").val()),
+        roomServicePrice: $("#editServicePrice").val(),
+        babyBed: $("#editBabyBed").val(),
+        nowDate : currentDate,
+        room: selectedNewRoom,
+        customers: reservationInfoEdit.customers
+    }
+
+    var reservationInfoEditJson=JSON.stringify(reservationInfoEditSave);
+
+    $.ajax({
+            url: RESERVATION_API,
+            type: "post",
+            contentType:"application/json",
+            datatype: "json",
+            data: reservationInfoEditJson,
+            success: function(reservation){
+            console.log("Reservation is saved successfully");
+            getReservationData();
+            $('#editReservationModal').modal('hide');
+            },
+            fail: function (error) {
+                console.log('Error: ' + error);
+            }
+        });
+
+}
+
+  //Put reservation data from page in Javascript object
+//
+//    if(reservationInfoEdit.startDate==$("#editStartDate").val()
+//    && reservationInfoEdit.endDate==$("#editEndDate").val()
+//    && reservationInfoEdit.room.roomType==$("#reEditRoomType").val()
+//    && reservationInfoEdit.room.sizePerson==$("#adults").val()
+//    && reservationInfoEdit.room.childrenPlace==$("#children").val()
+//    && ((reservationInfoEdit.room.smoke==true && document.getElementById('smoking').checked==true)
+//    || (reservationInfoEdit.room.smoke==false && document.getElementById('nonSmoking').checked==true)
+//    || (reservationInfoEdit.room.disabled==true && document.getElementById('disabled').checked==true))
+//    ){
+//
+//    editBasicReservationInfo();
+//
+//    }else{
+//
+//    alert("Please check the availability");
+//
+//     var reEditRoom = reRoomsTable.row($('.selected')).data();
+//}
+
+
+    //burada
+
+
+
+
+
+
+
+
+
+
+
+
+function editBasicReservationInfo(){
+
+console.log('editBasicReservationInfo FUNCTION!');
+
+  var reservationInfoEdit = reservationTable.row($('.selected')).data();
+
+    reservationInfoEdit.babyBed = $("#editBabyBed").val();
+    reservationInfoEdit.price = $("#editBookingPrice").val();
+    reservationInfoEdit.totalPrice = parseFloat( $("#editBookingPrice").val()) + parseFloat( $("#editServicePrice").val());
+    reservationInfoEdit.roomServicePrice = $("#editServicePrice").val();
+
+    var checkedIn= $("#checkedIn  input[name='checkedInRadioName']:checked").val();
+            if(checkedIn == "yes"){
+              reservationInfoEdit.checkedIn = true;
+            }else{
+              reservationInfoEdit.checkedIn = false;
+            }
+
+        var checkedOut= $("#checkedOut  input[name='checkedOutRadioName']:checked").val();
+            if(checkedOut == "yes"){
+              reservationInfoEdit.checkedOut = true;
+              reservationInfoEdit.room.cleanRoom=false;
+            }else{
+              reservationInfoEdit.checkedOut = false;
+              reservationInfoEdit.room.cleanRoom=true;
+            }
+
+        var paymentStatus= $("#paymentStatus  input[name='paymentRadioName']:checked").val();
+        if(paymentStatus == "paid"){
+          reservationInfoEdit.payment = true;
+        }else{
+          reservationInfoEdit.payment = false;
+        }
+        //update if the room is clean
+     var reservationRoomJson = JSON.stringify(reservationInfoEdit.room);
+     var reservationJson = JSON.stringify(reservationInfoEdit);
+     console.log(reservationJson);
+     $.ajax({
+           url: ROOMS_API,
+           type: "post",
+           contentType:"application/json",
+           datatype: "json",
+           data: reservationRoomJson,
+           // success: function(reservations, textStatus, jqXHR){
+           success: function(response){
+               if (response) {
+                  console.log("ROOM ISCLEAN UPDATED Success!!!!!!");
+                  getRoomsData();
+               }else{
+                 console.log("NOT ISCLEAN Success!!!!!!");
+               }
+           },
+           fail: function (error) {
+               console.log('Error: ' + error);
+           }
+       });
+
+
+    $.ajax({
+      url: RESERVATION_API,
+      type: "post",
+      contentType:"application/json",
+      datatype: "json",
+      data: reservationJson,
+      // success: function(reservations, textStatus, jqXHR){
+      success: function(response){
+          if (response) {
+             console.log("Success!!!!!!");
+           getReservationData();
+           getRoomsData();
+          }
+      },
+      fail: function (error) {
+          console.log('Error: ' + error);
+      }
+  });
+
+}
+
+
+function checkAvailability(){
+  console.log('inside checkAvailability');
+
+  var reservationInfoEdit = reservationTable.row($('.selected')).data();
+
+ let date = new Date();
+  let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+
+
+  var smoke=false;
+  var disabled=false;
+  var selectedComment= $("#comments  input[name='comments']:checked").val();
+  if(selectedComment == "smoking"){
+    smoke=true;
+  }else if(selectedComment == "nonSmoking"){
+
+  }else{
+    disabled=true;
+  }
+
+
+   var filterRooms={
+      startDate : $("#editStartDate").val(),
+      endDate : $("#editEndDate").val(),
+      roomType : $("#reEditRoomType :selected").text(),
+      adultSize : $("#adults").val(),
+      childrenSize : $("#children").val(),
+      smoking : smoke,
+      disabled : disabled
+    }
+
+     var filterRoomsJson=JSON.stringify(filterRooms);
+
+     console.log(filterRoomsJson);
+
+$.ajax({
+      url: availableRoomsApi,
+      type: "post",
+      contentType:"application/json",
+      datatype: "json",
+      data: filterRoomsJson,
+      success: function(rooms){
+
+          if (rooms) {
+
+                console.log("writing rooms");
+              reRoomsTable.clear();
+              reRoomsTable.rows.add(rooms);
+              reRoomsTable.columns.adjust().draw();
+          }
+      },
+      fail: function (error) {
+          console.log('Error: ' + error);
+      }
+  });
+
+
+}
+
+
+
+
+
+
 //------- CUSTOMERS -------
 // INIT CUSTOMERS Table
 function initCustomersTable() {
@@ -798,7 +1172,7 @@ function createCustomer(){
     reservationInfoEdit.startDate = $("#editStartDate").val();
     reservationInfoEdit.endDate   = $("#editEndDate").val();
     reservationInfoEdit.babyBed = $("#editBabyBed").val();
-    reservationInfoEdit.price = $("#editPrice").val();
+    reservationInfoEdit.price = $("#editBookingPrice").val();
     reservationInfoEdit.totalPrice = $("#editTotalPrice").val();
     reservationInfoEdit.roomServicePrice = $("#editServicePrice").val();
 
@@ -848,7 +1222,7 @@ function initRoomsTable() {
     // Create columns (with titles) for datatable: id, name, address, age
   //  var checkedInData1='<p class="checkin-Date">2011-04-25</p><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">'
    // var checkedInData2='<p class="checkin-Date">2011-04-25</p><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">'
-   var infoBtn='<div><button type="button" class="btn btn-info p-1 m-0" id="infoRoom">Info</button></div>'
+   var infoBtn='<div><button type="button" class="btn btn-info p-1 m-0" id="infoRoom">Facilities</button></div>'
     columns = [
         { "title":  "ID",
             "data": "id" },
@@ -897,14 +1271,13 @@ function initRoomsTable() {
         "order": [[ 0, "asc" ]],
         "columns": columns,
         columnDefs: [
-          { targets: '_all', className: 'dt-left' },
           {
-            targets: 11,
-            render: function(){
-                   return infoBtn
+                  targets: 11,
+                  render: function(){
+                  return infoBtn;
                  },
-          },
-                    ],
+              },
+          ],
         pageLength: 7,
         responsive: true,
         "lengthMenu": [ 5, 10, 15, 20 ],
@@ -947,6 +1320,7 @@ function updateRoom(){
   roomInfoEdit.price = $("#editRoomPrice").val();
   roomInfoEdit.singleBedAmount = $("#editSingleBed").val();
   roomInfoEdit.doubleBedAmount = $("#editDoubleBed").val();
+  roomInfoEdit.facilities = $("#editFacilities").val();
 
   var isClean= $("#isClean  input[name='isCleanRadioName']:checked").val();
   console.log("isClean: "+ isClean);
@@ -1049,6 +1423,8 @@ function createRoom(){
 
       smoke: isSmokeResult,
 
+      facilities: $("#roomFacilities").val(),
+
       id: 0
     }
 
@@ -1078,6 +1454,20 @@ function createRoom(){
           console.log('Error: ' + error);
       }
   });
+}
+
+function formatRoomFacilities(d) {
+  // `d` is the original data object for the row
+  return (
+      '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+      '<tr>' +
+      '<td>Facilities:</td>' +
+      '<td>' +
+      d.facilities +
+      '</td>' +
+      '</tr>' +
+      '</table>'
+  );
 }
 
 function formatUserPage(d) {
@@ -1337,3 +1727,123 @@ CheckOutAddOne = function(){
     CheckOut = CheckIn.setDate(CheckIn.getDate() + 1);
     $('#editEndDate').datepicker( "option", "minDate", new Date(CheckOut) );
 }
+
+function initreRoomstable(){
+console.log('inside initreRoomsTable' );
+var infoBtn='<div><button type="button" class="btn btn-info p-1 m-0" id="infoReRoom">Choose</button></div>'
+
+columns = [
+        { "title":  "Room No",
+            "data": "roomNumber" },
+        { "title":  "Room Type",
+            "data": "roomType" },
+        { "title":  "Adults",
+            "data": "sizePerson"},
+        { "title":  "Children",
+            "data": "childrenPlace"},
+        { "title":  "Price",
+            "data": "price",
+            render: function(data,type,row){
+                      return "¥" + data;
+        }},
+    ];
+
+    reRoomsTable = $("#reRoomsTable").DataTable( {
+            "order": [[ 0, "asc" ]],
+            "columns": columns,
+            columnDefs: [
+              {
+                      targets: 5,
+                      render: function(){
+                      return infoBtn;
+                     },
+                  },
+              ],
+            pageLength: 7,
+            responsive: true,
+            "lengthMenu": [ 5, 10, 15, 20 ],
+            dom: '<"top">ct<"top"lip><"clear">',
+        });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//function initRoomsTable() {
+//    console.log('inside initRoomsTable' );
+//    // Create columns (with titles) for datatable: id, name, address, age
+//  //  var checkedInData1='<p class="checkin-Date">2011-04-25</p><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">'
+//   // var checkedInData2='<p class="checkin-Date">2011-04-25</p><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">'
+//   var infoBtn='<div><button type="button" class="btn btn-info p-1 m-0" id="infoRoom">Facilities</button></div>'
+//    columns = [
+//        { "title":  "ID",
+//            "data": "id" },
+//        { "title":  "Room No",
+//            "data": "roomNumber" },
+//        { "title":  "Room Type",
+//            "data": "roomType" },
+//        { "title":  "Adults",
+//            "data": "sizePerson"},
+//        { "title":  "Children",
+//            "data": "childrenPlace"},
+//        { "title":  "Single Bed",
+//            "data": "singleBedAmount"},
+//        { "title":  "Double Bed",
+//            "data": "doubleBedAmount"},
+//        { "title":  "isClean",
+//             "data": "cleanRoom",
+//             render: function(data,type,row){
+//                      if(data === true){
+//                       return "<span class='yes'>YES</span>";
+//                       } else { return "<span class='no'>NO</span>";}
+//        }},
+//        { "title":  "Price",
+//            "data": "price",
+//            render: function(data,type,row){
+//                      return "¥" + data;
+//        }},
+//        { "title":  "Disabled",
+//            "data": "disabled",
+//             render: function(data,type,row){
+//                     if(data === true){
+//                      return "<span class='yes'>YES</span>";
+//                     } else {return "<span class='no'>NO</span>"; }
+//        }},
+//        { "title": "Smoke",
+//            "data": "smoke",
+//            render: function(data,type,row){
+//                    if(data === true){
+//                     return "<span class='yes'>YES</span>";
+//                    }else{return "<span class='no'>NO</span>"; }
+//        }},
+//    ];
+//
+//    // Define new table with above columns
+//    roomsTable = $("#roomsTable").DataTable( {
+//        "order": [[ 0, "asc" ]],
+//        "columns": columns,
+//        columnDefs: [
+//          {
+//                  targets: 11,
+//                  render: function(){
+//                  return infoBtn;
+//                 },
+//              },
+//          ],
+//        pageLength: 7,
+//        responsive: true,
+//        "lengthMenu": [ 5, 10, 15, 20 ],
+//        dom: '<"top">ct<"top"lip><"clear">',
+//    });
+//}

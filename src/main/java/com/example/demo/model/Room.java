@@ -31,6 +31,8 @@ public class Room {
 
     private boolean smoke;
 
+    private  String facilities;
+
     public boolean isRoomActive() {
         return roomActive;
     }
@@ -39,9 +41,17 @@ public class Room {
         this.roomActive = roomActive;
     }
 
+    public String getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(String facilities) {
+        this.facilities = facilities;
+    }
+
     public Room (){}
 
-    public Room( String type, int sizePerson, int roomNumber, int singleBedAmount, int doubleBedAmount, boolean cleanRoom, boolean roomActive, double price, int childPlace, boolean disabled, boolean smoke) {
+    public Room( String type, int sizePerson, int roomNumber, int singleBedAmount, int doubleBedAmount, boolean cleanRoom, boolean roomActive, double price, int childPlace, boolean disabled, boolean smoke, String facilities) {
 
         this.roomType = type;
         this.sizePerson = sizePerson;
@@ -54,6 +64,7 @@ public class Room {
         this.disabled = disabled;
         this.smoke = smoke;
         this.roomActive=roomActive;
+        this.facilities=facilities;
     }
 
 

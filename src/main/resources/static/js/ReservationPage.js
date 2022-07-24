@@ -15,6 +15,8 @@ var customerInfoList = [];
 
 function init(){
 
+  getHomeData();
+  initRoomsTable();
     $("#enImg").click(function(){
       setLanguage('en');
       getLanguage();
@@ -28,7 +30,6 @@ function init(){
      $.datepicker.setDefaults( $.datepicker.regional[ "zh-CN" ] );
     })
 
-    initRoomsTable();
     getLanguage();
 
   $("#checkRoomsForm").on("submit",function(event){
@@ -44,6 +45,21 @@ function init(){
       roomsTable.$("tr.selected").removeClass("selected");
       $(this).addClass("selected");
     }
+  });
+
+  $("#roomsTable tbody").on("click", "#infoRoom", function () {
+           var tr = $(this).closest("tr");
+           var row = roomsTable.row(tr);
+             console.log(row.data());
+           if (row.child.isShown()) {
+             // This row is already open - close it
+             row.child.hide();
+             tr.removeClass("shown");
+           } else {
+             // Open this row (the format() function would return the data to be shown)
+             row.child(formatRoomFacilities(row.data())).show();
+             tr.addClass("shown");
+           }
   });
 
    //---  Continue Reservation Modal  -------
@@ -62,6 +78,7 @@ function init(){
     console.log("Inside reservationSubmit");
     customerCreate();
     reservationCreate();
+    getHomeData();
     getRoomsData();
   })
 }
@@ -173,6 +190,15 @@ function getRoomsData(){
   console.log('inside getRoomsData');
   // http:/localhost:8080/api/rooms
   // json list of rooms
+  var filter = localStorage.getItem('filterRoomsHome')
+  var baby =localStorage.getItem('babyBedCheckbox')
+  if(filter && baby){
+  localStorage.removeItem('filterRoomsHome');
+  localStorage.removeItem('babyBedCheckbox');
+  location.reload();
+  }else{
+
+
   let date = new Date();
   let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 
@@ -232,6 +258,70 @@ function getRoomsData(){
           console.log('Error: ' + error);
       }
   });
+}}
+function getHomeData(){
+  console.log('inside getHomeData');
+  // http:/localhost:8080/api/rooms
+  // json list of rooms
+
+ var filterRoomsHome = JSON.parse(localStorage.getItem("filterRoomsHome"));
+     console.log(filterRoomsHome)
+    if(filterRoomsHome){
+               console.log(filterRoomsHome)
+
+                var indx;
+                switch (filterRoomsHome.roomType) {
+                  case "Single":
+                    indx = 0;
+                    break;
+                  case "Double":
+                    indx = 1;
+                    break;
+                  case "2x Double":
+                    indx = 2;
+                    break;
+                  case "Penthouse":
+                    indx = 3;
+                    break;
+                }
+
+       $("#checkIn").val(filterRoomsHome.startDate);
+       $("#checkOut").val(filterRoomsHome.endDate);
+       document.getElementById("selectRoomType").selectedIndex=indx;
+       $("#adults").val(filterRoomsHome.adultSize);
+       $("#children").val(filterRoomsHome.childrenSize);
+       $("#smoking").val(filterRoomsHome.smoking);
+       $("#nonSmoking").val(filterRoomsHome.nonSmoking);
+       $("#disabled").val(filterRoomsHome.disabled);
+
+
+       let filterRoomsHomeJson=JSON.stringify(filterRoomsHome);
+           console.log(filterRoomsHome)
+            $.ajax({
+                 url: AVAILABLE_ROOMS_API,
+                 type: "post",
+                 contentType:"application/json",
+                 datatype: "json",
+                 data: filterRoomsHomeJson,
+                 success: function(rooms){
+
+                     if (rooms) {
+                         roomsTable.clear();
+                         roomsTable.rows.add(rooms);
+                         roomsTable.columns.adjust().draw();
+                     }
+                 },
+                 fail: function (error) {
+                     console.log('Error: ' + error);
+                 }
+             });
+    }
+
+
+
+
+
+
 }
 
 function reservationCreate(){
@@ -239,7 +329,12 @@ function reservationCreate(){
 console.log(selectedRoom.price);
     let date = new Date();
     let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-
+     var baby= localStorage.getItem('babyBedCheckbox')
+     var babyBedInit;
+     if(baby){
+         babyBedInit = baby
+     }else{
+         babyBedInit = $("#babyBed").val()}
     reservationInfo={
      id:0,
      startDate : $("#checkIn").val(),
@@ -322,6 +417,21 @@ function customerCreate(){
                console.log('Error: ' + error);
            }
        });
+}
+
+
+function formatRoomFacilities(d) {
+  // `d` is the original data object for the row
+  return (
+      '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+      '<tr>' +
+      '<td>Facilities:</td>' +
+      '<td>' +
+      d.facilities +
+      '</td>' +
+      '</tr>' +
+      '</table>'
+  );
 }
 
 

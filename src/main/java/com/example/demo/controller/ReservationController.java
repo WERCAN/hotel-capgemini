@@ -4,7 +4,6 @@ import com.example.demo.model.Customer;
 import com.example.demo.model.Filter;
 import com.example.demo.model.Reservation;
 import com.example.demo.model.Room;
-import com.example.demo.service.CustomerService;
 import com.example.demo.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
