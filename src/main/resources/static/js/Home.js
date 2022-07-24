@@ -108,8 +108,8 @@ function getLanguage() {
     $("#text-p1").text(data.textp1);
     $("#text-p2").text(data.textp2);
     $("#reservationBtn").text(data.reservation);
-    $("#checkIn").text(data.checkIn);
-    $("#checkOut").text(data.checkOut);
+    $("#checkin").text(data.checkIn);
+    $("#checkout").text(data.checkOut);
     $("#room").text(data.room);
     $("#single").text(data.single);
     $("#double").text(data.double);
@@ -125,6 +125,13 @@ function getLanguage() {
     $("#social").text(data.social);
     $("#socialDescription").text(data.socialDescription);
     $("#address").text(data.address);
+    $("#monDay").text(data.monday);
+    $("#tueDay").text(data.tuesday);
+    $("#wedDay").text(data.wednesday);
+    $("#thuDay").text(data.thursday);
+    $("#friDay").text(data.friday);
+    $("#satDay").text(data.saturday);
+    $("#sunDay").text(data.sunday);
 
   }).fail(function(){
       console.log("An error has occurred.");
@@ -327,7 +334,8 @@ console.log("CALENDAR!!!");
 
     str += "<table>";
     str +=
-      "<thead><tr><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td><td>Sun</td></tr></thead><tbody>";
+       "<thead><tr><td id='monDay'>Mon</td><td id='tueDay'>Tue</td><td id='wedDay'>Wed</td><td id='thuDay'>Thu</td><td id='friDay'>Fri</td><td id='satDay'>Sat</td><td id='sunDay'>Sun</td></tr></thead><tbody>";
+
 
     for (key in days) {
       i++;
@@ -349,20 +357,39 @@ console.log("CALENDAR!!!");
   } // end getMonth()
 
   // months array (0 based index)
-  var monthArr = [
-    "january",
-    "february",
-    "march",
-    "april",
-    "may",
-    "june",
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december",
-  ];
+   var monthArr;
+
+    if(localStorage.getItem('language') == null || localStorage.getItem('language') == "en"){
+        monthArr=[
+        "january",
+        "february",
+        "march",
+        "april",
+        "may",
+        "june",
+        "july",
+        "august",
+        "september",
+        "october",
+        "november",
+        "december",
+      ]
+    }else{
+        monthArr=[
+        "一月",
+        "二月",
+        "三月",
+        "四月",
+        "五月",
+        "六月",
+        "七月",
+        "八月",
+        "九月",
+        "十月",
+        "十一月",
+        "十二月"
+      ]
+    };
 
   /* INIT */
   var date = new Date();
@@ -398,6 +425,7 @@ console.log("CALENDAR!!!");
       $("table").remove();
       getMonth(month, year);
       $("#month").text(monthArr[month - 1] + " " + year);
+      getLanguage();
     });
   }
 

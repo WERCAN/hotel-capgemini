@@ -15,7 +15,21 @@ var customerInfoList = [];
 
 function init(){
 
-  initRoomsTable();
+    $("#enImg").click(function(){
+      setLanguage('en');
+      getLanguage();
+      window.location.reload(true);
+      $.datepicker.setDefaults( $.datepicker.regional["en-GB"]);
+    })
+    $("#cnImg").click(function(){
+      setLanguage('cn');
+      getLanguage();
+
+     $.datepicker.setDefaults( $.datepicker.regional[ "zh-CN" ] );
+    })
+
+    initRoomsTable();
+    getLanguage();
 
   $("#checkRoomsForm").on("submit",function(event){
       event.preventDefault();
@@ -127,15 +141,15 @@ function initRoomsTable() {
           "data": "disabled",
            render: function(data,type,row){
                    if(data == true){
-                    return "<span class='yes'>YES</span>";
-                   } else {return "<span class='no'>NO</span>"; }
+                    return "<span class='yes' id='disabledYes'>YES</span>";
+                   } else {return "<span class='no' id='disabledNo'>NO</span>"; }
       }},
       { "title": "Smoke",
           "data": "smoking",
           render: function(data,type,row){
                   if(data == true){
                    return "<span class='yes'>Allowed</span>";
-                  }else{return "<span class='no'>Not Allowed</span>"; }
+                  }else{return "<span class='no' id='notAllowed'>Not Allowed</span>"; }
         }},
   ];
 
@@ -178,7 +192,7 @@ function getRoomsData(){
 
   var smoke=false;
   var disabled=false;
-  var selectedComment= $("#comments  input[name='comments']:checked").val();
+  var selectedComment= $("input[name='comments']:checked").val();
   if(selectedComment == "smoking"){
     smoke=true;
   }else if(selectedComment == "nonSmoking"){
@@ -212,6 +226,7 @@ function getRoomsData(){
               roomsTable.rows.add(rooms);
               roomsTable.columns.adjust().draw();
           }
+           getLanguage();
       },
       fail: function (error) {
           console.log('Error: ' + error);
@@ -307,4 +322,128 @@ function customerCreate(){
                console.log('Error: ' + error);
            }
        });
+}
+
+
+
+//--- LANGUAGE ----
+//-----------------
+var language;
+function getLanguage() {
+  (localStorage.getItem('language') == null) ? setLanguage('en') : false;
+
+  var url= '/language/' +  localStorage.getItem('language') + '.json';
+
+  $.getJSON(url, function(data){
+    $("#aboutBtn").text(data.aboutUs);
+    $("#contactBtn").text(data.contact);
+    $("#loginBtn").text(data.logIn);
+    $("#userName").text(data.username);
+    $("#password").text(data.password);
+    $("#submit").text(data.submit);
+    $("#text-p1").text(data.textp1);
+    $("#text-p2").text(data.textp2);
+    $("#reservationBtn").text(data.reservation);
+    $("#checkinLabel").text(data.checkIn);
+    $("#checkoutLabel").text(data.checkOut);
+    $("#room").text(data.room);
+    $("#single").text(data.single);
+    $("#double").text(data.double);
+    $("#x2double").text(data.x2double);
+    $("#pentHouse").text(data.pentHouse);
+    $("#guests").text(data.guests);
+    $("#adults").attr("placeholder", data.adults);
+    $("#children").attr("placeholder", data.child);
+    $("#babyBed").attr("placeholder", data.babyBed);
+    $("#smoking_lang").text(data.smoking);
+    $("#nonSmoking_lang").text(data.nonSmoking);
+    $("#disabled_lang").text(data.disabled);
+    $("#checkRoomsButton").text(data.checkAvalibility);
+    $("#selectedRoomButton").text(data.continue);
+    $("#aboutUsText").text(data.aboutUsText);
+    $("#social").text(data.social);
+    $("#socialDescription").text(data.socialDescription);
+    $("#address").text(data.address);
+    $("#monDay").text(data.monday);
+    $("#tueDay").text(data.tuesday);
+    $("#wedDay").text(data.wednesday);
+    $("#thuDay").text(data.thursday);
+    $("#friDay").text(data.friday);
+    $("#satDay").text(data.saturday);
+    $("#sunDay").text(data.sunday);
+    $("#roomsTable th.dt-left.sorting")[0].innerText= data.roomNo;
+    $("#roomsTable th.dt-left.sorting")[1].innerText= data.roomType;
+    $("#roomsTable th.dt-left.sorting")[2].innerText= data.guests;
+    $("#roomsTable th.dt-left.sorting")[3].innerText= data.children;
+    $("#roomsTable th.dt-left.sorting")[4].innerText= data.singleBed;
+    $("#roomsTable th.dt-left.sorting")[5].innerText= data.doubleBed;
+    $("#roomsTable th.dt-left.sorting")[6].innerText= data.price;
+    $("#roomsTable th.dt-left.sorting")[7].innerText= data.disabled;
+    $("#roomsTable th.dt-left.sorting")[8].innerText= data.smoking;
+    $("#titleRegistrationModal").text(data.titleRegistrationModal);
+    $("#labelFirstName").text(data.labelFirstName);
+    $("#labelLastName").text(data.labelLastName);
+    $("#labelEmail").text(data.labelEmail);
+    $("#email").attr("placeholder", data.emailPlaceholder);
+    $("#textPassword").text(data.textPassword);
+    $("#labelPhone").text(data.labelPhone);
+    $("#labelAddress").text(data.labelAddress);
+    $("#labelDocumentType").text(data.labelDocumentType);
+    $("#reservationSubmit").text(data.submitButton);
+    $("#closeButton").text(data.closeButton);
+
+
+
+
+    var roomsTable = $('#roomsTable').DataTable();
+
+    roomsTable.rows().every( function () {
+        var d = this.data();
+
+        var infoRoomText=document.querySelectorAll("#infoRoom");
+        infoRoomText.forEach(btn => {
+          btn.innerText = data.facilities ;
+        });
+
+        var disabledYes=document.querySelectorAll("#disabledYes");
+        disabledYes.forEach(item => {
+          item.innerText = data.yes ;
+        });
+
+        var disabledNo=document.querySelectorAll("#disabledNo");
+        disabledNo.forEach(item => {
+          item.innerText = data.no ;
+        });
+
+        var notAllowed=document.querySelectorAll("#notAllowed");
+        notAllowed.forEach(item => {
+          item.innerText = data.notAllowed ;
+        });
+
+        // update data source for the row
+        if(d.roomType == "Single"){
+        d.roomType = data.single;
+        }else if(d.roomType == "Double"){
+          d.roomType = data.double;
+        }else if(d.roomType == "2 x Double"){
+          d.roomType= data.x2double;
+        }else if(d.roomType== "Penthouse"){
+          d.roomType = data.pentHouse;
+        }
+
+        this.invalidate(); // invalidate the data DataTables has cached for this row
+
+    } );
+
+    // Draw once all updates are done
+    roomsTable.draw();
+
+
+  }).fail(function(){
+      console.log("An error has occurred.");
+  });
+}
+
+function setLanguage(lang) {
+  localStorage.setItem('language', lang);
 }
