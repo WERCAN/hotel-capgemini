@@ -175,7 +175,8 @@ function init() {
 
 
 
-         if(reservationInfoEdit.startDate==$("#editStartDate").val()
+         if((reRoomsTable.rows( '.selected' ).any()==false)
+         && reservationInfoEdit.startDate==$("#editStartDate").val()
          && reservationInfoEdit.endDate==$("#editEndDate").val()
          && reservationInfoEdit.room.roomType==$("#reEditRoomType :selected").text()
          && reservationInfoEdit.room.sizePerson==$("#adults").val()
@@ -202,20 +203,6 @@ function init() {
 
      }
 
-
-
-
-
-
-
-
-
-//    e.preventDefault();
-//    console.log("submit button");
-//    editReservation(); //burada
-//    getReservationData();
-//
-//    $('#editReservationModal').modal('hide');
   });
 
   $("#reEditCheckRoomsButton").click( function (){
@@ -916,26 +903,6 @@ console.log("editReservation function");
 
 }
 
-  //Put reservation data from page in Javascript object
-//
-//    if(reservationInfoEdit.startDate==$("#editStartDate").val()
-//    && reservationInfoEdit.endDate==$("#editEndDate").val()
-//    && reservationInfoEdit.room.roomType==$("#reEditRoomType").val()
-//    && reservationInfoEdit.room.sizePerson==$("#adults").val()
-//    && reservationInfoEdit.room.childrenPlace==$("#children").val()
-//    && ((reservationInfoEdit.room.smoke==true && document.getElementById('smoking').checked==true)
-//    || (reservationInfoEdit.room.smoke==false && document.getElementById('nonSmoking').checked==true)
-//    || (reservationInfoEdit.room.disabled==true && document.getElementById('disabled').checked==true))
-//    ){
-//
-//    editBasicReservationInfo();
-//
-//    }else{
-//
-//    alert("Please check the availability");
-//
-//     var reEditRoom = reRoomsTable.row($('.selected')).data();
-//}
 
 
     //burada

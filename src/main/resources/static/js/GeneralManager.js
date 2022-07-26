@@ -1,10 +1,11 @@
 var RESERVATION_API = "http://localhost:9090/api/reservations" ;
 var CUSTOMERS_API="http://localhost:9090/api/customer";
 var ROOMS_API = "http://localhost:9090/api/rooms";
+var availableRoomsApi="http://localhost:9090/api/reservations/availableRooms";
 
 var RESERVATION_PAGE_ROUTE="http://localhost:9090/reservation/reservationpage";
 var HOME_ROUTE = "http://localhost:9090/home" ;
-
+var reRoomsTable;
 var reservationTable;
 var customerInfo=[];
 
@@ -15,6 +16,8 @@ function init() {
    initReservationTable();
    // Get reservations from backend and update DOM
    getReservationData();
+
+   initreRoomstable();
 
    initCustomersTable();
    getCustomersData();
@@ -38,79 +41,176 @@ function init() {
          // -------------------------
           // ----  RESERVATIONS -------
           // Add event listener for opening and closing details
-          $("#reservationsTable tbody").on("click", "#information", function () {
-         var tr = $(this).closest("tr");
-         var row = reservationTable.row(tr);
+         $("#reservationsTable tbody").on("click", "#information", function () {
+                  var tr = $(this).closest("tr");
+                  var row = reservationTable.row(tr);
 
-         if (row.child.isShown()) {
-           // This row is already open - close it
-           row.child.hide();
-           tr.removeClass("shown");
-         } else {
-           // Open this row (the format() function would return the data to be shown)
-           row.child(format(row.data())).show();
-           tr.addClass("shown");
-         }
-       });
+                  if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass("shown");
+                  } else {
+                    // Open this row (the format() function would return the data to be shown)
+                    row.child(format(row.data())).show();
+                    tr.addClass("shown");
+                  }
+                });
 
-          $("#reservationsTable tbody").on("click", "tr", function () {
-         console.log("Clicking on row");
-         if ($(this).hasClass("selected")) {
-           $(this).removeClass("selected");
-           // emptyRoomModals();
-         } else {
-           reservationTable.$("tr.selected").removeClass("selected");
+                 $("#roomsTable tbody").on("click", "#infoRoom", function () {
+                         var tr = $(this).closest("tr");
+                         var row = roomsTable.row(tr);
+                           console.log(row.data());
+                         if (row.child.isShown()) {
+                           // This row is already open - close it
+                           row.child.hide();
+                           tr.removeClass("shown");
+                         } else {
+                           // Open this row (the format() function would return the data to be shown)
+                           row.child(formatRoomFacilities(row.data())).show();
+                           tr.addClass("shown");
+                         }
+                       });
+
+     $("#reservationsTable tbody, #reRoomsTable tbody").on("click", "tr", function () {
+                  console.log("Clicking on row");
+                  if ($(this).hasClass("selected")) {
+                    $(this).removeClass("selected");
+                    // emptyRoomModals();
+                  } else {
+                    reservationTable.$("tr.selected").removeClass("selected");
+                    reRoomsTable.$("tr.selected").removeClass("selected");
+
+                    // emptyRoomModals();
+                    $(this).addClass("selected");
+                  }
+      });
 
 
-           // emptyRoomModals();
-           $(this).addClass("selected");
-         }
-       });
+      //******* Edit Reservation ********
+       $("#editReservationButton").click( function () {
+       console.log("Inside click of editReservationButton");
+        // Get the data from selected row and fill fields in modal
+          if (reservationTable.row($('.selected')).data() == undefined) {
+          alert("Select reservation first");
+            }else{
+                   reservationInfoEdit = reservationTable.row($('.selected')).data();
+
+                            $("#editStartDate").val(reservationInfoEdit.startDate);
+                            $("#editEndDate").val(reservationInfoEdit.endDate);
+                            $("#editBabyBed").val(reservationInfoEdit.babyBed);
+                            $("#editTotalPrice").val(reservationInfoEdit.totalPrice);
+                            $("#editServicePrice").val(reservationInfoEdit.roomServicePrice);
+                            $("#adults").val(reservationInfoEdit.room.sizePerson);
+                            $("#children").val(reservationInfoEdit.room.childrenPlace);
+                            $("#editBookingPrice").val(reservationInfoEdit.price);
+                            //$("#reEditRoomType").val(reservationInfoEdit.room.roomType);
+                            var selectType=reservationInfoEdit.room.roomType;
+                            var indx;
+                                    switch (selectType) {
+                                      case "Single":
+                                        indx = 1;
+                                        break;
+                                      case "Double":
+                                        indx = 2;
+                                        break;
+                                      case "2x Double":
+                                        indx = 3;
+                                        break;
+                                      case "Penthouse":
+                                        indx = 4;
+                                        break;
+                                    };
+                            document.getElementById("reEditRoomType").selectedIndex=indx-1;
 
 
-       //******* Edit Reservation ********
-            $("#editReservationButton").click( function () {
-           console.log("Inside click of editReservationButton");
-           // Get the data from selected row and fill fields in modal
-           if (reservationTable.row($('.selected')).data() == undefined) {
-               alert("Select reservation first");
-           }else{
-               var reservationInfoEdit = reservationTable.row($('.selected')).data();
+                             if(reservationInfoEdit.payment == true){
+                              $("#paymentPaidRadio").prop("checked", true);
+                            }else{
+                              $("#paymentUnPaidRadio").prop("checked", true);
+                            }
 
-                $("#editStartDate").val(reservationInfoEdit.startDate);
-                $("#editEndDate").val(reservationInfoEdit.endDate);
-                $("#editBabyBed").val(reservationInfoEdit.babyBed);
-                $("#editPrice").val(reservationInfoEdit.price);
-                $("#editServicePrice").val(reservationInfoEdit.roomServicePrice);
+                            if(reservationInfoEdit.checkedIn == true){
+                              $("#checkedInYesRadioId").prop("checked", true);
+                            }else{
+                              $("#checkedInNoRadioId").prop("checked", true);
+                            }
 
-                 if(reservationInfoEdit.payment == true){
-                  $("#paymentPaidRadio").prop("checked", true);
-                }else{
-                  $("#paymentUnPaidRadio").prop("checked", true);
-                }
+                            if(reservationInfoEdit.checkedOut == true){
+                              $("#checkedOutYesRadioId").prop("checked", true);
+                            }else{
+                              $("#checkedOutNoRadioId").prop("checked", true);
 
-                if(reservationInfoEdit.checkedIn == true){
-                  $("#checkedInYesRadioId").prop("checked", true);
-                }else{
-                  $("#checkedInNoRadioId").prop("checked", true);
-                }
 
-                if(reservationInfoEdit.checkedOut == true){
-                  $("#checkedOutYesRadioId").prop("checked", true);
-                }else{
-                  $("#checkedOutNoRadioId").prop("checked", true);
-                }
+                            }
 
-                $('#editReservationModal').modal('show');
-           }
-           });
+                            if(reservationInfoEdit.room.smoke == true){
+                              $("#smoking").prop("checked", true);
+                            }else{
+                              $("#nonSmoking").prop("checked", true);
+                            }
 
-            $('#editReservationModal').on('submit', function(e){
-           e.preventDefault();
-           console.log("Submitting Edit Reservation Modal Form!");
-           createReservation();
-           $('#editReservationModal').modal('hide');
-         });
+                            if(reservationInfoEdit.room.disabled == true){
+                               $("#disabled").prop("checked", true);
+                            }
+
+                            $('#editReservationModal').modal('show');
+                       }
+                       });
+
+
+         $("#reRoomsTable tbody").on("click", "#infoReRoom", function () {
+                                var tr = $(this).closest("tr");
+                                var row = reRoomsTable.row(tr);
+                                  console.log(row.data());
+                                if (row.child.isShown()) {
+                                  // This row is already open - close it
+                                  row.child.hide();
+                                  tr.removeClass("shown");
+                                } else {
+                                  // Open this row (the format() function would return the data to be shown)
+                                  row.child(formatRoomFacilities(row.data())).show();
+                                  tr.addClass("shown");
+                                }
+                              });
+                           //Edit Submit
+        $('#reEditSubmitButton').click(function(e){
+
+
+
+                            if((reRoomsTable.rows( '.selected' ).any()==false)
+                            && reservationInfoEdit.startDate==$("#editStartDate").val()
+                            && reservationInfoEdit.endDate==$("#editEndDate").val()
+                            && reservationInfoEdit.room.roomType==$("#reEditRoomType :selected").text()
+                            && reservationInfoEdit.room.sizePerson==$("#adults").val()
+                            && reservationInfoEdit.room.childrenPlace==$("#children").val()
+                            && ((reservationInfoEdit.room.smoke==true && document.getElementById('smoking').checked==true)
+                            || (reservationInfoEdit.room.smoke==false && document.getElementById('nonSmoking').checked==true)
+                            || (reservationInfoEdit.room.disabled==true && document.getElementById('disabled').checked==true))
+                            ){
+                            console.log("submit button");
+                            editBasicReservationInfo();
+                            $('#editReservationModal').modal('hide');
+                            }else{
+
+
+
+                            if ( reRoomsTable.rows( '.selected' ).any() ){
+                                         console.log("submit button");
+                                         editReservation(); //burada
+                                         getReservationData();
+                                         $('#editReservationModal').modal('hide');
+                            }else{alert("Please check the availability");}
+
+
+
+                        }
+
+                     });
+
+        $("#reEditCheckRoomsButton").click( function (){
+                             console.log("inside check availability button!");
+                             checkAvailability();
+                   });
 
             //---Delete reservation
             $("#deleteReservationButton").click(function () {
@@ -665,4 +765,273 @@ CheckOutAddOne = function(){
     CheckIn = $('#editStartDate').datepicker('getDate');
     CheckOut = CheckIn.setDate(CheckIn.getDate() + 1);
     $('#editEndDate').datepicker( "option", "minDate", new Date(CheckOut) );
+}
+
+// RESERVATION EDIT
+
+function initreRoomstable(){
+console.log('inside initreRoomsTable' );
+var infoBtn='<div><button type="button" class="btn btn-info p-1 m-0" id="infoReRoom">Choose</button></div>'
+
+columns = [
+        { "title":  "Room No",
+            "data": "roomNumber" },
+        { "title":  "Room Type",
+            "data": "roomType" },
+        { "title":  "Adults",
+            "data": "sizePerson"},
+        { "title":  "Children",
+            "data": "childrenPlace"},
+        { "title":  "Price",
+            "data": "price",
+            render: function(data,type,row){
+                      return "¥" + data;
+        }},
+    ];
+
+    reRoomsTable = $("#reRoomsTable").DataTable( {
+            "order": [[ 0, "asc" ]],
+            "columns": columns,
+            columnDefs: [
+              {
+                      targets: 5,
+                      render: function(){
+                      return infoBtn;
+                     },
+                  },
+              ],
+            pageLength: 7,
+            responsive: true,
+            "lengthMenu": [ 5, 10, 15, 20 ],
+            dom: '<"top">ct<"top"lip><"clear">',
+        });
+
+}
+
+function editReservation(){
+
+console.log("editReservation function");
+
+
+
+    var selectedNewRoom =reRoomsTable.row($('.selected')).data();
+    console.log(selectedNewRoom);
+
+    var checkedIn= $("#checkedIn  input[name='checkedInRadioName']:checked").val();
+    var infoCheckIn;
+                if(checkedIn == "yes"){
+                  infoCheckIn = true;
+                }else{
+                  infoCheckIn = false;
+                }
+
+    var checkedOut= $("#checkedOut  input[name='checkedOutRadioName']:checked").val();
+    var infoCheckOut;
+                if(checkedOut == "yes"){
+                  infoCheckOut = true;
+                }else{
+                  infoCheckOut = false;
+                }
+
+    var paymentStatus= $("#paymentStatus  input[name='paymentRadioName']:checked").val();
+    var infoPayment;
+            if(paymentStatus == "paid"){
+              infoPayment = true;
+            }else{
+              infoPayment = false;
+            }
+
+    let date = new Date();
+    let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+
+       console.log(reservationInfoEdit.id.toString());
+
+    var reservationInfoEditSave={
+        id: reservationInfoEdit.id,
+        startDate:  $("#editStartDate").val(),
+        endDate : $("#editEndDate").val(),
+        checkedIn : infoCheckIn,
+        checkedOut : infoCheckOut,
+        payment: infoPayment,
+        price :$("#editBookingPrice").val(),
+        totalPrice: parseFloat( $("#editBookingPrice").val()) + parseFloat( $("#editServicePrice").val()),
+        roomServicePrice: $("#editServicePrice").val(),
+        babyBed: $("#editBabyBed").val(),
+        nowDate : currentDate,
+        room: selectedNewRoom,
+        customers: reservationInfoEdit.customers
+    }
+
+    var reservationInfoEditJson=JSON.stringify(reservationInfoEditSave);
+
+    $.ajax({
+            url: RESERVATION_API,
+            type: "post",
+            contentType:"application/json",
+            datatype: "json",
+            data: reservationInfoEditJson,
+            success: function(reservation){
+            console.log("Reservation is saved successfully");
+            getReservationData();
+            $('#editReservationModal').modal('hide');
+            },
+            fail: function (error) {
+                console.log('Error: ' + error);
+            }
+        });
+
+}
+
+function checkAvailability(){
+  console.log('inside checkAvailability');
+
+  var reservationInfoEdit = reservationTable.row($('.selected')).data();
+
+ let date = new Date();
+  let currentDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+
+
+  var smoke=false;
+  var disabled=false;
+  var selectedComment= $("#comments  input[name='comments']:checked").val();
+  if(selectedComment == "smoking"){
+    smoke=true;
+  }else if(selectedComment == "nonSmoking"){
+
+  }else{
+    disabled=true;
+  }
+
+
+   var filterRooms={
+      startDate : $("#editStartDate").val(),
+      endDate : $("#editEndDate").val(),
+      roomType : $("#reEditRoomType :selected").text(),
+      adultSize : $("#adults").val(),
+      childrenSize : $("#children").val(),
+      smoking : smoke,
+      disabled : disabled
+    }
+
+     var filterRoomsJson=JSON.stringify(filterRooms);
+
+     console.log(filterRoomsJson);
+
+$.ajax({
+      url: availableRoomsApi,
+      type: "post",
+      contentType:"application/json",
+      datatype: "json",
+      data: filterRoomsJson,
+      success: function(rooms){
+
+          if (rooms) {
+
+                console.log("writing rooms");
+              reRoomsTable.clear();
+              reRoomsTable.rows.add(rooms);
+              reRoomsTable.columns.adjust().draw();
+          }
+      },
+      fail: function (error) {
+          console.log('Error: ' + error);
+      }
+  });
+
+
+}
+
+
+function formatRoomFacilities(d) {
+  // `d` is the original data object for the row
+  return (
+      '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+      '<tr>' +
+      '<td>Facilities:</td>' +
+      '<td>' +
+      d.facilities +
+      '</td>' +
+      '</tr>' +
+      '</table>'
+  );
+}
+
+function editBasicReservationInfo(){
+
+console.log('editBasicReservationInfo FUNCTION!');
+
+  var reservationInfoEdit = reservationTable.row($('.selected')).data();
+
+    reservationInfoEdit.babyBed = $("#editBabyBed").val();
+    reservationInfoEdit.price = $("#editBookingPrice").val();
+    reservationInfoEdit.totalPrice = parseFloat( $("#editBookingPrice").val()) + parseFloat( $("#editServicePrice").val());
+    reservationInfoEdit.roomServicePrice = $("#editServicePrice").val();
+
+    var checkedIn= $("#checkedIn  input[name='checkedInRadioName']:checked").val();
+            if(checkedIn == "yes"){
+              reservationInfoEdit.checkedIn = true;
+            }else{
+              reservationInfoEdit.checkedIn = false;
+            }
+
+        var checkedOut= $("#checkedOut  input[name='checkedOutRadioName']:checked").val();
+            if(checkedOut == "yes"){
+              reservationInfoEdit.checkedOut = true;
+              reservationInfoEdit.room.cleanRoom=false;
+            }else{
+              reservationInfoEdit.checkedOut = false;
+              reservationInfoEdit.room.cleanRoom=true;
+            }
+
+        var paymentStatus= $("#paymentStatus  input[name='paymentRadioName']:checked").val();
+        if(paymentStatus == "paid"){
+          reservationInfoEdit.payment = true;
+        }else{
+          reservationInfoEdit.payment = false;
+        }
+        //update if the room is clean
+     var reservationRoomJson = JSON.stringify(reservationInfoEdit.room);
+     var reservationJson = JSON.stringify(reservationInfoEdit);
+     console.log(reservationJson);
+     $.ajax({
+           url: ROOMS_API,
+           type: "post",
+           contentType:"application/json",
+           datatype: "json",
+           data: reservationRoomJson,
+           // success: function(reservations, textStatus, jqXHR){
+           success: function(response){
+               if (response) {
+                  console.log("ROOM ISCLEAN UPDATED Success!!!!!!");
+                  getRoomsData();
+               }else{
+                 console.log("NOT ISCLEAN Success!!!!!!");
+               }
+           },
+           fail: function (error) {
+               console.log('Error: ' + error);
+           }
+       });
+
+
+    $.ajax({
+      url: RESERVATION_API,
+      type: "post",
+      contentType:"application/json",
+      datatype: "json",
+      data: reservationJson,
+      // success: function(reservations, textStatus, jqXHR){
+      success: function(response){
+          if (response) {
+             console.log("Success!!!!!!");
+           getReservationData();
+           getRoomsData();
+          }
+      },
+      fail: function (error) {
+          console.log('Error: ' + error);
+      }
+  });
+
 }
