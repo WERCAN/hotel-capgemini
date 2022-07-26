@@ -34,6 +34,12 @@
     <title>Receptionist Panel</title>
 
     <script>
+        console.log("calsiyor....." + localStorage.getItem("re"));
+        var isLogged= localStorage.getItem("re");
+        if(isLogged == null || isLogged == "false" ){
+           window.location.href = '/home';
+        }
+
         $(document).ready(function () {
           console.log("initializing");
           init();

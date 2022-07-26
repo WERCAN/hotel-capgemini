@@ -85,16 +85,7 @@ public class DemoApplication implements CommandLineRunner {
 		TypeReference<List<Room>> mapType = new TypeReference<List<Room>>() {};
 		rooms = objectMapper.readValue(json, mapType);
 
-//		roomRepository.saveAll(rooms);
-//		rooms.add(new Room("Double",4,1,2,1,true,true,22,2,false,true));
-//		rooms.add(new Room("Penthouse",2,2,2,0,true,true,2,2,false,true));
-//		rooms.add(new Room("Double",2,3,2,0,true,true,2,2,false,true));
-//		rooms.add(new Room("Double",2,4,2,0,true,true,2,2,false,true));
-//		rooms.add(new Room("Double",2,5,2,0,true,true,2,2,false,true));
-//		rooms.add(new Room("Double",2,6,2,0,true,true,2,2,false,true));
-//		rooms.add(new Room("Double",2,7,2,0,true,true,2,2,false,true));
-
-//		roomRepository.saveAll(rooms);
+		roomRepository.saveAll(rooms);
 
 
 
@@ -122,7 +113,7 @@ public class DemoApplication implements CommandLineRunner {
 
 		}
 
-//		reservationRepository.saveAll(reservations);
+	//	reservationRepository.saveAll(reservations);
 
 
 

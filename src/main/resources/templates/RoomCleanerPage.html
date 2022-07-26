@@ -34,6 +34,12 @@
     <title>RoomCleaner</title>
 
     <script>
+        console.log("calsiyor....." + localStorage.getItem("rc"));
+        var isLogged= localStorage.getItem("rc");
+        if(isLogged == null || isLogged == "false" ){
+           window.location.href = '/home';
+        }
+
         $(document).ready(function () {
             console.log("initializing");
             init();

@@ -118,18 +118,22 @@ console.log('Inside checkValidUser');
                 switch(response){
                     case "Admin":
                         console.log("Admin page returns");
+                        localStorage.setItem("admin" , true);
                         window.location.href = 'http://localhost:9090/adminDashboard';
                         break;
                     case "General Manager":
                         console.log("GM page returns");
+                        localStorage.setItem("gm" , true);
                         window.location.href = 'http://localhost:9090/generalManager';
                         break;
                     case "Receptionist":
                         console.log("RE page returns");
+                        localStorage.setItem("re" , true);
                         window.location.href = 'http://localhost:9090/receptionist';
                         break;
                     case "Room Cleaner":
                         console.log("RC page returns");
+                        localStorage.setItem("rc" , true);
                         window.location.href = 'http://localhost:9090/roomCleaner';
                         break;
                     case "User not found!" :
