@@ -33,91 +33,89 @@
         });
     </script>
 </head>
-
 <body>
-<!-- Navbar -->
-<nav>
-    <!-- Brand logo -->
-    <div class="brand-logo">
-        <a href="#">
-            <img src="/assests/Company Logo.jpg" alt="logo" class="logo" />
-        </a>
-        <a href="#">
-            <h1>Molveno Lake Resort</h1>
-        </a>
-    </div>
-    <!-- Navbar pages links buttons -->
-    <ul class="nav-links">
-        <li class="nav-link"><a href="#about" id="aboutBtn"> About us </a></li>
-        <li class="nav-link"><a href="#footer" id="contactBtn"> Contact </a></li>
-        <li class="login">
-            <!-- Button trigger modal so login form-->
-            <button class="nav-link login-btn" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
-                <a href="#" id="loginBtn"> Log in </a>
-            </button>
-        </li>
-    </ul>
-
-    <div class="flags">
-        <div class="flagEn">
-            <a href="#" id="enImg"><img src="/assests/englishIcon.png"/></a>
+    <!-- Navbar -->
+    <nav>
+        <!-- Brand logo -->
+        <div class="brand-logo">
+            <a href="#">
+                <img src="/assests/Company Logo.jpg" alt="logo" class="logo" />
+            </a>
+            <a href="#">
+                <h1>Molveno Lake Resort</h1>
+            </a>
         </div>
-        <div class="flagCn">
-            <a href="#" id="cnImg"><img src="/assests/China-icon.png"/></a>
-        </div>
-    </div>
-</nav>
+        <!-- Navbar pages links buttons -->
+        <ul class="nav-links">
+            <li class="nav-link"><a href="#about" id="aboutBtn"> About us </a></li>
+            <li class="nav-link"><a href="#footer" id="contactBtn"> Contact </a></li>
+            <li class="login">
+                <!-- Button trigger modal so login form-->
+                <button class="nav-link login-btn" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <a href="#" id="loginBtn"> Log in </a>
+                </button>
+            </li>
+        </ul>
 
-<!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form class="loginForm" id="loginForm">
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label" id="username">User name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required/>
-                    <div class="invalid-feedback">
-                        User name is case-sensitive!
+        <div class="flags">
+            <div class="flagEn">
+                <a href="#" id="enImg"><img src="/assests/englishIcon.png"/></a>
+            </div>
+            <div class="flagCn">
+                <a href="#" id="cnImg"><img src="/assests/China-icon.png"/></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="loginForm" id="loginForm">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label" id="username">User name</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required/>
+                        <div class="invalid-feedback">
+                            User name is case-sensitive!
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label" id="password">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1"
-                           aria-required="true" aria-invalid="true" required/>
-                    <div class="invalid-feedback">
-                        Password is case-sensitive!
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label" id="password">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1"
+                               aria-required="true" aria-invalid="true" required/>
+                        <div class="invalid-feedback">
+                            Password is case-sensitive!
+                        </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-primary" id="submitLoginButton">Submit</button>
-            </form>
+                    <button type="submit" class="btn btn-primary" id="submitLoginButton">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Reservation Modal -->
-<div class="modal fade" id="reservationModal">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form class="reservationForm" id="reservationForm">
+    <!-- Reservation Modal -->
+    <div class="modal fade" id="reservationModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
                 <div class="modal-header">
                     <div class="calendarModal">
                         <div id="calHelp">
-                        <div class="first active">
-                            <i id="checkIn">Check-in</i> <b id="sel1text">SELECT DEPART</b>
+                            <div class="first active">
+                                <i id="checkin">Check-in</i> <b id="sel1text"></b>
+                            </div>
+                            <div class="disabled"><i id="checkout">Check-out</i> <b id="sel2text"></b></div>
                         </div>
-                        <div class="disabled" id="checkOut"><i>Check-out</i> <b id="sel2text">RETURN</b></div>
-                    </div>
                         <div id="disp">
-                        <div id="prev" class="nav">&larr;</div>
-                        <div id="month">Hello world</div>
-                        <div id="next" class="nav">&rarr;</div>
-                    </div>
+                            <div id="prev" class="nav">&larr;</div>
+                            <div id="month">Hello world</div>
+                            <div id="next" class="nav">&rarr;</div>
+                        </div>
                         <div id="cal"></div>
                     </div>
 
                     <div class="reservationModalRight">
                         <div class="selectRoomModal">
-                            <select class="form-select m-1" aria-label="Default select room" id = "selectRoomType">
+                            <select class="form-select m-1" aria-label="Default select room">
                                 <option selected id="room">Room</option>
                                 <option value="1" id="single">Single</option>
                                 <option value="2" id="double">Double</option>
@@ -132,21 +130,21 @@
                             <input type="number" class="form-control m-2" placeholder="Baby Bed" aria-label="Baby" id="babyBed">
                         </div>
 
-                        <div class="reservationModalRadio m-2" id="commentsHome">
+                        <div class="reservationModalRadio m-2">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" value="smoking">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault">
                                 <label class="form-check-label" for="flexRadioDefault1" id="smoking">
                                     Smoking
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="nonSmoking">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
                                 <label class="form-check-label" for="flexRadioDefault2" id="nonSmoking">
                                     Non Smoking
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="disabled" >
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
                                 <label class="form-check-label" for="flexRadioDefault2" id="disabled">
                                     Disabled
                                 </label>
@@ -156,109 +154,107 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Main content -->
-<div class="content-container">
-    <img class="mySlides" src="/assests/foto1.jpg" />
-    <img class="mySlides" src="/assests/foto4.jpg" />
-    <img class="mySlides" src="/assests/hotel-foto3.jpg" />
+    <!-- Main content -->
+    <div class="content-container">
+        <img class="mySlides" src="/assests/foto1.jpg" />
+        <img class="mySlides" src="/assests/foto4.jpg" />
+        <img class="mySlides" src="/assests/hotel-foto3.jpg" />
 
-    <div class="home-main-text">
-        <p id="text-p1">Some nice texts coming here</p>
-        <p id="text-p2">Some nice texts coming here</p>
-        <button type="button" data-bs-toggle="modal" data-bs-target="#reservationModal" id="reservationBtn">
-            Reservation
-        </button>
-    </div>
-</div>
-
-<!-- about-us -->
-<div class="about" id="about">
-    <div class="about-img">
-        <img src="/assests/foto1.jpg" alt="about-photo" />
-    </div>
-
-    <div class="about-text">
-        <div class="about-title">
-            <h2 id="aboutUs">About us</h2>
-        </div>
-        <div class="about-text-body">
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-                ipsam laudantium, eveniet eligendi alias natus magni possimus
-                necessitatibus quo voluptatibus fuga labore? Velit accusamus sit
-                error voluptates vel aliquid veniam.
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-                ipsam laudantium, eveniet eligendi alias natus magni possimus
-                necessitatibus quo voluptatibus fuga labore? Velit accusamus sit
-                error voluptates vel aliquid veniam.
-            </p>
+        <div class="home-main-text">
+            <p id="text-p1">Some nice texts coming here</p>
+            <p id="text-p2">Some nice texts coming here</p>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#reservationModal" id="reservationBtn">
+                Reservation
+            </button>
         </div>
     </div>
-</div>
 
-<!-- Footer -->
-<footer id="footer">
-    <div class="main-content">
-        <div class="left box">
-            <h2 id="social">Socials</h2>
-            <div class="content">
+    <!-- about-us -->
+    <div class="about" id="about">
+        <div class="about-img">
+            <img src="/assests/foto1.jpg" alt="about-photo" />
+        </div>
+
+        <div class="about-text">
+            <div class="about-title">
+                <h2 id="aboutUs">About us</h2>
+            </div>
+            <div class="about-text-body">
                 <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui cum
-                    mollitia quod iure, labore possimus similique sapiente porro
-                    numqua habdhj jkandjkna jdnjkankna jandknxksnws
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
+                    ipsam laudantium, eveniet eligendi alias natus magni possimus
+                    necessitatibus quo voluptatibus fuga labore? Velit accusamus sit
+                    error voluptates vel aliquid veniam.
                 </p>
-                <div class="social">
-                    <a href="#"><i class="fa fa-facebook-f" style="font-size: 26px"></i></a>
-                    <a href="#"><i class="fa fa-twitter" style="font-size: 26px"></i></a>
-                    <a href="#"><i class="fa fa-instagram" style="font-size: 26px"></i></a>
-                    <a href="#"><i class="fa fa-youtube" style="font-size: 26px"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="center box">
-            <h2 id="address">Address</h2>
-            <div class="content">
-                <div class="place">
-                    <a href="#">
-                        <i class="material-icons" style="font-size: 26px; color: red">place</i></a>
-                    <span class="text">Via Bettega 12, 38018 Molveno (Tn), Italia</span>
-                </div>
-
-                <div class="phone">
-                    <a href="#">
-                        <i class="material-icons" style="font-size: 26px">phone</i>
-                    </a>
-                    <span class="text">+31 6 8932485</span>
-                </div>
-
-                <div class="mail">
-                    <a href="#">
-                        <i class="material-icons" style="font-size: 26px">mail</i>
-                    </a>
-                    <span class="text">molvenolakeresort@example.com</span>
-                </div>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
+                    ipsam laudantium, eveniet eligendi alias natus magni possimus
+                    necessitatibus quo voluptatibus fuga labore? Velit accusamus sit
+                    error voluptates vel aliquid veniam.
+                </p>
             </div>
         </div>
     </div>
-    <div class="bottom">
-        <center>
-            <span class="credit">Created By <a href="#"> TeamHotel </a> | </span>
-            <i class="material-icons" style="font-size: 16px">copyright</i>
-            <span>2022 All rights reserved.</span>
-        </center>
-    </div>
-</footer>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="main-content">
+            <div class="left box">
+                <h2 id="social">Socials</h2>
+                <div class="content">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui cum
+                        mollitia quod iure, labore possimus similique sapiente porro
+                        numqua habdhj jkandjkna jdnjkankna jandknxksnws
+                    </p>
+                    <div class="social">
+                        <a href="#"><i class="fa fa-facebook-f" style="font-size: 26px"></i></a>
+                        <a href="#"><i class="fa fa-twitter" style="font-size: 26px"></i></a>
+                        <a href="#"><i class="fa fa-instagram" style="font-size: 26px"></i></a>
+                        <a href="#"><i class="fa fa-youtube" style="font-size: 26px"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="center box">
+                <h2 id="address">Address</h2>
+                <div class="content">
+                    <div class="place">
+                        <a href="#">
+                            <i class="material-icons" style="font-size: 26px; color: red">place</i></a>
+                        <span class="text">Via Bettega 12, 38018 Molveno (Tn), Italia</span>
+                    </div>
+
+                    <div class="phone">
+                        <a href="#">
+                            <i class="material-icons" style="font-size: 26px">phone</i>
+                        </a>
+                        <span class="text">+31 6 8932485</span>
+                    </div>
+
+                    <div class="mail">
+                        <a href="#">
+                            <i class="material-icons" style="font-size: 26px">mail</i>
+                        </a>
+                        <span class="text">molvenolakeresort@example.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <center>
+                <span class="credit">Created By <a href="#"> TeamHotel </a> | </span>
+                <i class="material-icons" style="font-size: 16px">copyright</i>
+                <span>2022 All rights reserved.</span>
+            </center>
+        </div>
+    </footer>
 
 </body>
-
 </html>

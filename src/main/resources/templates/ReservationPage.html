@@ -5,6 +5,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0"/>
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -28,6 +31,8 @@
             src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/js/ReservationPage.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="/js/ui.datepicker-cn.js"></script>
+    <script type="text/javascript" src="/js/ui.datepicker-en.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -55,10 +60,10 @@
         </div>
         <div class="flags">
             <div class="flagEn">
-                <img src="/assests/englishIcon.png"/>
+                <a href="#" id="enImg"><img src="/assests/englishIcon.png"/></a>
             </div>
             <div class="flagCn">
-                <img src="/assests/China-icon.png"/>
+                <a href="#" id="cnImg"><img src="/assests/China-icon.png"/></a>
             </div>
         </div>
     </nav>
@@ -68,45 +73,45 @@
         <form id="checkRoomsForm" class="needs-validation" novalidate>
             <div class="checkinAndOut">
                 <div class="checkIn">
-                    <label for="checkIn" class="form-label">Check in</label>
+                    <label for="checkIn" class="form-label" id="checkinLabel">Check in</label>
                     <input class="form-control" type="text" id="checkIn" autocomplete="off" onchange="CheckOutAddOne()" required>
                 </div>
                 <div class="checkOut">
-                    <label for="checkOut" class="form-label">Check out</label>
+                    <label for="checkOut" class="form-label" id="checkoutLabel">Check out</label>
                     <input class="form-control" type="text" id="checkOut" autocomplete="off" required>
                 </div>
             </div>
             <div class="Guests">
-                <div class="mb-1">Guests</div>
+                <div class="mb-1" id="guests">Guests</div>
                 <input type="number" class="form-control mb-1" placeholder="Adults" aria-label="Adults" id="adults" required>
                 <input type="number" class="form-control mb-1" placeholder="Child" aria-label="Child" id="children">
                 <input type="number" class="form-control" placeholder="Baby Bed" aria-label="babyBed" id="babyBed">
             </div>
             <div class="selectRoomType">
-                <div class="mb-1">Room Type</div>
+                <div class="mb-1" id="room">Room Type</div>
                 <select class="form-select mb-2" aria-label="Default select room" id="selectRoomType" required>
-                    <option value="1" selected>Single</option>
-                    <option value="2">Double</option>
-                    <option value="3">2x Double</option>
-                    <option value="4">Penthouse</option>
+                    <option value="1" selected id="single">Single</option>
+                    <option value="2" id="double">Double</option>
+                    <option value="3" id="x2double">2x Double</option>
+                    <option value="4" id="pentHouse">Penthouse</option>
                 </select>
             </div>
             <div class="comments" id="comments">
                 <div class="form-check mb-1">
-                    <label class="form-check-label" for="smoking">
+                    <label class="form-check-label" for="smoking" id="smoking_lang">
                         Smoking
                     </label>
                     <input class="form-check-input" type="radio" name="comments" value="smoking" id="smoking">
                 </div>
                 <div class="form-check mb-1">
                     <input class="form-check-input" type="radio" name="comments" value="nonSmoking" id="nonSmoking" >
-                    <label class="form-check-label" for="nonSmoking">
+                    <label class="form-check-label" for="nonSmoking" id="nonSmoking_lang">
                         Non Smoking
                     </label>
                 </div>
                 <div class="form-check mb-4">
                     <input class="form-check-input" type="radio" name="comments" value="disabled" id="disabled" >
-                    <label class="form-check-label" for="disabled">
+                    <label class="form-check-label" for="disabled" id="disabled_lang">
                         Disabled
                     </label>
                 </div>
@@ -132,39 +137,39 @@
             <!-- Content-->
             <div class="modal-content w-75">
                 <div class="modal-header bg-warning">
-                    <h4 class="modal-title">Registration</h4>
+                    <h4 class="modal-title"  id="titleRegistrationModal">Registration</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="customerForm">
                     <div class="customerInfoForm">
                         <div class="form-group">
-                            <label for="firstName">First Name:</label>
+                            <label for="firstName" id="labelFirstName">First Name:</label>
                             <input type="text" class="form-control" id="firstName" required/>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="lastName">Last Name:</label>
+                            <label for="lastName"  id="labelLastName">Last Name:</label>
                             <input type="text" class="form-control" id="lastName" required/>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="email" class="form-label">Email address:</label>
+                            <label for="email" class="form-label" id="labelEmail">Email address:</label>
                             <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" id="textPassword">
                                 Please provide a valid email address.
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="phone">Phone:</label>
+                            <label for="phone" id="labelPhone">Phone:</label>
                             <input type="text" class="form-control" id="phone" required/>
                         </div>
                         <div class="form-group mt-2">
-                            <div class="mb-1">Document</div>
+                            <div class="mb-1" id="labelDocumentType">Document</div>
                             <select class="form-select" id="documentType" aria-label="Default select document" required>
                                 <option selected>ID</option>
                                 <option value="1">Passport</option>
@@ -173,7 +178,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="address">Address:</label>
+                            <label for="address" id="labelAddress">Address:</label>
                             <input type="text" class="form-control" id="address" />
                         </div>
                     </div>
