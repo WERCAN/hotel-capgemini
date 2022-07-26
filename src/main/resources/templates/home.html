@@ -97,65 +97,67 @@
     <div class="modal fade" id="reservationModal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <div class="calendarModal">
-                        <div id="calHelp">
-                            <div class="first active">
-                                <i id="checkin">Check-in</i> <b id="sel1text"></b>
+                <form class="reservationForm" id="reservationForm">
+                    <div class="modal-header">
+                        <div class="calendarModal">
+                            <div id="calHelp">
+                                <div class="first active">
+                                    <i id="checkIn">Check-in</i> <b id="sel1text">SELECT DEPART</b>
+                                </div>
+                                <div class="disabled" id="checkOut"><i>Check-out</i> <b id="sel2text">RETURN</b></div>
                             </div>
-                            <div class="disabled"><i id="checkout">Check-out</i> <b id="sel2text"></b></div>
+                            <div id="disp">
+                                <div id="prev" class="nav">&larr;</div>
+                                <div id="month">Hello world</div>
+                                <div id="next" class="nav">&rarr;</div>
+                            </div>
+                            <div id="cal"></div>
                         </div>
-                        <div id="disp">
-                            <div id="prev" class="nav">&larr;</div>
-                            <div id="month">Hello world</div>
-                            <div id="next" class="nav">&rarr;</div>
+
+                        <div class="reservationModalRight">
+                            <div class="selectRoomModal">
+                                <select class="form-select m-1" aria-label="Default select room" id = "selectRoomType">
+                                    <option selected id="room">Room</option>
+                                    <option value="1" id="single">Single</option>
+                                    <option value="2" id="double">Double</option>
+                                    <option value="3" id="x2double">2x Double</option>
+                                    <option value="4" id="pentHouse">Penthouse</option>
+                                </select>
+                            </div>
+
+                            <div class="reservationModalAdultandChild">
+                                <input type="number" class="form-control m-2" placeholder="Adults" aria-label="Adults" id="adults">
+                                <input type="number" class="form-control m-2" placeholder="Child" aria-label="Child" id="child">
+                                <input type="number" class="form-control m-2" placeholder="Baby Bed" aria-label="Baby" id="babyBed">
+                            </div>
+
+                            <div class="reservationModalRadio m-2" id="commentsHome">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" value="smoking">
+                                    <label class="form-check-label" for="flexRadioDefault1" id="smoking">
+                                        Smoking
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="nonSmoking">
+                                    <label class="form-check-label" for="flexRadioDefault2" id="nonSmoking">
+                                        Non Smoking
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="disabled" >
+                                    <label class="form-check-label" for="flexRadioDefault2" id="disabled">
+                                        Disabled
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div id="cal"></div>
                     </div>
-
-                    <div class="reservationModalRight">
-                        <div class="selectRoomModal">
-                            <select class="form-select m-1" aria-label="Default select room">
-                                <option selected id="room">Room</option>
-                                <option value="1" id="single">Single</option>
-                                <option value="2" id="double">Double</option>
-                                <option value="3" id="x2double">2x Double</option>
-                                <option value="4" id="pentHouse">Penthouse</option>
-                            </select>
-                        </div>
-
-                        <div class="reservationModalAdultandChild">
-                            <input type="number" class="form-control m-2" placeholder="Adults" aria-label="Adults" id="adults">
-                            <input type="number" class="form-control m-2" placeholder="Child" aria-label="Child" id="child">
-                            <input type="number" class="form-control m-2" placeholder="Baby Bed" aria-label="Baby" id="babyBed">
-                        </div>
-
-                        <div class="reservationModalRadio m-2">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault">
-                                <label class="form-check-label" for="flexRadioDefault1" id="smoking">
-                                    Smoking
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
-                                <label class="form-check-label" for="flexRadioDefault2" id="nonSmoking">
-                                    Non Smoking
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                <label class="form-check-label" for="flexRadioDefault2" id="disabled">
-                                    Disabled
-                                </label>
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
