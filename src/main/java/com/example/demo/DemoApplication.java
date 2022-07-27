@@ -59,23 +59,23 @@ public class DemoApplication implements CommandLineRunner {
 			customers.add( new Customer(0,Util.getFakeFirstName(),Util.getFakeLastName(),Util.getFakeAddress(),Util.getFakeEmail(),Util.getFakephoneNumber(),"Passport"));
 		}
 
-//		customerRepository.saveAll( customers);
+	//	customerRepository.saveAll( customers);
 
 		User adminUser =new User("Halid","Karabiyik","user@gmail.com","Konya42","hoptillepad","20/08/1996","Adminuser","Admin");
-//		userRepository.save(adminUser);
+	//	userRepository.save(adminUser);
 		User gmUser =new User("Halid","Karabiyik","user@gmail.com","Konya42","hoptillepad","20/08/1996","Gmuser","General Manager");
-//		userRepository.save(gmUser);
+	//	userRepository.save(gmUser);
 		User receptionistUser =new User("Halid","Karabiyik","user@gmail.com","Konya42","hoptillepad","20/08/1996","Reuser","Receptionist");
-//		userRepository.save(receptionistUser);
+	//	userRepository.save(receptionistUser);
 		User roomCleanerUser =new User("Halid","Karabiyik","user@gmail.com","Konya42","hoptillepad","20/08/1996","Rcuser","Room Cleaner");
-//		userRepository.save(roomCleanerUser);
+	//	userRepository.save(roomCleanerUser);
 
 		List<User> users = new ArrayList<>();
 		for(int n=0; n<10; n++){
 			users.add(new User(Util.getFakeFirstName(),Util.getFakeLastName(),Util.getFakeEmail(),Util.getFakePassword(),Util.getFakeAddress(), String.valueOf(Util.getFakeAge()),Util.getFakeUsername(),"Admin"));
 		}
 
-//		userRepository.saveAll(users);
+	//	userRepository.saveAll(users);
 
 
 		List<Room> rooms;
@@ -85,7 +85,7 @@ public class DemoApplication implements CommandLineRunner {
 		TypeReference<List<Room>> mapType = new TypeReference<List<Room>>() {};
 		rooms = objectMapper.readValue(json, mapType);
 
-		roomRepository.saveAll(rooms);
+	//	roomRepository.saveAll(rooms);
 
 
 

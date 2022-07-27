@@ -253,6 +253,7 @@ function init() {
          //-----------------
               //--- LOG OUT -----
              $("#logoutConfirmButton").click(function(){
+              localStorage.setItem("re" , false);
                   window.location.href = HOME_ROUTE;
              });
 

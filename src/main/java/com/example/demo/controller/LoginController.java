@@ -34,6 +34,7 @@ public class LoginController {
         if(validUser==null){
             return "User not found!";
         }
+
         return validUser.getRole();
     }
 }

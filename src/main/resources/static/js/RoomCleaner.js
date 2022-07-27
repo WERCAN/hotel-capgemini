@@ -1,5 +1,6 @@
 var UNCLEANED_API = "http://localhost:9090/api/uncleanedRooms";
 var ROOMS_API = "http://localhost:9090/api/rooms"
+var HOME_ROUTE = "http://localhost:9090/home" ;
 
 var roomsTable;
 
@@ -50,6 +51,13 @@ function init(){
          });
       }
   });
+
+    //-----------------
+    //--- LOG OUT -----
+    $("#logoutConfirmBtnRc").click(function(){
+        localStorage.setItem("rc" , false);
+        window.location.href = HOME_ROUTE;
+    });
 
 }
 

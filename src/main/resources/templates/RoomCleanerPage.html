@@ -45,19 +45,48 @@
             init();
         });
     </script>
-</head>
-<!-- Navbar -->
-<nav>
-    <!-- Brand logo -->
-    <div class="brand-logo">
-        <a href="#">
-            <img src="/assests/Company Logo.jpg" alt="logo" class="logo" />
-        </a>
-        <h1>Rooms Status</h1>
-    </div>
-</nav>
 
+</head>
 <body>
+
+    <!-- Navbar -->
+    <nav>
+        <!-- Brand logo -->
+        <div class="brand-logo">
+            <a href="#">
+                <img src="/assests/Company Logo.jpg" alt="logo" class="logo" />
+            </a>
+            <h1>Rooms Status</h1>
+        </div>
+
+        <div class="logoutButtonWrapper">
+            <button class="btn btn-outline-primary" id="logoutButton" data-bs-toggle="modal"
+                    data-bs-target="#logoutModal" type="button">
+                Log out
+            </button>
+        </div>
+    </nav>
+
+    <!-- Log out Modal -->
+    <div id="logoutModal" class="modal fade " role="dialog">
+        <div class="modal-dialog">
+            <!-- Content-->
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure to Log out?
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" id="logoutConfirmBtnRc" class="btn btn-danger">Continue</button>
+                    <button type="button" class="btn btn-secondary logout-close-button"
+                            data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="rooms container" id="rooms">
         <!-- Rooms TABLE -->

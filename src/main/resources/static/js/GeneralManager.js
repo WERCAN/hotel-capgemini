@@ -281,17 +281,18 @@ function init() {
                  }
              });
 
-         //-----------------
-              //--- LOG OUT -----
-             $("#logoutConfirmButton").click(function(){
-                  window.location.href = HOME_ROUTE;
-             });
+          //-----------------
+          //--- LOG OUT -----
+         $("#logoutConfirmButton").click(function(){
+          localStorage.setItem("gm" , false);
+              window.location.href = HOME_ROUTE;
+         });
 
-             //----------------------------------
-             //--- ROUTING RESERVATION PAGE -----
-             $("#addNewReservationBtn").click(function(){
-               window.location.href = RESERVATION_PAGE_ROUTE;
-             });
+         //----------------------------------
+         //--- ROUTING RESERVATION PAGE -----
+         $("#addNewReservationBtn").click(function(){
+           window.location.href = RESERVATION_PAGE_ROUTE;
+         });
 }
 
 //------- RESERVATIONS -------

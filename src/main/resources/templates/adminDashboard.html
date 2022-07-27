@@ -6,12 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script>
-
-        if(performance.navigation.type == 2){
-          location.reload(true);
-         }
-    </script>
+<!--    <script type="text/javascript">-->
+<!--        function preventBack() { window.history.forward(); }-->
+<!--        setTimeout("preventBack()", 0);-->
+<!--        window.onunload = function () { null };-->
+<!--    </script>-->
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
@@ -160,10 +159,7 @@
                             <div class="modal-body">
                                 <form id="editReservationForm">
                                     <div class="reservationFormContent">
-
                                         <div class="customerRoomForm">
-
-
                                             <div class="form-group checkStatus mt-2" id="checkedIn">
                                                 <span>checked-in: </span>
                                                 <div class="form-check form-check-inline me-0 ms-2">
@@ -214,27 +210,11 @@
                                                 <label for="editBabyBed">Baby Bed:</label>
                                                 <input type="number" class="form-control" id="editBabyBed" />
                                             </div>
-
-                                            <div class="form-group">
-                                                <label for="editServicePrice">Booking Price:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">¥</span>
-                                                    <input type="number" step="0.01" class="form-control" id="editBookingPrice" />
-                                                </div>
-                                            </div>
                                             <div class="form-group">
                                                 <label for="editServicePrice">Service Price:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text">¥</span>
                                                     <input type="number" step="0.01" class="form-control" id="editServicePrice" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="editTotalPrice">Total Price:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">¥</span>
-                                                    <input type="number" step="0.01" class="form-control" id="editTotalPrice" />
                                                 </div>
                                             </div>
                                         </div>
@@ -251,13 +231,16 @@
                                                 <input type="text" class="form-control" id="editEndDate" />
                                             </div>
                                             <div class="form-group mt-2">
+                                                <label for="reEditRoomType">Room Type</label>
                                                 <select class="form-select" id="reEditRoomType" aria-label="Default select room" required>
                                                     <option value="1" >Single</option>
                                                     <option value="2">Double</option>
                                                     <option value="3">2x Double</option>
                                                     <option value="4">Penthouse</option>
                                                 </select>
+                                                <label for="adults">Adults</label>
                                                 <input type="number" class="form-control mb-1" placeholder="Adults" aria-label="Adults" id="adults" required>
+                                                <label for="children">Children</label>
                                                 <input type="number" class="form-control mb-1" placeholder="Child" aria-label="Child" id="children" required>
                                                 <div class="comments" id="comments">
                                                     <div class="form-check mb-1">
@@ -272,7 +255,7 @@
                                                             Non Smoking
                                                         </label>
                                                     </div>
-                                                    <div class="form-check mb-4">
+                                                    <div class="form-check mb-1">
                                                         <input class="form-check-input" type="radio" name="comments" value="disabled" id="disabled" >
                                                         <label class="form-check-label" for="disabled">
                                                             Disabled
@@ -332,10 +315,10 @@
                                         <div class="form-group mt-2">
                                             <div class="mb-1">Document</div>
                                             <select class="form-select" id="editDocumentType" aria-label="Default select document" required>
-                                                <option selected>ID</option>
-                                                <option value="1">Passport</option>
-                                                <option value="2">Driver License</option>
-                                                <option value="3">Travel Document</option>
+                                                <option value="ID" selected>ID</option>
+                                                <option value="Passport">Passport</option>
+                                                <option value="Driver License">Driver License</option>
+                                                <option value="Travel Document">Travel Document</option>
                                             </select>
                                         </div>
                                         <div class="form-group">

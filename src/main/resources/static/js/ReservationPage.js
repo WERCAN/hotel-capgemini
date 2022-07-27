@@ -162,13 +162,21 @@ function initRoomsTable() {
                    } else {return "<span class='no' id='disabledNo'>NO</span>"; }
       }},
       { "title": "Smoke",
-          "data": "smoking",
+          "data": "smoke",
           render: function(data,type,row){
                   if(data == true){
-                   return "<span class='yes'>Allowed</span>";
+                   return "<span class='yes' id='allowed'>Allowed</span>";
                   }else{return "<span class='no' id='notAllowed'>Not Allowed</span>"; }
         }},
   ];
+
+   var langURL = ()=>{
+      if(localStorage.getItem('language') == null || localStorage.getItem('language') == "en"){
+        return "//cdn.datatables.net/plug-ins/1.12.1/i18n/en-GB.json";
+      }else{
+        return "//cdn.datatables.net/plug-ins/1.12.1/i18n/zh.json";
+      }
+    }
 
   // Define new table with above columns
   roomsTable = $("#roomsTable").DataTable( {
@@ -181,6 +189,9 @@ function initRoomsTable() {
                  return infoBtn
                }},
                   ],
+         language: {
+           url: langURL(),
+         },
       responsive: true,
       dom: '<"top">ct<"top"lip><"clear">',
   });
@@ -240,11 +251,13 @@ function getRoomsData(){
   var smoke=false;
   var disabled=false;
   var selectedComment= $("input[name='comments']:checked").val();
+
+  console.log("selectedComment: " + selectedComment);
   if(selectedComment == "smoking"){
     smoke=true;
   }else if(selectedComment == "nonSmoking"){
 
-  }else{
+  }else if(selectedComment == "disabled"){
     disabled=true;
   }
 
@@ -267,7 +280,7 @@ function getRoomsData(){
       datatype: "json",
       data: filterRoomsJson,
       success: function(rooms){
-
+          console.log(rooms);
           if (rooms) {
               roomsTable.clear();
               roomsTable.rows.add(rooms);
@@ -315,6 +328,7 @@ function getHomeData(){
        $("#smoking").val(filterRoomsHome.smoking);
        $("#nonSmoking").val(filterRoomsHome.nonSmoking);
        $("#disabled").val(filterRoomsHome.disabled);
+        $("#babyBed").val(localStorage.getItem("babyBedCheckbox"));
 
 
        let filterRoomsHomeJson=JSON.stringify(filterRoomsHome);
@@ -367,7 +381,7 @@ console.log(selectedRoom.price);
      price : selectedRoom.price,
      totalPrice : selectedRoom.price,
      roomServicePrice : 0,
-     babyBed : $("#babyBed").val(),
+     babyBed : babyBedInit,
      nowDate : currentDate,
      room: selectedRoom,
      customers: customerInfoList
@@ -381,8 +395,10 @@ console.log(selectedRoom.price);
         datatype: "json",
         data: reservationInfoJson,
         success: function(reservation){
+
         console.log("Reservation is saved successfully");
         $('#continueModal').modal('hide');
+        getRoomsData();
         },
         fail: function (error) {
             console.log('Error: ' + error);
@@ -550,6 +566,11 @@ function getLanguage() {
         var notAllowed=document.querySelectorAll("#notAllowed");
         notAllowed.forEach(item => {
           item.innerText = data.notAllowed ;
+        });
+
+        var notAllowed=document.querySelectorAll("#allowed");
+            notAllowed.forEach(item => {
+              item.innerText = data.allowed ;
         });
 
         // update data source for the row

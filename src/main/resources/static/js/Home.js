@@ -161,14 +161,16 @@ function getLanguage() {
     $("#aboutBtn").text(data.aboutUs);
     $("#contactBtn").text(data.contact);
     $("#loginBtn").text(data.logIn);
+    $("#saveChanges").text(data.saveChanges);
+    $("#closeBtn").text(data.closeButton);
     $("#username").text(data.username);
     $("#password").text(data.password);
     $("#submitLoginButton").text(data.submit);
     $("#text-p1").text(data.textp1);
     $("#text-p2").text(data.textp2);
     $("#reservationBtn").text(data.reservation);
-    $("#checkin").text(data.checkIn);
-    $("#checkout").text(data.checkOut);
+    $("#checkIn").text(data.checkIn);
+    $("#checkOutText").text(data.checkOut);
     $("#room").text(data.room);
     $("#single").text(data.single);
     $("#double").text(data.double);
@@ -261,7 +263,7 @@ console.log("CALENDAR!!!");
         $("#cal").after('<i id="out1"></i>');
       }
 
-      _id("sel1text").innerHTML = e.innerText + "/" + month + "/" + year;
+      _id("sel1text").innerHTML = month + "/" +  e.innerText + "/" + year;
     }
 
     // second doesnt exist
@@ -304,7 +306,7 @@ console.log("CALENDAR!!!");
           }
 
           _id("sel2text").innerHTML =
-            e.innerText + "/" + month + "/" + year;
+            month + "/" + e.innerText + "/" + year;
         }
         if (stop) {
           go = 0;
@@ -490,3 +492,16 @@ console.log("CALENDAR!!!");
 
   bind(month, year);
 } // end() init
+
+function HandleBackFunctionality()
+ {
+      if (event.currentTarget.performance.navigation.type == 1)
+       {
+           console.log("Browser refresh button is clicked...");
+       }
+       if(event.currentTarget.performance.navigation.type == 2)
+       {
+             console.log("Browser back button is clicked...");
+//             window.reload(true);
+       }
+ }
