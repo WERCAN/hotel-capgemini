@@ -33,7 +33,7 @@ pipeline {
             }
             post{
               always {
-               mail bcc: '', body: 'Pipeline has been succesfully executed ', cc: '', from: 'cornelius.broekhuis@capgemini.com', replyTo: 'cornelius.broekhuis@capgemini.com', subject: 'Pipeline has been succesfully executed ', to: 'cornelius.broekhuis@capgemini.com'
+               mail bcc: '', body: 'Pipeline has been succesfully executed ', cc: '', from: 'muslum.ercan@capgemini.com', replyTo: 'muslum.ercan@capgemini.com', subject: 'Pipeline has been succesfully executed ', to: 'muslum.ercan@capgemini.com'
               }
             }
           }
