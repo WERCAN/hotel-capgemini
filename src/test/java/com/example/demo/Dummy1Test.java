@@ -19,7 +19,7 @@ public class Dummy1Test {
     public void dummyTestForInteger(){
 
         Integer i = 9;
-        assertEquals( 8, i);
+        assertEquals( 9, i);
 
     }
 
