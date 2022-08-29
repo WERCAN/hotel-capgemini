@@ -27,6 +27,12 @@ pipeline {
         }
     }
 
+    stage ('Build') {
+        steps {
+            bat 'mvn -Dskip.tests=true package'
+        }
+    }
+
     stage('Finalize') {
             steps {
               bat 'echo "Finalizing"'
