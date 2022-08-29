@@ -13,11 +13,13 @@ function init(){
     $("#enImg").click(function(){
         setLanguage('en');
         getLanguage();
+        window.location.reload(true);
         console.log(localStorage.getItem('language'));
       })
     $("#cnImg").click(function(){
         setLanguage('cn');
         getLanguage();
+
         console.log(localStorage.getItem('language'));
       })
 
@@ -175,7 +177,7 @@ function getLanguage() {
     $("#single").text(data.single);
     $("#double").text(data.double);
     $("#x2double").text(data.x2double);
-    $("#pentHouse").text(data.penthouse);
+    $("#penthouse").text(data.pentHouse);
     $("#adults").attr("placeholder", data.adults);
     $("#child").attr("placeholder", data.child);
     $("#babyBed").attr("placeholder", data.babyBed);

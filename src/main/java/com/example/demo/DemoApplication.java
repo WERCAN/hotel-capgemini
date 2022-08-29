@@ -85,7 +85,7 @@ public class DemoApplication implements CommandLineRunner {
 		TypeReference<List<Room>> mapType = new TypeReference<List<Room>>() {};
 		rooms = objectMapper.readValue(json, mapType);
 
-	//	roomRepository.saveAll(rooms);
+//		roomRepository.saveAll(rooms);
 
 
 
@@ -113,7 +113,7 @@ public class DemoApplication implements CommandLineRunner {
 
 		}
 
-	//	reservationRepository.saveAll(reservations);
+//		reservationRepository.saveAll(reservations);
 
 
 

@@ -328,8 +328,8 @@ function getHomeData(){
        $("#smoking").val(filterRoomsHome.smoking);
        $("#nonSmoking").val(filterRoomsHome.nonSmoking);
        $("#disabled").val(filterRoomsHome.disabled);
-        $("#babyBed").val(localStorage.getItem("babyBedCheckbox"));
-
+       $("#babyBed").val(localStorage.getItem("babyBedCheckbox"));
+       $("#nonSmoking").prop("checked", true);
 
        let filterRoomsHomeJson=JSON.stringify(filterRoomsHome);
            console.log(filterRoomsHome)
@@ -352,10 +352,6 @@ function getHomeData(){
                  }
              });
     }
-
-
-
-
 
 
 }
